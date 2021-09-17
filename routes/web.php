@@ -66,5 +66,3 @@ Route::get('/student/edit-profile', [StudentViewsController::class,'edit_profile
 Route::get('/student/security', [StudentViewsController::class,'security_view']);
 Route::get('/student/social-profiles', [StudentViewsController::class,'social_profile_view']);
 Route::get('/student/logout', [StudentViewsController::class,'logout']);
-
-// This is test========
