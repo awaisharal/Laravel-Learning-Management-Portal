@@ -39,4 +39,8 @@ class AdminViewsController extends Controller
     {
         return view('admin.add-courses');
     }
+    public function setting_view(Request $request)
+    {
+        return view('admin.setting');
+    }
 }

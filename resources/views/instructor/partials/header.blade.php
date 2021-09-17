@@ -794,14 +794,6 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        class="dropdown-item"
-                                        href="./pages/student-subscriptions.html"
-                                    >
-                                        <i class="fe fe-star me-2"></i>Subscription
-                                    </a>
-                                </li>
-                                <li>
                                     <a class="dropdown-item" href="#">
                                         <i class="fe fe-settings me-2"></i>Settings
                                     </a>
@@ -810,7 +802,7 @@
                             <div class="dropdown-divider"></div>
                             <ul class="list-unstyled">
                                 <li>
-                                    <a class="dropdown-item" href="./index.html">
+                                    <a class="dropdown-item" href="/instructor/logout">
                                         <i class="fe fe-power me-2"></i>Sign Out
                                     </a>
                                 </li>

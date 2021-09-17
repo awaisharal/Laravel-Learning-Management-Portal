@@ -11,7 +11,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link  collapsed " href="#!" data-bs-toggle="collapse" data-bs-target="#navinstructor" aria-expanded="false" aria-controls="navinstructor">
-                    <i class="nav-icon fe fe-book me-2"></i> Instructors
+                    <i class="nav-icon fe fe-users me-2"></i> Instructors
                 </a>
                 <div id="navinstructor"  class="collapse "  data-bs-parent="#sideNavbar">
                     <ul class="nav flex-column">
@@ -30,7 +30,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link  collapsed " href="#!" data-bs-toggle="collapse" data-bs-target="#navstudents" aria-expanded="false" aria-controls="navstudents">
-                    <i class="nav-icon fe fe-book me-2"></i> Students
+                    <i class="nav-icon fe fe-user me-2"></i> Students
                 </a>
                 <div id="navstudents"  class="collapse "  data-bs-parent="#sideNavbar">
                     <ul class="nav flex-column">

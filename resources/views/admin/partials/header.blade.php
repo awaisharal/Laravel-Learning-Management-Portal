@@ -239,7 +239,7 @@
                                 </div>
                                 <div class="dropdown-divider"></div>
                                 <ul class="list-unstyled">
-                                    <li>
+                                    {{-- <li>
                                         <a class="dropdown-item" href="../../pages/profile-edit.html">
                                             <i class="fe fe-user me-2"></i> Profile
                                         </a>
@@ -248,17 +248,16 @@
                                         <a class="dropdown-item" href="../../pages/student-subscriptions.html">
                                             <i class="fe fe-star me-2"></i> Subscription
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="/admin/setting">
                                             <i class="fe fe-settings me-2"></i> Settings
                                         </a>
                                     </li>
                                 </ul>
-                                <div class="dropdown-divider"></div>
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a class="dropdown-item" href="../../index.html">
+                                        <a class="dropdown-item" href="/admin/logout">
                                             <i class="fe fe-power me-2"></i> Sign Out
                                         </a>
                                     </li>

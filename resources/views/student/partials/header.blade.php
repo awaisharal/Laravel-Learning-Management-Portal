@@ -810,7 +810,7 @@
                             <div class="dropdown-divider"></div>
                             <ul class="list-unstyled">
                                 <li>
-                                    <a class="dropdown-item" href="./index.html">
+                                    <a class="dropdown-item" href="/student/logout">
                                         <i class="fe fe-power me-2"></i>Sign Out
                                     </a>
                                 </li>

@@ -22,7 +22,7 @@
   <link href="/assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
   <!-- Theme CSS -->
   <link rel="stylesheet" href="/assets/css/theme.min.css">
-  <title>Sign in</title>
+  <title>Student Sign in</title>
 </head>
 <body>
   <!-- Page content -->
@@ -34,8 +34,8 @@
           <!-- Card body -->
           <div class="card-body p-6">
             <div class="mb-4">
-              <a href="/"><img src="//assets/images/brand/logo/logo-icon.svg" class="mb-4" alt=""></a>
-              <h1 class="mb-1 fw-bold">Sign in</h1>
+              <a href="/"><img src="/assets/images/brand/logo/logo-icon.svg" class="mb-4" alt=""></a>
+              <h1 class="mb-1 fw-bold">Student Sign in</h1>
             </div>
             <!-- Form -->
             @if($errors->any())

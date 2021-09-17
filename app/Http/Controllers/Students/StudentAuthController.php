@@ -74,7 +74,8 @@ class StudentAuthController extends Controller
                 if ($dbStatus == 0) {
                     return back()->withErrors('banned');
                 }else{
-                    return "Login Success";
+                    $request->session()->put('StudentEmail',$email);
+                    return redirect('/student');
                 }
             }
             else
@@ -83,8 +84,11 @@ class StudentAuthController extends Controller
             }
         }else{
             return back()->withErrors('email_not_match');
-
         }
-        return $request;
+    }
+    public function logoutStudent()
+    {
+        session()->forget('StudentEmail');
+        return redirect('/login');
     }
 }

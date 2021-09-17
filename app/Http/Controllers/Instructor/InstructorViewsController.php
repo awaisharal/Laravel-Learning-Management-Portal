@@ -43,8 +43,4 @@ class InstructorViewsController extends Controller
     {
         return view('instructor.social-profile');
     }
-    public function logout ()
-    {
-    
-    }
 }

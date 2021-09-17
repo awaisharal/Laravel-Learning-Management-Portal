@@ -35,7 +35,7 @@
           <div class="card-body p-6">
             <div class="mb-4">
               <a href="/"><img src="/assets/images/brand/logo/logo-icon.svg" class="mb-4" alt=""></a>
-              <h1 class="mb-1 fw-bold">Sign in</h1>
+              <h1 class="mb-1 fw-bold">Admin Sign in</h1>
             </div>
             <!-- Form -->
             @if($errors->any())

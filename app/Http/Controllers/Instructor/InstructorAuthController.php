@@ -45,7 +45,6 @@ class InstructorAuthController extends Controller
             $user = Instructor::create($array);
             if($user)
             {
-                // $request->session()->put('email', $email);
                 return back()->withErrors('user_created');
             }else{
                 return back()->withErrors('unknownError');
@@ -77,7 +76,8 @@ class InstructorAuthController extends Controller
                 if ($dbStatus == 0) {
                     return back()->withErrors('banned');
                 }else{
-                    return "Login Success";
+                    $request->session()->put('InstructorEmail',$email);
+                    return redirect('/instructor/');
                 }
             }
             else
@@ -88,6 +88,10 @@ class InstructorAuthController extends Controller
             return back()->withErrors('email_not_match');
 
         }
-        return $request;
+    }
+    public function logoutInstructor()
+    {
+        session()->forget('InstructorEmail');
+        return redirect('/instructor/login');
     }
 }
