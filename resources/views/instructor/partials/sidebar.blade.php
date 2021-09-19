@@ -13,12 +13,12 @@
             <span class="navbar-header">Dashboard</span>
             <ul class="list-unstyled ms-n2 mb-4">
                 <!-- Nav item -->
-                <li class="nav-item active">
+                <li class="nav-item" id="dashboard">
                     <a class="nav-link" href="/instructor/"><i class="fe fe-home nav-icon"></i>My
                     Dashboard</a>
                 </li>
                 <!-- Nav item -->
-                <li class="nav-item">
+                <li class="nav-item" id="myCourses">
                     <a class="nav-link" href="/instructor/my-courses"><i class="fe fe-book nav-icon"></i>My Courses</a>
                 </li>
                 <!-- Nav item -->
@@ -34,11 +34,11 @@
             <span class="navbar-header">Account Settings</span>
             <ul class="list-unstyled ms-n2 mb-0">
                 <!-- Nav item -->
-                <li class="nav-item">
+                <li class="nav-item" id="profile">
                     <a class="nav-link" href="/instructor/edit-profile"><i class="fe fe-settings nav-icon"></i>Edit Profile</a>
                 </li>
                 <!-- Nav item -->
-                <li class="nav-item">
+                <li class="nav-item" id="security">
                     <a class="nav-link" href="/instructor/security"><i class="fe fe-user nav-icon"></i>Security</a>
                 </li>
                 <!-- Nav item -->

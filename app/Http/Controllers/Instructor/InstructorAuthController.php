@@ -77,6 +77,7 @@ class InstructorAuthController extends Controller
                     return back()->withErrors('banned');
                 }else{
                     $request->session()->put('InstructorEmail',$email);
+                    $request->session()->put('sessionData',$user);
                     return redirect('/instructor/');
                 }
             }

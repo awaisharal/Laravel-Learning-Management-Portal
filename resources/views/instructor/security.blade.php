@@ -23,24 +23,40 @@
 		<!-- Card body -->
 		<div class="card-body">
 			<div>
+				@if(count($errors->all()) > 0)
+					@if($errors->first() == 'success')
+						<div class="alert alert-success mt-5 mb-3">
+							Password updated successfully.
+						</div>
+					@elseif($errors->first() == 'invalid')
+						<div class="alert alert-warning mt-5 mb-3">
+							You have entered incorrect old password
+						</div>
+					@elseif($errors->first() == 'mismatch')
+						<div class="alert alert-warning mt-5 mb-3">
+							New passwords does not match 
+						</div>
+					@endif
+				@endif
 				<h4 class="mb-0">Change Password</h4>
 				<p>
 					We will email you a confirmation when changing your
 					password, so please expect that email after submitting.
 				</p>
 				<!-- Form -->
-				<form class="row">
+				<form class="row" method="post" action="{{route('instructor.passwordUpdate')}}">
+					@csrf
 					<div class="col-lg-6 col-md-12 col-12">
 							<!-- Current password -->
 						<div class="mb-3">
 							<label class="form-label" for="currentpassword">Current password</label>
-							<input id="currentpassword" type="password" name="currentpassword" class="form-control"
+							<input id="currentpassword" type="password" name="old" class="form-control"
 								placeholder="" required />
 						</div>
 							<!-- New password -->
 						<div class="mb-3 password-field">
 							<label class="form-label" for="newpassword">New password</label>
-							<input id="newpassword" type="password" name="newpassword" class="form-control mb-2"
+							<input id="newpassword" type="password" name="new1" class="form-control mb-2"
 								placeholder="" required />
 							<div class="row align-items-center g-0">
 								<div class="col-6">
@@ -54,7 +70,7 @@
 						<div class="mb-3">
 								<!-- Confirm new password -->
 							<label class="form-label" for="confirmpassword">Confirm New Password</label>
-							<input id="confirmpassword" type="password" name="confirmpassword" class="form-control mb-2"
+							<input id="confirmpassword" type="password" name="new2" class="form-control mb-2"
 								placeholder="" required />
 						</div>
 							<!-- Button -->
@@ -74,4 +90,8 @@
 		</div>
 	</div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+	$("#sidenav ul li#security").addClass("active");
+</script>
 @endsection

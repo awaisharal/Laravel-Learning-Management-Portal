@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\Instructor;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +16,17 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
-
+    public function boot()
+    {
+        //compose all the views....
+        view()->composer('*', function ($view) 
+        {
+            if(session()->has('InstructorEmail')){
+                $user = Instructor::where('email', session()->get('InstructorEmail'))->get();
+                $view->with('user', $user[0]);    
+            }
+        });  
+    }
     /**
      * Bootstrap any application services.
      *

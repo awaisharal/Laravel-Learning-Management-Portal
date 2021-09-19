@@ -18,13 +18,19 @@ class InstructorsMigration extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('phone');
+            $table->string('birthday')->nullable();
             $table->string('password');
             $table->longText('img')->nullable();
             $table->string('title')->nullable();
             $table->bigInteger('students')->nullable();
             $table->bigInteger('courses')->nullable();
             $table->enum('role', ['student','admin','instructor'])->default('instructor');
-            $table->integer('status');
+            $table->string('address_line1')->nullable();
+            $table->string('address_line2')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

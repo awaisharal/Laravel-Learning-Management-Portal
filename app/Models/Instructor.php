@@ -17,6 +17,12 @@ class Instructor extends Model
         'students',
         'courses',
         'role',
+        'birthday',
+        'address_line1',
+        'address_line2',
+        'city',
+        'state',
+        'country',
         'status'
     ];
 }

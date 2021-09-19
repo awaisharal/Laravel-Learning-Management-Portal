@@ -39,62 +39,60 @@
 			</div>
 			<hr class="my-5" />
 			<div>
+				@if(count($errors->all()) > 0)
+					@if($errors->first() == 'success')
+						<div class="alert alert-success mt-5 mb-3">
+							Profile updated successfully.
+						</div>
+					@endif
+				@endif
 				<h4 class="mb-0">Personal Details</h4>
 				<p class="mb-4">
 					Edit your personal information and address.
 				</p>
 				<!-- Form -->
-				<form class="row">
-					<!-- First name -->
+				<form class="row" action="{{route('instructor.updateProfile')}}" method="post">
+					@csrf
+					<!-- Full name -->
 					<div class="mb-3 col-12 col-md-6">
-						<label class="form-label" for="fname">First Name</label>
-						<input type="text" id="fname" class="form-control" placeholder="First Name" required />
-					</div>
-					<!-- Last name -->
-					<div class="mb-3 col-12 col-md-6">
-						<label class="form-label" for="lname">Last Name</label>
-						<input type="text" id="lname" class="form-control" placeholder="Last Name" required />
+						<label class="form-label" for="name">Full Name</label>
+						<input type="text" id="name" name="name" class="form-control" placeholder="Your name here.." value="{{$user->name}}" required />
 					</div>
 					<!-- Phone -->
 					<div class="mb-3 col-12 col-md-6">
 						<label class="form-label" for="phone">Phone</label>
-						<input type="text" id="phone" class="form-control" placeholder="Phone" required />
+						<input type="text" id="phone" class="form-control" placeholder="Phone" name="phone" value="{{$user->phone}}" required />
 					</div>
 					<!-- Birthday -->
 					<div class="mb-3 col-12 col-md-6">
 						<label class="form-label" for="birth">Birthday</label>
 						<input class="form-control flatpickr" type="text" placeholder="Birth of Date" id="birth"
-							name="birth" />
+							name="birthday" value="{{$user->birthday}}"/>
 					</div>
 					<!-- Address -->
 					<div class="mb-3 col-12 col-md-6">
 						<label class="form-label" for="address">Address Line 1</label>
-						<input type="text" id="address" class="form-control" placeholder="Address" required />
+						<input type="text" id="address" class="form-control" placeholder="Address" value="{{$user->address_line1}}" name="address1" required />
 					</div>
 					<!-- Address -->
 					<div class="mb-3 col-12 col-md-6">
 						<label class="form-label" for="address2">Address Line 2</label>
-						<input type="text" id="address2" class="form-control" placeholder="Address" required />
+						<input type="text" id="address2" class="form-control" placeholder="Address" value="{{$user->address_line2}}" name="address2" required />
+					</div>
+					<!-- City -->
+					<div class="mb-3 col-12 col-md-6">
+						<label class="form-label" for="city">City</label>
+						<input type="text" id="city" class="form-control" placeholder="City" name="city" value="{{$user->city}}" />
 					</div>
 					<!-- State -->
 					<div class="mb-3 col-12 col-md-6">
 						<label class="form-label">State</label>
-						<select class="selectpicker" data-width="100%">
-							<option value="">Select State</option>
-							<option value="1">Gujarat</option>
-							<option value="2">Rajasthan</option>
-							<option value="3">Maharashtra</option>
-						</select>
+						<input type="text" id="state" class="form-control" placeholder="State" name="state" required value="{{$user->state}}"/>
 					</div>
 					<!-- Country -->
 					<div class="mb-3 col-12 col-md-6">
 						<label class="form-label">Country</label>
-						<select class="selectpicker" data-width="100%">
-							<option value="">Select Country</option>
-							<option value="1">India</option>
-							<option value="2">UK</option>
-							<option value="3">USA</option>
-						</select>
+						<input type="text" id="country" class="form-control" placeholder="Country" name="country" required value="{{$user->country}}" />
 					</div>
 					<div class="col-12">
 						<!-- Button -->
@@ -107,4 +105,8 @@
 		</div>
 	</div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+	$("#sidenav ul li#profile").addClass("active");
+</script>
 @endsection

@@ -17,8 +17,10 @@
                     </a>
                 </div>
                 <div class="lh-1">
-                    <h2 class="mb-0">Jenny Wilson</h2>
-                    <p class="mb-0 d-block">@Jennywilson</p>
+                    <h2 class="mb-0">
+                        {{$user->name}}
+                    </h2>
+                    <p class="mb-0 d-block">{{$user->role}}</p>
                 </div>
             </div>
             <div>
