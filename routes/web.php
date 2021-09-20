@@ -90,3 +90,4 @@ Route::group(['middleware' => ['StudentAuth']], function(){
 	Route::get('/student/social-profiles', [StudentViewsController::class,'social_profile_view']);
 
 });
+// this is testing
