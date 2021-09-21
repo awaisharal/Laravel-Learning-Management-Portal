@@ -145,7 +145,9 @@
                                                     <td class="align-middle border-top-0">
                                                         <div class="d-flex align-items-center">
                                                             <img src="../../assets/images/avatar/avatar-7.jpg" alt="" class="rounded-circle avatar-xs me-2" />
-                                                            <h5 class="mb-0">Reva Yokk</h5>
+                                                            <h5 class="mb-0">
+                                                                {{$pending->instructor_name}}
+                                                            </h5>
                                                         </div>
                                                     </td>
                                                     <td class="align-middle border-top-0">
