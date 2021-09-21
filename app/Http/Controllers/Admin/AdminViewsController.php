@@ -39,41 +39,54 @@ class AdminViewsController extends Controller
     public function all_courses_view()
     {
         $pending_courses = Course::where('status', '=', "Pending")->orderBy('id', 'desc')->get();
-
-        foreach($pending_courses as $pc)
+        if(!empty($pending_courses))
         {
-            $ins_id = $pc->instructor_id;
-            $ins = Instructor::find($ins_id);
-            $name = $ins->name;
+            foreach($pending_courses as $pc)
+            {
+                $ins_id = $pc->user_id;
+                $ins = Instructor::find($ins_id);
+                $name = $ins->name;
+                $img = $ins->img;
 
-            $pc['instructor_name'] = $name;
+                $pc['instructor_name'] = $name;
+                $pc['instructor_img'] = $img;
+            }
         }
         $approved_courses = Course::where('status', '=', "Approved")->orderBy('id', 'desc')->get();
-        foreach($approved_courses as $pc)
+        if(!empty($approved_courses))
         {
-            $ins_id = $pc->instructor_id;
-            $ins = Instructor::find($ins_id);
-            $name = $ins->name;
+            foreach($approved_courses as $pc)
+            {
+                $ins_id = $pc->user_id;
+                $ins = Instructor::find($ins_id);
+                $name = $ins->name;
 
-            $pc['instructor_name'] = $name;
+                $pc['instructor_name'] = $name;
+            }
         }
         $banned_courses = Course::where('status', '=', "Banned")->orderBy('id', 'desc')->get();
-        foreach($banned_courses as $pc)
+        if(!empty($banned_courses))
         {
-            $ins_id = $pc->instructor_id;
-            $ins = Instructor::find($ins_id);
-            $name = $ins->name;
+            foreach($banned_courses as $pc)
+            {
+                $ins_id = $pc->user_id;
+                $ins = Instructor::find($ins_id);
+                $name = $ins->name;
 
-            $pc['instructor_name'] = $name;
+                $pc['instructor_name'] = $name;
+            }
         }
         $not_approved_courses = Course::where('status', '=', "Not Approved")->orderBy('id', 'desc')->get();
-        foreach($not_approved_courses as $pc)
+        if(!empty($not_approved_courses))
         {
-            $ins_id = $pc->instructor_id;
-            $ins = Instructor::find($ins_id);
-            $name = $ins->name;
+            foreach($not_approved_courses as $pc)
+            {
+                $ins_id = $pc->user_id;
+                $ins = Instructor::find($ins_id);
+                $name = $ins->name;
 
-            $pc['instructor_name'] = $name;
+                $pc['instructor_name'] = $name;
+            }
         }
         return view('admin.all-courses', [
             'pending_course'        =>      $pending_courses,

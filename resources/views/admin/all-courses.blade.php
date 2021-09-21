@@ -217,7 +217,7 @@
                                                     <td class="align-middle border-top-0">
                                                         <div class="d-flex align-items-center">
                                                             <img src="../../assets/images/avatar/avatar-10.jpg" alt="" class="rounded-circle avatar-xs me-2" />
-                                                            <h5 class="mb-0">Guy Hawkins</h5>
+                                                            <h5 class="mb-0">{{$approve_course->instructor_name}}</h5>
                                                         </div>
                                                     </td>
                                                     <td class="align-middle border-top-0">
@@ -295,7 +295,7 @@
                                                     <td class="align-middle border-top-0">
                                                         <div class="d-flex align-items-center">
                                                             <img src="../../assets/images/avatar/avatar-7.jpg" alt="" class="rounded-circle avatar-xs me-2" />
-                                                            <h5 class="mb-0">Reva Yokk</h5>
+                                                            <h5 class="mb-0">{{$not_approve_course->instructor_name}}</h5>
                                                         </div>
                                                     </td>
                                                     <td class="align-middle border-top-0">
@@ -372,11 +372,11 @@
                                                     <td class="align-middle border-top-0">
                                                         <div class="d-flex align-items-center">
                                                             <img src="../../assets/images/avatar/avatar-7.jpg" alt="" class="rounded-circle avatar-xs me-2" />
-                                                            <h5 class="mb-0">Reva Yokk</h5>
+                                                            <h5 class="mb-0">{{$ban_course->instructor_name}}</h5>
                                                         </div>
                                                     </td>
                                                     <td class="align-middle border-top-0">
-                                                        <span class="badge-dot bg-danger me-1 d-inline-block align-middle"></span>{{ $ban_course->Status }}
+                                                        <span class="badge-dot bg-danger me-1 d-inline-block align-middle"></span>Banned
                                                     </td>
                                                     <td class="align-middle border-top-0">
                                                         <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#unban-course-modal" onclick="unbanCourse('<?php echo $ban_course->id; ?>', '<?php echo $ban_course->title; ?>')">Unban</a>
