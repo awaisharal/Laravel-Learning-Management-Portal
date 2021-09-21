@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AdminViewsController;
+use App\Http\Controllers\Admin\AdminMainController;
 use App\Http\Controllers\Students\StudentAuthController;
 use App\Http\Controllers\Students\StudentViewsController;
 use App\Http\Controllers\Instructor\InstructorAuthController;
@@ -33,14 +34,26 @@ Route::group(['middleware' => ['AdminAuth']], function(){
 
 	Route::get('/admin', [AdminViewsController::class,'index_view']);
 	Route::get('/admin/logout', [AuthController::class,'logoutAdmin']);
-	Route::get('/admin/all-instructors', [AdminViewsController::class,'all_instructors_view']);
-	Route::get('/admin/add-instructors', [AdminViewsController::class,'add_instructors_view']);
+
+	Route::get('/admin/all-instructors',[AdminViewsController::class,'all_instructors_view']);
+	Route::get('/admin/add-instructors',[AdminViewsController::class,'add_instructors_view']);
 	Route::POST('/admin/add-instructors', [InstructorAuthController::class,'add_instructor'])->name('admin.add_instructor');
+	
 	Route::get('/admin/all-students', [AdminViewsController::class,'all_students_view']);
 	Route::get('/admin/add-students', [AdminViewsController::class,'add_students_view']);
 	Route::POST('/admin/add-students', [StudentAuthController::class,'add_students'])->name('admin.add_student');
+	Route::POST('/admin/ban-student', [AdminMainController::class,'ban_student'])->name('admin.ban_student');
+	Route::POST('/admin/unban-student', [AdminMainController::class,'unban_student'])->name('admin.unban_student');
+	Route::POST('/admin/delete-student', [AdminMainController::class,'delete_student'])->name('admin.delete_student');
+
 	Route::get('/admin/all-courses', [AdminViewsController::class,'all_courses_view']);
 	Route::get('/admin/add-courses', [AdminViewsController::class,'add_courses_view']);
+	Route::POST('/admin/approve-course', [AdminMainController::class,'approve_course'])->name('admin.approve_course');
+	Route::POST('/admin/reject-course', [AdminMainController::class,'reject_course'])->name('admin.reject_course');
+	Route::POST('/admin/ban-course', [AdminMainController::class,'ban_course'])->name('admin.ban_course');
+	Route::POST('/admin/unban-course', [AdminMainController::class,'unban_course'])->name('admin.unban_course');
+
+	
 	Route::get('/admin/setting', [AdminViewsController::class,'setting_view']);
 	Route::POST('/admin/setting/change-password', [AuthController::class,'change_password'])->name('admin.change-password');
 

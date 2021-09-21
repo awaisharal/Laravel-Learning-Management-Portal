@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <base href="/">
     @yield('meta')
     @yield('css')
     <link rel="shortcut icon" type="image/x-icon" href="../../assets/images/favicon/favicon.ico">
@@ -22,6 +23,8 @@
     </div>
     <!-- Scripts -->
     <!-- Libs JS -->
+    <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+    @yield('extra_js')
     @include('admin.partials.scripts')
 </body>
 </html>
