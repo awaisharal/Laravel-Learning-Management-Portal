@@ -231,6 +231,8 @@ class InstructorViewsController extends Controller
             $filepath = "uploads/lectures/";
 
             move_uploaded_file($_FILES['file']['tmp_name'], $filepath.$filename);
+        }else{
+            $filename = null;
         }
         Lecture::create([
             'title' => $title,
@@ -249,5 +251,35 @@ class InstructorViewsController extends Controller
         $data = Lecture::find($id);
         $data->delete();
         return back()->withErrors('Lecture deleted successfully');
+    }
+    public function edit_section(Request $request)
+    {   
+        $validate = $request->validate([
+            'name' => 'required|max:255'
+        ]);
+        $id = $request->id;
+        $name = $request->name;
+
+        $obj = Curriculum::find($id);
+        if(!empty($obj)){
+            Curriculum::where('id', $id)->update(['name'=>$name]);
+            return back()->withErrors('sectionUpdated');
+        }else{
+            return back()->with('error','Unknown error. Please try again later.');
+        }
+    }
+    public function delete_section(Request $request)
+    {
+        $id = $request->id;
+        
+        // deleting all lectures of this section
+        $lec = Lecture::where('curriculum_id', $id)->delete();
+        
+        // Deleting section itself
+        
+        $obj = Curriculum::find($id);
+        $obj->delete();
+
+        return back()->withErrors('sectionDeleted');
     }
 }

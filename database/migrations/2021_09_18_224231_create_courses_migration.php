@@ -18,7 +18,7 @@ class CreateCoursesMigration extends Migration
             $table->string('title');
             $table->string('level');
             $table->integer('category');
-            $table->string('description');
+            $table->text('description');
             $table->string('filename');
             $table->string('url');
             $table->string('tags');

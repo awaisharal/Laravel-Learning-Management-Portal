@@ -39,6 +39,14 @@
 			<div class="alert alert-success mt-5">
 				New lecture added to the course
 			</div>
+		@elseif($errors->first() == 'sectionUpdated')
+			<div class="alert alert-success mt-5">
+				Section updated successfully.
+			</div>
+		@elseif($errors->first() == 'sectionDeleted')
+			<div class="alert alert-success mt-5">
+				Section deleted successfully.
+			</div>
 		@else
 			<div class="alert alert-warning mt-5">
 				{{$errors->first()}}
@@ -70,7 +78,15 @@
                         <!-- List group -->
                         <div class="list-group list-group-flush border-top-0" id="courseList">
                           <div id="courseOne">
-                          	<h4>{{$obj->name}}</h4>
+                          	<h4>
+                          		{{$obj->name}}
+															<button class="no-bg" onclick="openSectionEditModal('{{$obj->id}}','{{$obj->name}}')">
+																<i class="fe fe-edit" style="font-size:14px;"></i>
+															</button>
+															<button class="no-bg" onclick="openSectionDeleteModal('{{$obj->id}}','{{$obj->name}}')">
+																<i class="fe fe-trash-2" style="font-size:14px;"></i>
+															</button>
+                          	</h4>
                           	@if(!$obj->lectures->isEmpty())
                             	@foreach($obj->lectures as $lec)
 	                            <div class="list-group-item rounded px-3 mb-1" id="introduction">
@@ -385,6 +401,64 @@
   </div>
 </div>
 
+<!-- EditSectionModal -->
+<div class="modal fade" id="EditSectionModal" tabindex="-1" role="dialog" aria-labelledby="addSectionModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="addSectionModalLabel1">
+          Update Section
+        </h4>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fe fe-x-circle"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{route('course.editSection')}}" method="post">
+        @csrf
+	        <input class="form-control mb-3" type="text" name="name" id="name" placeholder="Enter section name here.." required />
+	        <input type="hidden" id="id" name="id" value="" />
+	        <button class="btn btn-primary" type="submit">
+	            Update Section
+	        </button>
+	        <button type="button" class="btn btn-outline-white" data-dismiss="modal" aria-label="Close">
+            	Close
+          	</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{-- DeleteSectionModal --}}
+<div class="modal fade" id="DeleteSectionModal" tabindex="-1" role="dialog" aria-labelledby="addSectionModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="padding-bottom: 0!important;">
+      <div class="modal-header">
+        <h4 class="modal-title" id="addSectionModalLabel1">
+          Delete Section
+        </h4>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fe fe-x-circle"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{route('course.deleteSection')}}" method="post">
+        @csrf
+        	<p>Are you sure, you want to delete <b id="name" class="text-danger"></b> section?</p>
+	        <input type="hidden" id="id" name="id" value="" />
+	        <div class="modal-footer" style="padding: 10px 0 0 0!important;border:none!important;">
+	        	<button class="btn btn-danger" type="submit">
+	            Delete
+	        	</button>
+	        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <script>	
 	function collapsefun(id)
 	{
@@ -403,6 +477,20 @@
 		let trigger = "#"+id;
 		$(trigger+ " #course_id").val(course_id);
 		$(trigger+ " #curriculum_id").val(curriculum_id);
+		$(trigger).modal('show');	
+	}
+	function openSectionEditModal(id, name)
+	{
+		let trigger = "#EditSectionModal";
+		$(trigger+ " #id").val(id);
+		$(trigger+ " #name").val(name);
+		$(trigger).modal('show');	
+	}
+	function openSectionDeleteModal(id, name)
+	{
+		let trigger = "#DeleteSectionModal";
+		$(trigger+ " #id").val(id);
+		$(trigger+ " #name").html(name);
 		$(trigger).modal('show');	
 	}
 </script>

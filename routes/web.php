@@ -73,6 +73,8 @@ Route::group(['middleware' => ['InstructorAuth']], function(){
 	Route::get('/instructor/my-courses', [InstructorViewsController::class,'my_courses_view']);
 	Route::get('/instructor/course/{id}/curriculum', [InstructorViewsController::class,'course_curriculum_view']);
 	Route::post('/instructor/course/add/section', [InstructorViewsController::class,'add_section'])->name('course.addSection');
+	Route::post('/instructor/course/edit/section', [InstructorViewsController::class,'edit_section'])->name('course.editSection');
+	Route::post('/instructor/course/delete/section', [InstructorViewsController::class,'delete_section'])->name('course.deleteSection');
 	Route::post('/instructor/course/add/lecture', [InstructorViewsController::class,'add_lecture'])->name('course.addLecture');
 	Route::post('/instructor/course/delete/lecture', [InstructorViewsController::class,'delete_lecture'])->name('lecture.delete');
 	Route::get('/instructor/reviews', [InstructorViewsController::class,'reviews_view']);
