@@ -17,7 +17,7 @@ class CreateLecturesMigration extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('video');
+            $table->string('video')->nullable();
             $table->integer('curriculum_id');
             $table->integer('course_id');
             $table->integer('user_id');

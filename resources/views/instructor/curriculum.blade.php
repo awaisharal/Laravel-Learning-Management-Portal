@@ -373,7 +373,7 @@
 	        </div>
 	        <div class="form-group mb-3">
 	        	<label for="file">Video</label>
-	        	<input class="form-control mb-3" type="file" id="file" name="file" required />
+	        	<input class="form-control mb-3" type="file" id="file" name="file" />
 	        </div>
 	        <input type="hidden" id="course_id" name="course_id" value="" />
 	        <input type="hidden" id="curriculum_id" name="curriculum_id" value="" />

@@ -212,33 +212,34 @@ class InstructorViewsController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
-            'file' => 'required|mimes:mp4,mov,ogg,qt',
+            'file' => 'mimes:mp4,mov,ogg,qt',
         ]);
 
         $user = session()->get('sessionData')[0];
         $user_id = $user->id;
         $title = $request->title;   
         $description = $request->description;   
-        $file = $request->file;   
         $course_id = $request->course_id;   
         $curriculum_id = $request->curriculum_id;   
 
-        $ext = $file->getClientOriginalExtension();    
-        $filename = uniqid(rand(999, 999999)).time().'.'.$ext;
-
-        $filepath = "uploads/lectures/";
-
-        if(move_uploaded_file($_FILES['file']['tmp_name'], $filepath.$filename))
+       if($request->file != null || $request->file != "")
         {
-            Lecture::create([
-                'title' => $title,
-                'description' => $description,
-                'video' => $filename,
-                'curriculum_id' => $curriculum_id,
-                'course_id' => $course_id,
-                'user_id' => $user_id
-            ]);
+            $file = $request->file;   
+            $ext = $file->getClientOriginalExtension();    
+            $filename = uniqid(rand(999, 999999)).time().'.'.$ext;
+
+            $filepath = "uploads/lectures/";
+
+            move_uploaded_file($_FILES['file']['tmp_name'], $filepath.$filename);
         }
+        Lecture::create([
+            'title' => $title,
+            'description' => $description,
+            'video' => $filename,
+            'curriculum_id' => $curriculum_id,
+            'course_id' => $course_id,
+            'user_id' => $user_id
+        ]);
 
         return back()->withErrors('lectureAdded');
     }
