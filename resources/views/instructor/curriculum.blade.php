@@ -97,12 +97,13 @@
 	                                    <span class="align-middle">{{$lec->title}}</span>
 	                                  </a>
 	                                </h5>
-	                                <div style="display:flex;"><a href="" class="mr-1 text-inherit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe fe-edit font-size-xs"></i></a>
-	                                  <form action="{{route('lecture.delete')}}" method="post">
-	                                  	@csrf
-	                                  	<input type="hidden" name="id" value="{{$lec->id}}">
-	                                  	<button class="mr-1 text-inherit no-bg" data-toggle="tooltip" data-placement="top" title="Delete this lecture" data-original-title="Delete"><i class="fe fe-trash-2 font-size-xs"></i></button>
-	                                  </form>
+	                                <div style="display:flex;">
+	                                	<a href="/instructor/course/{{ $lec->id }}/edit/curriculum" class="mr-1 text-inherit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+	                                		<i class="fe fe-edit font-size-xs"></i>
+	                                	</a>
+	                                	<button class="mr-1 text-inherit no-bg" onclick="openLectureDeleteModal('{{$lec->id}}','{{$lec->title}}')">
+	                                		<i class="fe fe-trash-2 font-size-xs"></i>
+	                                	</button>
 	                                  <button type="button" class="text-inherit no-bg"  data-toggle="collapse" id="collapseBtn1" onclick="collapsefun({{$i}})">
 	                                    <span class="chevron-arrow"><i class="fe fe-chevron-down"></i></span>
 	                                  </button>
@@ -135,199 +136,6 @@
                     @endif
                 </div>
             </div>
-		</div>
-		<!-- Tab pane -->
-		<div class="tab-pane fade" id="tabPaneList" role="tabpanel" aria-labelledby="tabPaneList">
-			<div class="card">
-				<div class="card-header border-bottom-0">
-					<div class="row">
-						<div class="col pe-0">
-							<form>
-								<input type="search" class="form-control" placeholder="Search by Name" />
-							</form>
-						</div>
-						<div class="col-auto">
-							<a href="#" class="btn btn-secondary">Export CSV</a>
-						</div>
-					</div>
-				</div>
-				<!-- Table -->
-				<div class="table-responsive">
-					<table class="table">
-						<thead class="table-light">
-							<tr>
-								<th scope="col" class="border-0">Name</th>
-								<th scope="col" class="border-0">Enrolled</th>
-								<th scope="col" class="border-0">Progress</th>
-								<th scope="col" class="border-0">Q/A</th>
-								<th scope="col" class="border-0">Locations</th>
-								<th scope="col" class="border-0">Message</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td class="align-middle border-top-0">
-									<div class="d-flex align-items-center">
-										<img src="../assets/images/avatar/avatar-3.jpg" alt="" class="rounded-circle avatar-md me-2" />
-										<h5 class="mb-0">Guy Hawkins</h5>
-									</div>
-								</td>
-								<td class="align-middle border-top-0">3/12/2020</td>
-								<td class="align-middle border-top-0">0%</td>
-								<td class="align-middle border-top-0">0</td>
-								<td class="align-middle border-top-0">
-									<span class="fs-6"><i class="fe fe-map-pin me-1"></i>Greece</span>
-								</td>
-								<td class="pe-0 align-middle border-top-0">
-									<a href="#" class="btn btn-outline-white btn-sm">Message</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="align-middle">
-									<div class="d-flex align-items-center">
-										<img src="../assets/images/avatar/avatar-2.jpg" alt="" class="rounded-circle avatar-md me-2" />
-										<h5 class="mb-0">Dianna Smiley</h5>
-									</div>
-								</td>
-								<td class="align-middle">3/11/2020</td>
-								<td class="align-middle">12%</td>
-								<td class="align-middle">2</td>
-								<td class="align-middle">
-									<span class="fs-6"><i class="fe fe-map-pin me-1"></i>India</span>
-								</td>
-								<td class="pe-0 align-middle">
-									<a href="#" class="btn btn-outline-white btn-sm">Message</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="align-middle">
-									<div class="d-flex align-items-center">
-										<img src="../assets/images/avatar/avatar-5.jpg" alt="" class="rounded-circle avatar-md me-2" />
-										<h5 class="mb-0">Guy Hawkins</h5>
-									</div>
-								</td>
-								<td class="align-middle">3/11/2020</td>
-								<td class="align-middle">34%</td>
-								<td class="align-middle">4</td>
-								<td class="align-middle">
-									<span class="fs-6"><i class="fe fe-map-pin me-1"></i>Brazil</span>
-								</td>
-								<td class="pe-0 align-middle">
-									<a href="#" class="btn btn-outline-white btn-sm">Message</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="align-middle">
-									<div class="d-flex align-items-center">
-										<img src="../assets/images/avatar/avatar-10.jpg" alt="" class="rounded-circle avatar-md me-2" />
-										<h5 class="mb-0">Jacob Jones</h5>
-									</div>
-								</td>
-								<td class="align-middle">3/12/2020</td>
-								<td class="align-middle">44%</td>
-								<td class="align-middle">5</td>
-								<td class="align-middle">
-									<span class="fs-6"><i class="fe fe-map-pin me-1"></i>Chile</span>
-								</td>
-								<td class="pe-0 align-middle">
-									<a href="#" class="btn btn-outline-white btn-sm">Message</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="align-middle">
-									<div class="d-flex align-items-center">
-										<img src="../assets/images/avatar/avatar-8.jpg" alt="" class="rounded-circle avatar-md me-2" />
-										<h5 class="mb-0">Kristin Watson</h5>
-									</div>
-								</td>
-								<td class="align-middle">18/12/2020</td>
-								<td class="align-middle">45%</td>
-								<td class="align-middle">9</td>
-								<td class="align-middle">
-									<span class="fs-6"><i class="fe fe-map-pin me-1"></i>Estonia</span>
-								</td>
-								<td class="pe-0 align-middle">
-									<a href="#" class="btn btn-outline-white btn-sm">Message</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="align-middle">
-									<div class="d-flex align-items-center">
-										<img src="../assets/images/avatar/avatar-6.jpg" alt="" class="rounded-circle avatar-md me-2" />
-										<h5 class="mb-0">Rivao Luke</h5>
-									</div>
-								</td>
-								<td class="align-middle">8/12/2020</td>
-								<td class="align-middle">100%</td>
-								<td class="align-middle">5</td>
-								<td class="align-middle">
-									<span class="fs-6"><i class="fe fe-map-pin me-1"></i>Greece</span>
-								</td>
-								<td class="pe-0 align-middle">
-									<a href="#" class="btn btn-outline-white btn-sm">Message</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="align-middle">
-									<div class="d-flex align-items-center">
-										<img src="../assets/images/avatar/avatar-7.jpg" alt="" class="rounded-circle avatar-md me-2" />
-										<h5 class="mb-0">Nia Sikhone</h5>
-									</div>
-								</td>
-								<td class="align-middle">8/12/2020</td>
-								<td class="align-middle">67%</td>
-								<td class="align-middle">3</td>
-								<td class="align-middle">
-									<span class="fs-6"><i class="fe fe-map-pin me-1"></i>Egypt</span>
-								</td>
-								<td class="pe-0 align-middle">
-									<a href="#" class="btn btn-outline-white btn-sm">Message</a>
-								</td>
-							</tr>
-							<tr class="border-bottom">
-								<td class="align-middle">
-									<div class="d-flex align-items-center">
-										<img src="../assets/images/avatar/avatar-9.jpg" alt="" class="rounded-circle avatar-md me-2" />
-										<h5 class="mb-0">Xiaon Merry</h5>
-									</div>
-								</td>
-								<td class="align-middle">7/12/2020</td>
-								<td class="align-middle">65%</td>
-								<td class="align-middle">4</td>
-								<td class="align-middle">
-									<span class="fs-6"><i class="fe fe-map-pin me-1"></i>Denmark</span>
-								</td>
-								<td class="pe-0 align-middle">
-									<a href="#" class="btn btn-outline-white btn-sm">Message</a>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="pt-2 pb-4">
-					<!-- Pagination -->
-					<nav>
-						<ul class="pagination justify-content-center mb-0">
-							<li class="page-item disabled">
-								<a class="page-link mx-1 rounded" href="#" tabindex="-1" aria-disabled="true"><i
-										class="mdi mdi-chevron-left"></i></a>
-							</li>
-							<li class="page-item active">
-								<a class="page-link mx-1 rounded" href="#">1</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link mx-1 rounded" href="#">2</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link mx-1 rounded" href="#">3</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link mx-1 rounded" href="#"><i class="mdi mdi-chevron-right"></i></a>
-							</li>
-						</ul>
-					</nav>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>
@@ -459,6 +267,35 @@
     </div>
   </div>
 </div>
+
+{{-- DeleteLectureModal --}}
+<div class="modal fade" id="DeleteLectureModal" tabindex="-1" role="dialog" aria-labelledby="addSectionModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="padding-bottom: 0!important;">
+      <div class="modal-header">
+        <h4 class="modal-title" id="addSectionModalLabel1">
+          Delete Lecture
+        </h4>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<form action="{{route('lecture.delete')}}" method="post">
+        @csrf
+        	<p>Are you sure, you want to delete <b id="name" class="text-danger"></b> lecture?</p>
+	        <input type="hidden" id="id" name="id" value="" />
+	        <div class="modal-footer" style="padding: 10px 0 0 0!important;border:none!important;">
+	        	<button class="btn btn-danger" type="submit">
+	            Delete
+	        	</button>
+	        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <script>	
 	function collapsefun(id)
 	{
@@ -489,6 +326,13 @@
 	function openSectionDeleteModal(id, name)
 	{
 		let trigger = "#DeleteSectionModal";
+		$(trigger+ " #id").val(id);
+		$(trigger+ " #name").html(name);
+		$(trigger).modal('show');	
+	}
+	function openLectureDeleteModal(id, name)
+	{
+		let trigger = "#DeleteLectureModal";
 		$(trigger+ " #id").val(id);
 		$(trigger+ " #name").html(name);
 		$(trigger).modal('show');	

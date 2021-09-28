@@ -18,11 +18,16 @@ class Instructor extends Model
         'courses',
         'role',
         'birthday',
-        'address_line1',
-        'address_line2',
-        'city',
+        'street_address',
+        'suburb',
+        'postcode',
         'state',
         'country',
+        'fb_link',
+        'linkedin_link',
+        'youtube_link',
+        'twitter_link',
+        'github_link',
         'status'
     ];
 }

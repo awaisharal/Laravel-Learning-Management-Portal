@@ -68,22 +68,36 @@ Route::group(['middleware' => ['InstructorAuth']], function(){
 
 	Route::get('/instructor/', [InstructorViewsController::class,'instructor_dashboard']);
 	Route::get('/instructor/dashboard', [InstructorViewsController::class,'dashboard_view']);
+
 	Route::get('/instructor/add-course', [InstructorViewsController::class,'add_course_view']);
 	Route::post('/instructor/add-course', [InstructorViewsController::class,'add_course'])->name('course.create');
+	Route::get('/instructor/course/{id}/edit', [InstructorViewsController::class,'editCourseView']);
+	
 	Route::get('/instructor/my-courses', [InstructorViewsController::class,'my_courses_view']);
 	Route::get('/instructor/course/{id}/curriculum', [InstructorViewsController::class,'course_curriculum_view']);
+
 	Route::post('/instructor/course/add/section', [InstructorViewsController::class,'add_section'])->name('course.addSection');
 	Route::post('/instructor/course/edit/section', [InstructorViewsController::class,'edit_section'])->name('course.editSection');
 	Route::post('/instructor/course/delete/section', [InstructorViewsController::class,'delete_section'])->name('course.deleteSection');
+
 	Route::post('/instructor/course/add/lecture', [InstructorViewsController::class,'add_lecture'])->name('course.addLecture');
+	Route::get('/instructor/course/{id}/edit/curriculum', [InstructorViewsController::class,'editLectureView']);
+	Route::POST('/instructor/course/edit/curriculum', [InstructorViewsController::class,'editLecture'])->name('course.editLecture');
 	Route::post('/instructor/course/delete/lecture', [InstructorViewsController::class,'delete_lecture'])->name('lecture.delete');
+
 	Route::get('/instructor/reviews', [InstructorViewsController::class,'reviews_view']);
 	Route::get('/instructor/students', [InstructorViewsController::class,'students_view']);
+
 	Route::get('/instructor/edit-profile', [InstructorViewsController::class,'edit_profile_view']);
 	Route::post('/instructor/edit-profile', [InstructorViewsController::class,'edit_profile'])->name('instructor.updateProfile');
+	Route::post('/instructor/edit-address', [InstructorViewsController::class,'edit_address'])->name('instructor.updateAddress');
+	
 	Route::get('/instructor/security', [InstructorViewsController::class,'security_view']);
 	Route::post('/instructor/security', [InstructorViewsController::class,'update_password'])->name('instructor.passwordUpdate');
+	
 	Route::get('/instructor/social-profiles', [InstructorViewsController::class,'social_profile_view']);
+	Route::POST('/instructor/social-profiles', [InstructorViewsController::class,'edit_social_links'])->name('instructor.socialUpdate');
+	
 	Route::get('/instructor/logout', [InstructorAuthController::class,'logoutInstructor']);
 
 });

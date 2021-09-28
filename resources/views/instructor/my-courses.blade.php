@@ -120,7 +120,7 @@
 									</a>
 									<span class="dropdown-menu" aria-labelledby="courseDropdown">
 										<span class="dropdown-header">Setting </span>
-										<a class="dropdown-item" href="#"><i class="fe fe-edit dropdown-item-icon"></i>Edit Course</a>
+										<a class="dropdown-item" href="/instructor/course/{{$obj->id}}/edit"><i class="fe fe-edit dropdown-item-icon"></i>Edit Course</a>
 										<a class="dropdown-item" href="/instructor/course/{{$obj->id}}/curriculum"><i class="fe fe-edit dropdown-item-icon"></i>Edit Curriculum</a>
 										<a class="dropdown-item" href="#"><i class="fe fe-trash dropdown-item-icon"></i>Remove</a>
 									</span>

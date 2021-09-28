@@ -27,7 +27,6 @@ class InstructorViewsController extends Controller
     }
     public function my_courses_view ()
     {
-
         $user = session()->get('sessionData')[0];
         $user_id = $user->id;
 
@@ -63,30 +62,41 @@ class InstructorViewsController extends Controller
             'phone' => 'required|max:255'
         ]);
 
-        $name = $request->name;
-        $phone = $request->phone;
-        $birthday = $request->birthday;
-        $address_line1 = $request->address1;
-        $address_line2 = $request->address2;
-        $city = $request->city;
-        $state = $request->state;
-        $country = $request->country;
+        $name       =   $request->name;
+        $phone      =   $request->phone;
+        $birthday   =   $request->birthday;
 
-        $user = session()->get('sessionData')[0];
-        $user_id = $user->id;
+        $user       = session()->get('sessionData')[0];
+        $user_id    = $user->id;
 
         Instructor::where('id',$user_id)->update([
-            'name' => $name,
-            'phone' => $phone,
-            'birthday' => $birthday,
-            'address_line1' => $address_line1,
-            'address_line2' => $address_line2,
-            'city' => $city,
-            'state' => $state,
-            'country' => $country
+            'name'      =>  $name,
+            'phone'     =>  $phone,
+            'birthday'  =>  $birthday
         ]);
 
         return back()->withErrors('success');
+    }
+    public function edit_address(Request $request)
+    {
+        $street_address  =   $request->street_address;
+        $suburb          =   $request->suburb;
+        $postcode        =   $request->postcode;
+        $state           =   $request->state;
+        $country         =   $request->country;
+
+        $user    = session()->get('sessionData')[0];
+        $user_id = $user->id;
+
+        Instructor::where('id',$user_id)->update([
+            'street_address'   =>   $street_address,
+            'suburb'           =>   $suburb,
+            'postcode'         =>   $postcode,
+            'state'            =>   $state,
+            'country'          =>   $country
+        ]);
+
+        return back()->withErrors('addresssuccess');
     } 
     public function security_view ()
     {
@@ -121,14 +131,33 @@ class InstructorViewsController extends Controller
         }else{
             return back()->withErrors('mismatch');
         }
-
-        
     }
     public function social_profile_view ()
     {
-        return view('instructor.social-profile');
+        $user = session()->get('sessionData')[0];
+        return view('instructor.social-profile', ['user' => $user]);
     }
+    public function edit_social_links(Request $request)
+    {
+        $twitter_link    =   $request->twitter_link;
+        $fb_link         =   $request->fb_link;
+        $github_link     =   $request->github_link;
+        $linkedin_link   =   $request->linkedin_link;
+        $youtube_link    =   $request->youtube_link;
+        // return $request;
+        $user    = session()->get('sessionData')[0];
+        $user_id = $user->id;
 
+        Instructor::where('id',$user_id)->update([
+            'twitter_link'  => $twitter_link,
+            'fb_link'       => $fb_link,
+            'github_link'   => $github_link,
+            'linkedin_link' => $linkedin_link,
+            'youtube_link'  => $youtube_link
+        ]);
+
+        return back()->withErrors('success');
+    } 
     public function add_course(Request $request)
     {
         $request->validate([
@@ -173,6 +202,17 @@ class InstructorViewsController extends Controller
             return redirect("/instructor/my-courses");
         }else{
             return back()->withErrors('serverError');
+        }
+    }
+    public function editCourseView($id)
+    {
+        $course_id = $id;
+        $course = Course::where('id', $course_id)->orderBy('id','desc')->get();
+        $course_count = $course->count();
+        if ($course_count == 0){
+            return redirect('/instructor/my-courses');
+        }else{
+            return view('instructor.edit-course', ['course' => $course]);
         }
     }
     public function course_curriculum_view($id)
@@ -245,6 +285,37 @@ class InstructorViewsController extends Controller
 
         return back()->withErrors('lectureAdded');
     }
+    public function editLectureView($id)
+    {
+        $lecture_id = $id;
+        $lecture = Lecture::where('id', $lecture_id)->orderBy('id','desc')->get();
+        $lecture_count = $lecture->count();
+        if ($lecture_count == 0){
+            return redirect('/instructor/my-courses');
+        }else{
+            return view('instructor.edit-curriculum', ['lecture' => $lecture]);
+        }
+    }
+    public function editLecture(Request $request)
+    {
+        $validate = $request->validate([
+            'title'         => 'required|max:255',
+            'description'   => 'required|max:1500'
+        ]);
+        $id           =   $request->id;
+        $title        =   $request->title;
+        $description  =   $request->description;
+
+        $obj = Lecture::find($id);
+        // return $obj;
+        if(!empty($obj)){
+            Lecture::where('id', $id)->update(['title' => $title, 'description' => $description]);
+            return back()->withErrors('LectureUpdated');
+        }else{
+            return back()->with('error','Unknown error. Please try again later.');
+        }
+        // return $request;
+    }
     public function delete_lecture(Request $request)
     {
         $id = $request->id;
@@ -282,4 +353,5 @@ class InstructorViewsController extends Controller
 
         return back()->withErrors('sectionDeleted');
     }
+    
 }

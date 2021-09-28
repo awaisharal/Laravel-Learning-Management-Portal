@@ -105,9 +105,7 @@
                       </div>
                       <div class="mb-3">
                         <label class="form-label">Course Description</label>
-                        <textarea id="" name="description" class="form-control">
-                          {{old('description')}}
-                        </textarea>
+                        <textarea id="" name="description" class="form-control">{{old('description')}}</textarea>
                         <small>A brief summary of your courses.</small>
                       </div>
                     </div>

@@ -53,36 +53,55 @@
 				<!-- Form -->
 				<form class="row" action="{{route('instructor.updateProfile')}}" method="post">
 					@csrf
-					<!-- Full name -->
 					<div class="mb-3 col-12 col-md-6">
 						<label class="form-label" for="name">Full Name</label>
 						<input type="text" id="name" name="name" class="form-control" placeholder="Your name here.." value="{{$user->name}}" required />
 					</div>
-					<!-- Phone -->
 					<div class="mb-3 col-12 col-md-6">
 						<label class="form-label" for="phone">Phone</label>
 						<input type="text" id="phone" class="form-control" placeholder="Phone" name="phone" value="{{$user->phone}}" required />
 					</div>
-					<!-- Birthday -->
 					<div class="mb-3 col-12 col-md-6">
 						<label class="form-label" for="birth">Birthday</label>
 						<input class="form-control flatpickr" type="text" placeholder="Birth of Date" id="birth"
 							name="birthday" value="{{$user->birthday}}"/>
 					</div>
-					<!-- Address -->
+					<div class="col-12">
+						<button class="btn btn-primary" type="submit">
+							Update Profile
+						</button>
+					</div>
+				</form>
+			</div>
+			<hr class="my-5" />
+			<div>
+				@if(count($errors->all()) > 0)
+					@if($errors->first() == 'addresssuccess')
+						<div class="alert alert-success mt-5 mb-3">
+							Address updated successfully.
+						</div>
+					@endif
+				@endif
+				<h4 class="mb-0">Personal Details</h4>
+				<p class="mb-4">
+					Edit your address information.
+				</p>
+				<!-- Form -->
+				<form class="row" action="{{route('instructor.updateAddress')}}" method="post">
+					@csrf
 					<div class="mb-3 col-12 col-md-6">
-						<label class="form-label" for="address">Address Line 1</label>
-						<input type="text" id="address" class="form-control" placeholder="Address" value="{{$user->address_line1}}" name="address1" required />
+						<label class="form-label" for="address">Street Address</label>
+						<input type="text" id="address" class="form-control" placeholder="Address" value="{{$user->street_address}}" name="street_address" required />
 					</div>
 					<!-- Address -->
 					<div class="mb-3 col-12 col-md-6">
-						<label class="form-label" for="address2">Address Line 2</label>
-						<input type="text" id="address2" class="form-control" placeholder="Address" value="{{$user->address_line2}}" name="address2" required />
+						<label class="form-label" for="suburb">Suburb</label>
+						<input type="text" id="suburb" class="form-control" placeholder="Address" value="{{$user->suburb}}" name="suburb" required />
 					</div>
 					<!-- City -->
 					<div class="mb-3 col-12 col-md-6">
-						<label class="form-label" for="city">City</label>
-						<input type="text" id="city" class="form-control" placeholder="City" name="city" value="{{$user->city}}" />
+						<label class="form-label" for="postcode">Postcode</label>
+						<input type="text" id="postcode" class="form-control" placeholder="Postcode" name="postcode" value="{{$user->postcode}}" />
 					</div>
 					<!-- State -->
 					<div class="mb-3 col-12 col-md-6">

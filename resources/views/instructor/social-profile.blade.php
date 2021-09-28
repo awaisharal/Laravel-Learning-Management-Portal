@@ -2,7 +2,7 @@
 
 @section('meta')
 
-<title>Instructor Reviews | {{config('app.name')}}</title>
+<title>Instructor Social Profile | {{config('app.name')}}</title>
 
 @endsection
 
@@ -19,67 +19,71 @@
 			<p class="mb-0">
 				Add your social profile links in below social accounts.
 			</p>
+			@if(count($errors->all()) > 0)
+				@if($errors->first() == 'success')
+					<div class="alert alert-success mt-5 mb-3">
+						Social updated successfully.
+					</div>
+				@endif
+			@endif
 		</div>
 		<!-- Card body -->
 		<div class="card-body">
-			<div class="row mb-5">
-					<!-- Twitter -->
-				<div class="col-lg-3 col-md-4 col-12">
-					<h5>Twitter</h5>
+			<form action="{{ route('instructor.socialUpdate') }}" method="POST">
+				@csrf
+				<div class="row mb-5">
+					<div class="col-lg-3 col-md-4 col-12">
+						<h5>Twitter</h5>
+					</div>
+					<div class="col-lg-9 col-md-8 col-12">
+						<input type="text" class="form-control mb-1" placeholder="Twitter Profile URL" value="{{ $user->twitter_link }}" name="twitter_link" />
+						<small class="text-muted">Add your Twitter username (e.g. johnsmith).</small>
+					</div>
 				</div>
-				<div class="col-lg-9 col-md-8 col-12">
-					<input type="text" class="form-control mb-1" placeholder="Twitter Profile Name" />
-					<small class="text-muted">Add your Twitter username (e.g. johnsmith).</small>
+				<div class="row mb-5">
+					<div class="col-lg-3 col-md-4 col-12">
+						<h5>Facebook</h5>
+					</div>
+					<div class="col-lg-9 col-md-8 col-12">
+						<input type="text" class="form-control mb-1" placeholder="Facebook Profile URL"  value="{{ $user->fb_link }}" name="fb_link" />
+						<small class="text-muted">Add your Facebook username (e.g. johnsmith).</small>
+					</div>
 				</div>
-			</div>
-				<!-- Facebook -->
-			<div class="row mb-5">
-				<div class="col-lg-3 col-md-4 col-12">
-					<h5>Facebook</h5>
+				<div class="row mb-5">
+					<div class="col-lg-3 col-md-4 col-12">
+						<h5>Github</h5>
+					</div>
+					<div class="col-lg-9 col-md-8 col-12">
+						<input type="text" class="form-control mb-1" placeholder="Github Profile URL" value="{{ $user->github_link }}" name="github_link" />
+						<small class="text-muted">Add your Instagram username (e.g. johnsmith).</small>
+					</div>
 				</div>
-				<div class="col-lg-9 col-md-8 col-12">
-					<input type="text" class="form-control mb-1" placeholder="Facebook Profile Name" />
-					<small class="text-muted">Add your Facebook username (e.g. johnsmith).</small>
+				<div class="row mb-5">
+					<div class="col-lg-3 col-md-4 col-12">
+						<h5>LinkedIn Profile URL</h5>
+					</div>
+					<div class="col-lg-9 col-md-8 col-12">
+						<input type="text" class="form-control mb-1" placeholder="LinkedIn Profile URL " value="{{ $user->linkedin_link }}" name="linkedin_link" />
+						<small class="text-muted">Add your linkedin profile URL. (
+							https://www.linkedin.com/in/jitu-chauhan-ba004b78)</small>
+					</div>
 				</div>
-			</div>
-				<!-- Instagram -->
-			<div class="row mb-5">
-				<div class="col-lg-3 col-md-4 col-12">
-					<h5>Instagram</h5>
+				<div class="row mb-3">
+					<div class="col-lg-3 col-md-4 col-12">
+						<h5>YouTube</h5>
+					</div>
+					<div class="col-lg-9 col-md-8 col-12">
+						<input type="text" class="form-control mb-1" placeholder="YouTube URL" value="{{ $user->youtube_link }}" name="youtube_link" />
+						<small class="text-muted">Add your Youtube profile URL.
+						</small>
+					</div>
 				</div>
-				<div class="col-lg-9 col-md-8 col-12">
-					<input type="text" class="form-control mb-1" placeholder="Instagram Profile Name" />
-					<small class="text-muted">Add your Instagram username (e.g. johnsmith).</small>
+				<div class="row">
+					<div class="offset-lg-3 col-lg-6 col-12">
+						<button type="submit" class="btn btn-primary">Save Social Profile</button>
+					</div>
 				</div>
-			</div>
-				<!-- Linked in -->
-			<div class="row mb-5">
-				<div class="col-lg-3 col-md-4 col-12">
-					<h5>LinkedIn Profile URL</h5>
-				</div>
-				<div class="col-lg-9 col-md-8 col-12">
-					<input type="text" class="form-control mb-1" placeholder="LinkedIn Profile URL " />
-					<small class="text-muted">Add your linkedin profile URL. (
-						https://www.linkedin.com/in/jitu-chauhan-ba004b78)</small>
-				</div>
-			</div>
-				<!-- Youtube -->
-			<div class="row mb-3">
-				<div class="col-lg-3 col-md-4 col-12">
-					<h5>YouTube</h5>
-				</div>
-				<div class="col-lg-9 col-md-8 col-12">
-					<input type="text" class="form-control mb-1" placeholder="YouTube URL" />
-					<small class="text-muted">Add your Youtube profile URL.
-					</small>
-				</div>
-			</div>
-				<!-- Button -->
-			<div class="row">
-				<div class="offset-lg-3 col-lg-6 col-12">
-					<a href="#" class="btn btn-primary">Save Social Profile</a>
-				</div>
-			</div>
+			</form>
 		</div>
 	</div>
 
