@@ -91,6 +91,7 @@ Route::group(['middleware' => ['InstructorAuth']], function(){
 	Route::get('/instructor/course/{id}/edit/curriculum', [InstructorViewsController::class,'editLectureView']);
 	Route::POST('/instructor/course/edit/curriculum', [InstructorViewsController::class,'editLecture'])->name('course.editLecture');
 	Route::post('/instructor/course/delete/lecture', [InstructorViewsController::class,'delete_lecture'])->name('lecture.delete');
+	Route::post('/instructor/course/submit/approval', [InstructorViewsController::class,'submit_for_approval'])->name('course.submitApproval');
 
 	Route::get('/instructor/reviews', [InstructorViewsController::class,'reviews_view']);
 	Route::get('/instructor/students', [InstructorViewsController::class,'students_view']);
@@ -98,6 +99,7 @@ Route::group(['middleware' => ['InstructorAuth']], function(){
 	Route::get('/instructor/edit-profile', [InstructorViewsController::class,'edit_profile_view']);
 	Route::post('/instructor/edit-profile', [InstructorViewsController::class,'edit_profile'])->name('instructor.updateProfile');
 	Route::post('instructor/dp/update', [InstructorViewsController::class,'update_profile_pic'])->name('instructor.updateProfilePic');
+	Route::post('instructor/dp/delete', [InstructorViewsController::class,'delete_profile_pic'])->name('instructor.deleteDP');
 	Route::post('/instructor/edit-address', [InstructorViewsController::class,'edit_address'])->name('instructor.updateAddress');
 	
 	Route::get('/instructor/security', [InstructorViewsController::class,'security_view']);

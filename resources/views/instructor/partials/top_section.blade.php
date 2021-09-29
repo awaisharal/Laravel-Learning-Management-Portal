@@ -25,7 +25,7 @@
                     <h2 class="mb-0">
                         {{$user->name}}
                     </h2>
-                    <p class="mb-0 d-block">{{$user->role}}</p>
+                    <p class="mb-0 d-block" style="text-transform: capitalize;">{{$user->role}}</p>
                 </div>
             </div>
             <div>

@@ -410,4 +410,23 @@ class InstructorViewsController extends Controller
             return back()->withErrors('DPError');
         }
     }
+    public function delete_profile_pic(Request $request)
+    {
+        $user = session()->get('sessionData')[0];
+        $user_id = $user->id;
+
+        Instructor::where('id', $user_id)->update([
+            'img' => ""
+        ]);
+
+        return back()->withErrors("success");
+    }
+    public function submit_for_approval(Request $request)
+    {
+        $id = $request->id;
+        $status = "Pending";
+        Course::where('id', $id)->update(['status'=>$status]);
+
+        return back()->withErrors('CourseSubmitSuccess');
+    }
 }

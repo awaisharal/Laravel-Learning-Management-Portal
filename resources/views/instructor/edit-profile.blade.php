@@ -37,12 +37,15 @@
 						</p>
 					</div>
 				</div>
-				<div>
+				<div style="display:flex;">
 					<form action="" method="post" enctype="multipart/form-data">
 						<input type="file" name="profile_pic" id="profile_pic" style="display:none;" />
 					</form>
-					<a class="btn btn-outline-white btn-sm" id="chooseFile">Update</a>
-					<a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
+					<a class="btn btn-outline-white btn-sm" id="chooseFile" style="margin-right:10px;">Update</a>
+					<form action="{{route('instructor.deleteDP')}}" method="post">
+						@csrf
+						<button class="btn btn-outline-danger btn-sm">Delete</button>
+					</form>
 				</div>
 			</div>
 			<hr class="my-5" />
@@ -144,7 +147,7 @@
       <div class="modal-content">
          <div class="modal-header">
             <h5 class="modal-title" id="modalLabel">Update profile picture</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close no-bg" data-dismiss="modal" aria-label="Close">
             	<span aria-hidden="true">×</span>
             </button>
          </div>
@@ -177,7 +180,7 @@
 	                        @endif
 	                        <small class="mt-3 d-block">Upload your profile picture here. It must meet our standards to be accepted.
 	                          Important guidelines: 400x400 pixels; .jpg, .jpeg, or .png. no text on the image.</small>
-	                        <div class="custom-file-container__image-preview"></div>
+	                        <div class="custom-file-container__image-preview" style="width: 300px!important;"></div>
 	                      </div>
 	                  </div>
 	               </div>
@@ -198,6 +201,9 @@
 	$("#chooseFile").click(function(){
 		$("#dpModal").modal('show');
 	});
-
+	$(".modal-title button.close").click(function(){
+		$("#dpModal").modal('hide');
+		console.log('a')
+	});
 </script>
 @endsection

@@ -44,6 +44,10 @@
 				<div class="alert alert-success">
 					Course details updated successfully
 				</div>
+			@elseif($errors->first() == "CourseSubmitSuccess")
+				<div class="alert alert-success">
+					Course submitted for approval
+				</div>
 			@endif
 		@endif
 		</div>
@@ -114,11 +118,13 @@
 								@if($obj->status == "Approved")
 									<span class="badge bg-success">Live</span>
 								@elseif($obj->status == 'Not Approved')
-									<span class="badge bg-warning">Rejected</span>
+									<span class="badge bg-danger">Rejected</span>
 								@elseif($obj->status == 'Draft')
 									<span class="badge bg-info">Draft</span>
-								@elseif($obj->status == 'Deleted')
-									<span class="badge bg-danger">Deleted</span>
+								@elseif($obj->status == 'Banned')
+									<span class="badge bg-danger">Banned</span>
+								@elseif($obj->status == 'Pending')
+									<span class="badge bg-warning">Pending</span>
 								@endif
 							</td>
 							<td class="text-muted border-top-0">
@@ -129,6 +135,7 @@
 									</a>
 									<span class="dropdown-menu" aria-labelledby="courseDropdown">
 										<span class="dropdown-header">Setting </span>
+										<a class="dropdown-item" onclick="openApprovalModal('{{$obj->id}}','{{$obj->title}}')"><i class="fe fe-edit dropdown-item-icon"></i>Submit for approval</a>
 										<a class="dropdown-item" href="/instructor/course/{{$obj->id}}/edit"><i class="fe fe-edit dropdown-item-icon"></i>Edit Course</a>
 										<a class="dropdown-item" href="/instructor/course/{{$obj->id}}/curriculum"><i class="fe fe-edit dropdown-item-icon"></i>Edit Curriculum</a>
 										<a class="dropdown-item" href="#"><i class="fe fe-trash dropdown-item-icon"></i>Remove</a>
@@ -200,8 +207,41 @@
 	</div>
 </div>
 
+{{-- Submit course for approval Modal --}}
+<div class="modal fade" id="approvalModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Submit course for approval</h5>
+            <button type="button" class="close no-bg" data-dismiss="modal" onclick="dismissModal()" aria-label="Close">
+            	<span aria-hidden="true">×</span>
+            </button>
+         </div>
+         <form action="{{route('course.submitApproval')}}" method="post">
+         @csrf
+         <div class="modal-body">
+            <div class="container">
+            	<input type="hidden" name="id" id="id" value="">
+            	<p>Are you sure to want to submit this course for approval</p>
+            </div>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" onclick="dismissModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="update">Update</button>
+         </div>
+     	</form>
+      </div>
+   </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
 	$("#sidenav ul li#myCourses").addClass("active");
+	function openApprovalModal(id, name)
+	{
+		$("#approvalModal #modalLabel").html(name);
+		$("#approvalModal #id").val(id);
+		$("#approvalModal").modal('show');
+	}
 </script>
 @endsection
