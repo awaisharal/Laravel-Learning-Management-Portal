@@ -28,25 +28,6 @@
                     <p class="mb-0 d-block">{{$user->role}}</p>
                 </div>
             </div>
-{{--             <div class="profileSocialLinks">
-                <ul>
-                    <li>
-                        <a href="#"><i class="fe fe-facebook"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fe fe-twitter"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fe fe-github"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fe fe-linkedin"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fe fe-youtube"></i></a>
-                    </li>
-                </ul>
-            </div> --}}
             <div>
                 <a href="/instructor/add-course" class="add-course-btn btn btn-primary btn-sm d-none d-md-block">Create New Course</a>
             </div>
