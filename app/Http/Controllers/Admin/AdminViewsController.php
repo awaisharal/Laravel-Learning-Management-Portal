@@ -13,6 +13,7 @@ use App\Models\Lecture;
 
 class AdminViewsController extends Controller
 {
+    // comment
     public function index_view()
     {
         return view('admin.index');
