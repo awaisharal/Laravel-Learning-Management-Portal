@@ -142,6 +142,21 @@
                         <input type="search" class="form-control" placeholder="Search Instructor" />
                     </div>
                     <div class="row">
+                        @if($errors->any())
+                            @if($errors->first() == 'instructor_banned')
+                                <div class="alert alert-warning" role="alert">
+                                    Instructor banned successfully.
+                                </div>
+                            @elseif($errors->first() == 'instructor_unbanned')
+                                <div class=" alert alert-success" role="alert">
+                                    Instructor Unbanned successfully.
+                                </div>
+                            @elseif($errors->first() == 'unknownError')
+                                <div class="alert alert-danger" role="alert">
+                                    Try again please.
+                                </div>
+                            @endif
+                        @endif
                         @foreach ($instructor as $instructor)
                             <div class="col-xl-3 col-lg-6 col-md-6 col-12">
                                 <!-- Card -->
@@ -154,7 +169,11 @@
                                             @else
                                                 <img src="/assets/images/instructors/avatar-11.jpg" class="rounded-circle avatar-xl mb-3" alt="" />
                                             @endif
-                                            <h4 class="mb-0">{{ $instructor->name }}</h4>
+                                            <h4 class="mb-0">{{ $instructor->name }}
+                                                <a href="/admin/view/{{ $instructor->id }}/instructor">
+                                                    <i class="fe fe-eye dropdown-item-icon"></i>
+                                                </a>
+                                            </h4>
                                             <p class="mb-0">{{ $instructor->title }}</p>
                                         </div>
                                         <div class="d-flex justify-content-between border-bottom py-2 mt-4">
@@ -167,9 +186,17 @@
                                             4.5 <i class="mdi mdi-star"></i>
                                             </span>
                                         </div>
-                                        <div class="d-flex justify-content-between pt-2">
+                                        <div class="d-flex justify-content-between py-2 border-bottom">
                                             <span>Courses</span>
                                             <span class="text-dark"> {{ $instructor->courses }} </span>
+                                        </div>
+                                        <div class="d-flex justify-content-between pt-2">
+                                            <span>Status</span>
+                                            @if ($instructor->status == 0)
+                                                <span class="text-danger"> Banned </span>
+                                            @elseif($instructor->status == 1)
+                                                <span class="text-success"> Active </span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -276,19 +303,22 @@
                                                 <span class="dropdown dropstart">
                                                 <a class="text-muted text-decoration-none" href="#" role="button" id="courseDropdown"
                                                     data-bs-toggle="dropdown"  data-bs-offset="-20,20" aria-expanded="false">
-                                                <i class="fe fe-more-vertical"></i></a>
-                                                <span class="dropdown-menu" aria-labelledby="courseDropdown"><span
-                                                    class="dropdown-header">Settings</span>
-                                                <a class="dropdown-item" href="#"><i
-                                                    class="fe fe-edit dropdown-item-icon"></i>Edit</a>
-                                                <a class="dropdown-item" href="#"><i
-                                                    class="fe fe-trash dropdown-item-icon"></i>Remove</a>
-                                                </span>
+                                                    <i class="fe fe-more-vertical"></i></a>
+                                                    <span class="dropdown-menu" aria-labelledby="courseDropdown">
+                                                        @if ($instructor->status == 1)
+                                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#ban-instructor-modal" onclick="banInstructor('<?php echo $instructor->id; ?>', '<?php echo $instructor->name; ?>')">
+                                                                Ban
+                                                            </a>
+                                                        @elseif($instructor->status == 0)
+                                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#unban-instructor-modal" onclick="unbanInstructor('<?php echo $instructor->id; ?>', '<?php echo $instructor->name; ?>')">
+                                                                Unban
+                                                            </a>
+                                                        @endif
+                                                    </span>
                                                 </span>
                                             </td>
                                         </tr>
-                                    @endforeach
-                                    
+                                    @endforeach                          
                                 </tbody>
                             </table>
                             <!-- Pagination -->
@@ -321,4 +351,77 @@
         </div>
     </div>
 </div>
+<!-- Ban Student Modal -->
+<div class="modal fade" id="ban-instructor-modal" tabindex="-1" role="dialog" aria-labelledby="addLectureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addLectureModalLabel">
+                    Ban Instructor
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to ban <b id="name"></b> ?</p>
+            </div>
+            <div class="modal-footer">
+                <form action="{{ route('admin.ban_instructor') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" id="id" value="">
+                    <button class="btn btn-outline-danger btn-sm" type="submit">
+                        Ban
+                    </button>
+                </form>
+                <button class="btn btn-outline-white btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Unban Student Modal -->
+<div class="modal fade" id="unban-instructor-modal" tabindex="-1" role="dialog" aria-labelledby="addLectureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addLectureModalLabel">
+                    Unban Instructor
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to unban <b id="name"></b> ?</p>
+            </div>
+            <div class="modal-footer">
+                <form action="{{ route('admin.unban_instructor') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" id="id" value="">
+                    <button class="btn btn-outline-success btn-sm" type="submit">
+                        Unban
+                    </button>
+                </form>
+                <button class="btn btn-outline-white btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('extra_js')
+<script>
+    function deleteInstructor(id, name ){
+      $("#delete-instructor-modal #name").html(name);
+      $("#delete-instructor-modal #id").val(id);
+    }
+    function banInstructor(id, name){
+      $("#ban-instructor-modal #name").html(name);
+      $("#ban-instructor-modal #id").val(id);
+    }
+    function unbanInstructor(id, name){
+      $("#unban-instructor-modal #name").html(name);
+      $("#unban-instructor-modal #id").val(id);
+    }
+  </script> 
 @endsection

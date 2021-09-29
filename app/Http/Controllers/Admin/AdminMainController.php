@@ -83,4 +83,56 @@ class AdminMainController extends Controller
     {
         return $request;
     }
+    public function edit_instructors_view($id){
+        $instructor_id = $id;
+        $courses = Course::where('user_id', $instructor_id)->get(); 
+
+        foreach($courses as $course)
+        {
+            $category_id = $course->category;
+            $cat = CourseCategory::find($category_id);
+            $category = $cat->name;
+
+            $course->category = $category;
+        }
+        return view('admin.view-instructor-courses',compact('courses'));
+    }
+    public function curriculum_view($id){
+        $course = Course::find($id);
+        $sections = Curriculum::where('course_id', $course->id)->get();
+        foreach($sections as $obj)
+        {
+            $id = $obj->id;
+
+            $lectures = Lecture::where('curriculum_id', $id)->get();
+            $obj['lectures'] = $lectures;
+        }
+        return view('admin.view-curriculum', compact('course','sections'));
+    }
+    public function course_curriculum_detail_view($id){
+        $lectures = Lecture::where('id', $id)->get();
+        return view('admin.curriculum-details', ['lecture' => $lectures]);
+    }
+    public function ban_instructor(Request $request)
+    {
+        $instructor_id = $request->id;
+        $new_status = 0;
+        $query = Instructor::where('id', $instructor_id)->update(['status' => $new_status]);
+        if ($query) {
+            return back()->withErrors('instructor_banned');
+        }else{
+            return back()->withErrors('unknownError');
+        }
+    }
+    public function unban_instructor(Request $request)
+    {
+        $instructor_id  = $request->id;
+        $new_status     = 1;
+        $query = Instructor::where('id', $instructor_id)->update(['status' => $new_status]);
+        if ($query) {
+            return back()->withErrors('instructor_unbanned');
+        }else{
+            return back()->withErrors('unknownError');
+        }
+    }
 }

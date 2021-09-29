@@ -23,11 +23,6 @@
                     <p class="mb-0 d-block">{{$user->role}}</p>
                 </div>
             </div>
-            {{-- <div>
-                <a href="">a</a>
-                <a href="">a</a>
-                <a href="">a</a>
-            </div> --}}
             <div>
                 <a href="/instructor/add-course" class="add-course-btn btn btn-primary btn-sm d-none d-md-block">Create New Course</a>
             </div>

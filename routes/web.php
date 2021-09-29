@@ -38,7 +38,13 @@ Route::group(['middleware' => ['AdminAuth']], function(){
 	Route::get('/admin/all-instructors',[AdminViewsController::class,'all_instructors_view']);
 	Route::get('/admin/add-instructors',[AdminViewsController::class,'add_instructors_view']);
 	Route::POST('/admin/add-instructors', [InstructorAuthController::class,'add_instructor'])->name('admin.add_instructor');
-	
+	Route::get('/admin/view/{id}/instructor',[AdminMainController::class,'edit_instructors_view']);
+	Route::get('/admin/course/{id}/curriculum', [AdminMainController::class,'curriculum_view'])->name('admin.edit_instructor');
+	Route::get('/admin/course/curriculum/{id}/details', [AdminMainController::class,'course_curriculum_detail_view']);
+	Route::POST('/admin/instructor/ban', [AdminMainController::class,'ban_instructor'])->name('admin.ban_instructor');
+	Route::POST('/admin/instructor/unban', [AdminMainController::class,'unban_instructor'])->name('admin.unban_instructor');
+
+
 	Route::get('/admin/all-students', [AdminViewsController::class,'all_students_view']);
 	Route::get('/admin/add-students', [AdminViewsController::class,'add_students_view']);
 	Route::POST('/admin/add-students', [StudentAuthController::class,'add_students'])->name('admin.add_student');
