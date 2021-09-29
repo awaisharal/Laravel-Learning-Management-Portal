@@ -38,6 +38,15 @@
 			</form>
 		</div>
 		<!-- Table -->
+		<div style="padding-left:20px;padding-right:20px;">
+		@if(count($errors) > 0)
+			@if($errors->first() == 'courseUpdated')
+				<div class="alert alert-success">
+					Course details updated successfully
+				</div>
+			@endif
+		@endif
+		</div>
 		<div class="table-responsive border-0 overflow-y-hidden">
 			<table class="table mb-0 text-nowrap">
 				<thead class="table-light">

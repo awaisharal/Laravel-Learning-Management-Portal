@@ -36,44 +36,51 @@
               <div class="card-header border-bottom px-4 py-3">
                 <h4 class="mb-0">Basic Information</h4>
               </div>
-              <div class="card-body">
-                <div class="mb-3">
-                  <label for="courseTitle" class="form-label">Course Title</label>
-                  <input id="courseTitle" name="title" class="form-control" type="text" placeholder="Course Title" value="{{ $course[0]->title }}" />
-                  <small>Write a 60 character course title.</small>
+              <form action="{{route('course.update')}}" method="post">
+                @csrf
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label for="courseTitle" class="form-label">Course Title</label>
+                    <input id="courseTitle" name="title" class="form-control" type="text" placeholder="Course Title" value="{{ $course[0]->title }}" />
+                    <small>Write a 60 character course title.</small>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Courses category</label>
+                    <select class="selectpicker" name="category" data-width="100%">
+                      <option selected value="{{$course[0]->category}}">Select category</option>
+                      @if(!empty($categories))
+                        @foreach($categories as $cat)
+                          <option value="{{$cat->id}}">{{$cat->name}}</option>
+                        @endforeach
+                      @endif
+                    </select>
+                    <small>Help people find your courses by choosing
+                      categories that represent your course.</small>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Courses level</label>
+                    <select class="selectpicker" name="level" data-width="100%">
+                      <option selected value="{{$course[0]->level}}">{{$course[0]->level}}</option>
+                      <option value="Intermediate">Intermediate</option>
+                      <option value="Beginner">Beginner</option>
+                      <option value="Advance">Advance</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Course Description</label>
+                    <textarea id="" name="description" class="form-control">{{ $course[0]->description }}</textarea>
+                    <small>A brief summary of your courses.</small>
+                  </div>
+                  <div class="mb-3">
+                    <label for="" class="form-label">Tags</label>
+                    <input name='tags' value='jquery, bootstrap' autofocus>
+                  </div>
+                  <div class="mb-3 text-right">
+                    <input type="hidden" name="id" value="{{$course[0]->id}}" />
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </div>
                 </div>
-                <div class="mb-3">
-                  <label class="form-label">Courses category</label>
-                  <select class="selectpicker" name="category" data-width="100%">
-                    <option selected disabled>Select category</option>
-                    @if(!empty($categories))
-                      @foreach($categories as $cat)
-                        <option value="{{$cat->id}}">{{$cat->name}}</option>
-                      @endforeach
-                    @endif
-                  </select>
-                  <small>Help people find your courses by choosing
-                    categories that represent your course.</small>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Courses level</label>
-                  <select class="selectpicker" name="level" data-width="100%">
-                    <option selected disabled>Select level</option>
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Beignners">Beignners</option>
-                    <option value="Advance">Advance</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Course Description</label>
-                  <textarea id="" name="description" class="form-control">{{ $course[0]->description }}</textarea>
-                  <small>A brief summary of your courses.</small>
-                </div>
-                <div class="mb-3">
-                  <label for="" class="form-label">Tags</label>
-                  <input name='tags' value='jquery, bootstrap' autofocus>
-                </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>

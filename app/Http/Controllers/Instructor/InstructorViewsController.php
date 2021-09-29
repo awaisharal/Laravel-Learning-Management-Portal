@@ -208,12 +208,41 @@ class InstructorViewsController extends Controller
     {
         $course_id = $id;
         $course = Course::where('id', $course_id)->orderBy('id','desc')->get();
+        $categories = CourseCategory::orderBy('id','desc')->get();
         $course_count = $course->count();
         if ($course_count == 0){
             return redirect('/instructor/my-courses');
         }else{
-            return view('instructor.edit-course', ['course' => $course]);
+            return view('instructor.edit-course', ['course' => $course,'categories'=>$categories]);
         }
+    }
+    public function editCourse(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|max:255',
+            'category' => 'required|max:255',
+            'level' => 'required|max:255',
+            'description' => 'required',
+            'tags' => 'required'
+        ]);
+
+        $title = $request->title;
+        $category = $request->category;
+        $level = $request->level;
+        $description = $request->description;
+    
+        $tags = $request->tags;
+        $id = $request->id;
+
+        Course::where('id', $id)->update([
+            'title' => $title,
+            'level' => $level,
+            'category' => $category,
+            'description' => $description,
+            'tags' => $tags
+        ]);
+
+        return redirect("/instructor/my-courses")->withErrors('courseUpdated');        
     }
     public function course_curriculum_view($id)
     {
