@@ -1,12 +1,13 @@
 @extends('instructor.partials.layout')
 
 @section('meta')
-
+<meta name="_token" content="{{ csrf_token() }}">
 <title>Instructor Reviews | {{config('app.name')}}</title>
 
 @endsection
 
 @section('css')
+
 
 @endsection
 
@@ -24,7 +25,11 @@
 		<div class="card-body">
 			<div class="d-lg-flex align-items-center justify-content-between">
 				<div class="d-flex align-items-center mb-4 mb-lg-0">
+					@if($user->img == "" || $user->img == null)
 					<img src="../assets/images/avatar/avatar-3.jpg" id="img-uploaded" class="avatar-xl rounded-circle" alt="" />
+					@else
+						<img src="uploads/profiles/{{$user->img}}" id="img-uploaded" class="avatar-xl rounded-circle" alt="" />
+					@endif
 					<div class="ms-3">
 						<h4 class="mb-0">Your avatar</h4>
 						<p class="mb-0">
@@ -33,7 +38,10 @@
 					</div>
 				</div>
 				<div>
-					<a href="#" class="btn btn-outline-white btn-sm">Update</a>
+					<form action="" method="post" enctype="multipart/form-data">
+						<input type="file" name="profile_pic" id="profile_pic" style="display:none;" />
+					</form>
+					<a class="btn btn-outline-white btn-sm" id="chooseFile">Update</a>
 					<a href="#" class="btn btn-outline-danger btn-sm">Delete</a>
 				</div>
 			</div>
@@ -43,6 +51,10 @@
 					@if($errors->first() == 'success')
 						<div class="alert alert-success mt-5 mb-3">
 							Profile updated successfully.
+						</div>
+					@elseif($errors->first() == 'DPError')
+						<div class="alert alert-warning mt-5 mb-3">
+							Something went wrong. Please try again later.
 						</div>
 					@endif
 				@endif
@@ -124,8 +136,68 @@
 		</div>
 	</div>
 </div>
+
+{{-- DP change Modal --}}
+
+<div class="modal fade" id="dpModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Update profile picture</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            	<span aria-hidden="true">×</span>
+            </button>
+         </div>
+         <form action="{{route('instructor.updateProfilePic')}}" method="post" enctype="multipart/form-data">
+         	@csrf
+	         <div class="modal-body">
+	            <div class="img-container">
+	               <div class="row">
+	                  <div class="col-md-12">
+	                     <div class="custom-file-container" data-upload-id="courseCoverImg" id="courseCoverImg">
+	                        <label class="form-label">Choose profile picture
+	                          <a href="javascript:void(0)" class="custom-file-container__image-clear"
+	                            title="Clear Image"></a></label>
+	                        <label class="custom-file-container__custom-file">
+	                          <input type="file" class="custom-file-container__custom-file__custom-file-input"
+	                            accept="image/*" name="file" />
+	                          <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+	                          <span class="custom-file-container__custom-file__custom-file-control"></span>
+	                        </label>
+	                        @if(count($errors->all()) > 0)
+	                        @if($errors->first('file'))
+	                          <div style="color: red;font-size: 13px;margin-top: 10px;">
+	                            <ul>
+	                              <li>Field is required</li>
+	                              <li>File must be an image</li>
+	                              <li>File must be less then 10MB</li>
+	                            </ul>
+	                          </div>
+	                        @endif
+	                        @endif
+	                        <small class="mt-3 d-block">Upload your profile picture here. It must meet our standards to be accepted.
+	                          Important guidelines: 400x400 pixels; .jpg, .jpeg, or .png. no text on the image.</small>
+	                        <div class="custom-file-container__image-preview"></div>
+	                      </div>
+	                  </div>
+	               </div>
+	            </div>
+	         </div>
+	         <div class="modal-footer">
+	            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+	            <button type="submit" class="btn btn-primary" id="update">Update</button>
+	         </div>
+         </form>
+      </div>
+   </div>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 <script>
 	$("#sidenav ul li#profile").addClass("active");
+	$("#chooseFile").click(function(){
+		$("#dpModal").modal('show');
+	});
+
 </script>
 @endsection

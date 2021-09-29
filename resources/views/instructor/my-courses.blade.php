@@ -140,7 +140,7 @@
 					@endif
 
 					{{-- Dont remove this dummy <tr> --}}
-					<tr>
+					{{-- <tr>
 						<td>
 							<div class="d-lg-flex">
 								<div>
@@ -192,7 +192,7 @@
 								</span>
 							</span>
 						</td>
-					</tr>
+					</tr> --}}
 					{{-- Ok? --}}
 				</tbody>
 			</table>

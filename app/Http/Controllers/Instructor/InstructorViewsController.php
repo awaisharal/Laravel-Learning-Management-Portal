@@ -222,6 +222,7 @@ class InstructorViewsController extends Controller
             'title' => 'required|max:255',
             'category' => 'required|max:255',
             'level' => 'required|max:255',
+            'url' => 'required|max:255',
             'description' => 'required',
             'tags' => 'required'
         ]);
@@ -230,8 +231,8 @@ class InstructorViewsController extends Controller
         $category = $request->category;
         $level = $request->level;
         $description = $request->description;
-    
         $tags = $request->tags;
+        $url = $request->url;
         $id = $request->id;
 
         Course::where('id', $id)->update([
@@ -239,6 +240,7 @@ class InstructorViewsController extends Controller
             'level' => $level,
             'category' => $category,
             'description' => $description,
+            'url' => $url,
             'tags' => $tags
         ]);
 
@@ -382,5 +384,30 @@ class InstructorViewsController extends Controller
 
         return back()->withErrors('sectionDeleted');
     }
-    
+    public function update_profile_pic(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:jpeg,jpg,png|max:10000'
+        ]);
+        
+        $file = $request->file;
+        $user = session()->get('sessionData')[0];
+        $user_id = $user->id;
+
+        $ext = $file->getClientOriginalExtension();    
+        $filename = uniqid(rand(999, 999999)).time().'.'.$ext;
+
+        $filepath = "uploads/profiles/";
+
+        if(move_uploaded_file($_FILES['file']['tmp_name'], $filepath.$filename))
+        {        
+            Instructor::where('id', $user_id)->update([
+                'img' => $filename
+            ]);
+
+            return back()->withErrors('success');
+        }else{
+            return back()->withErrors('DPError');
+        }
+    }
 }

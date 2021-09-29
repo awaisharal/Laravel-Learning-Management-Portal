@@ -72,6 +72,10 @@
                     <small>A brief summary of your courses.</small>
                   </div>
                   <div class="mb-3">
+                    <label for="" class="form-label">Video URL</label>
+                    <input name='url' value="{{$course[0]->url}}" class="form-control" required>
+                  </div>
+                  <div class="mb-3">
                     <label for="" class="form-label">Tags</label>
                     <input name='tags' value='jquery, bootstrap' autofocus>
                   </div>

@@ -55,7 +55,7 @@
 					</div>
 					<div class="col-lg-9 col-md-8 col-12">
 						<input type="text" class="form-control mb-1" placeholder="Github Profile URL" value="{{ $user->github_link }}" name="github_link" />
-						<small class="text-muted">Add your Instagram username (e.g. johnsmith).</small>
+						<small class="text-muted">Add your github username (e.g. johnsmith).</small>
 					</div>
 				</div>
 				<div class="row mb-5">
@@ -65,7 +65,7 @@
 					<div class="col-lg-9 col-md-8 col-12">
 						<input type="text" class="form-control mb-1" placeholder="LinkedIn Profile URL " value="{{ $user->linkedin_link }}" name="linkedin_link" />
 						<small class="text-muted">Add your linkedin profile URL. (
-							https://www.linkedin.com/in/jitu-chauhan-ba004b78)</small>
+							https://www.linkedin.com/in/example-a678vdsa)</small>
 					</div>
 				</div>
 				<div class="row mb-3">

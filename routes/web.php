@@ -91,6 +91,7 @@ Route::group(['middleware' => ['InstructorAuth']], function(){
 
 	Route::get('/instructor/edit-profile', [InstructorViewsController::class,'edit_profile_view']);
 	Route::post('/instructor/edit-profile', [InstructorViewsController::class,'edit_profile'])->name('instructor.updateProfile');
+	Route::post('instructor/dp/update', [InstructorViewsController::class,'update_profile_pic'])->name('instructor.updateProfilePic');
 	Route::post('/instructor/edit-address', [InstructorViewsController::class,'edit_address'])->name('instructor.updateAddress');
 	
 	Route::get('/instructor/security', [InstructorViewsController::class,'security_view']);

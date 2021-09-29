@@ -4,3 +4,13 @@ button.no-bg{
 	outline: none;
 	box-shadow: none;
 }
+.profileSocialLinks{
+	/*background: red;*/
+}
+.profileSocialLinks ul li{
+	display: inline-block;
+	margin-left: 8px;
+}
+.profileSocialLinks ul li a{
+	color: #333;
+}
