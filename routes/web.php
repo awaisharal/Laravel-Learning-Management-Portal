@@ -124,7 +124,10 @@ Route::group(['middleware' => ['StudentAuth']], function(){
 	Route::get('/student/add-course', [StudentViewsController::class,'add_course_view']);
 	Route::get('/student/my-courses', [StudentViewsController::class,'my_courses_view']);
 	Route::get('/student/edit-profile', [StudentViewsController::class,'edit_profile_view']);
+	Route::post('/student/edit-profile', [StudentViewsController::class,'edit_profile'])->name('student.editPersonalData');
+	Route::post('/student/update/profile-pic', [StudentViewsController::class,'update_profile_pic'])->name('student.updateProfilePic');
 	Route::get('/student/security', [StudentViewsController::class,'security_view']);
+	Route::post('/student/security', [StudentViewsController::class,'update_password'])->name('student.passwordUpdate');
 	Route::get('/student/logout', [StudentAuthController::class,'logoutStudent']);
 	Route::get('/student/social-profiles', [StudentViewsController::class,'social_profile_view']);
 

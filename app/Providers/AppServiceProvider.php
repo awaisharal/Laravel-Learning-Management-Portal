@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\Instructor;
+use App\Models\Student;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
         {
             if(session()->has('InstructorEmail')){
                 $user = Instructor::where('email', session()->get('InstructorEmail'))->get();
+                $view->with('user', $user[0]);    
+            }
+            elseif(session()->has('StudentEmail')){
+                $user = Student::where('email', session()->get('StudentEmail'))->get();
                 $view->with('user', $user[0]);    
             }
         });  

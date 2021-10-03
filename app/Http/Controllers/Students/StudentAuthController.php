@@ -75,6 +75,7 @@ class StudentAuthController extends Controller
                     return back()->withErrors('banned');
                 }else{
                     $request->session()->put('StudentEmail',$email);
+                    $request->session()->put('sessionData',$user);
                     return redirect('/student');
                 }
             }
@@ -89,6 +90,7 @@ class StudentAuthController extends Controller
     public function logoutStudent()
     {
         session()->forget('StudentEmail');
+        session()->forget('sessionData');
         return redirect('/login');
     }
 }

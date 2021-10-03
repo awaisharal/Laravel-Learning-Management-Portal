@@ -14,6 +14,14 @@ class Student extends Model
         'email',
         'phone',
         'password',
+        'username',
+        'img',
+        'birthday',
+        'address_line1',
+        'address_line2',
+        'city',
+        'state',
+        'country',
         'role',
         'status'
     ];

@@ -19,6 +19,14 @@ class StudentsMigration extends Migration
             $table->string('email');
             $table->string('phone');
             $table->string('password');
+            $table->string('username')->nullable();
+            $table->string('img')->nullable();
+            $table->string('birthday')->nullable();
+            $table->string('address_line1')->nullable();
+            $table->string('address_line2')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
             $table->enum('role', ['student','admin','instructor'])->default('student');
             $table->integer('status');
             $table->timestamps();
