@@ -291,6 +291,11 @@
             <!-- Collapse -->
             <div class="collapse navbar-collapse mr-auto" id="navbar-default">
                 <ul class="navbar-nav ms-auto" style="margin-right: 30px;">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/instructor/" >
+                            Home
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a
                             class="nav-link dropdown-toggle"
@@ -521,16 +526,26 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/student/" >
-                            Student
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="/instructor/" >
                             Instructor
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/student/" >
+                            Sign In
+                        </a>
+                    </li>
                 </ul>
+                <form class="mt-3 mt-lg-0 d-flex align-items-center" style="margin-right: 30px;">
+                    <span class="position-absolute ps-3 search-icon">
+                        <i class="fe fe-search"></i>
+                    </span>
+                    <input
+                        type="search"
+                        class="form-control ps-6"
+                        placeholder="Search Courses"
+                    />
+                </form>
                 <ul class="navbar-nav navbar-right-wrap d-none d-lg-block">
                     <li class="dropdown d-inline-block stopevent">
                         <a
