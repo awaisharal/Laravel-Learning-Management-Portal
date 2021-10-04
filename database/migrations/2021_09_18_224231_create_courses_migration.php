@@ -22,6 +22,7 @@ class CreateCoursesMigration extends Migration
             $table->string('filename');
             $table->string('url');
             $table->string('tags');
+            $table->string('duration');
             $table->enum('status',['Draft','Pending','Approved','Not Approved','Banned'])->default('Draft');
             $table->integer('user_id');
             $table->timestamps();

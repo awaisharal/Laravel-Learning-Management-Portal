@@ -25,12 +25,12 @@
 </head>
 <body>
   <!-- Page content -->
-  @include('header')
+  @include('partials.header')
 
   @yield('main_content')
   <!-- Footer -->
-  @include('footer')
-  @include('scripts')
+  @include('partials.footer')
+  @include('partials.scripts')
 
 </body>
 </html>
