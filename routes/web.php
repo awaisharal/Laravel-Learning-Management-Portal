@@ -120,7 +120,10 @@ Route::group(['middleware' => ['InstructorAuth']], function(){
 
 Route::get('/login', [StudentAuthController::class,'login_view']);
 Route::POST('/login', [StudentAuthController::class,'login'])->name('student.login');
-	
+Route::get('/courses', [mainController::class,'courses']);
+Route::post('/courses', [mainController::class,'filter_courses'])->name('course.filter');
+
+
 Route::group(['middleware' => ['StudentAuth']], function(){
 	
 	Route::get('/student/', [StudentViewsController::class,'student_dashboard']);
