@@ -135,6 +135,7 @@ Route::group(['middleware' => ['StudentAuth']], function(){
 	Route::post('/student/security', [StudentViewsController::class,'update_password'])->name('student.passwordUpdate');
 	Route::get('/student/logout', [StudentAuthController::class,'logoutStudent']);
 	Route::get('/student/social-profiles', [StudentViewsController::class,'social_profile_view']);
+	Route::post('/student/social-profiles', [StudentViewsController::class,'update_social_profile'])->name('update.StudentSocial');
 
 });
 // this is testing

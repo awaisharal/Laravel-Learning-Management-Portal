@@ -27,6 +27,11 @@ class StudentsMigration extends Migration
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('country')->nullable();
+            $table->string('fb_link')->nullable();
+            $table->string('linkedin_link')->nullable();
+            $table->string('twitter_link')->nullable();
+            $table->string('instagram_link')->nullable();
+            $table->string('github_link')->nullable();
             $table->enum('role', ['student','admin','instructor'])->default('student');
             $table->integer('status');
             $table->timestamps();

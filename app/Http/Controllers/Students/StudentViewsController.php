@@ -119,4 +119,25 @@ class StudentViewsController extends Controller
     {
         return view('student.social-profile');
     }
+    public function update_social_profile(Request $request)
+    {
+        $twitter_link    =   $request->twitter_link;
+        $fb_link         =   $request->fb_link;
+        $github_link     =   $request->github_link;
+        $linkedin_link   =   $request->linkedin_link;
+        $instagram_link  =   $request->instagram_link;
+
+        $user    = session()->get('sessionData')[0];
+        $user_id = $user->id;
+
+        Student::where('id',$user_id)->update([
+            'twitter_link'  => $twitter_link,
+            'fb_link'       => $fb_link,
+            'github_link'   => $github_link,
+            'linkedin_link' => $linkedin_link,
+            'instagram_link'  => $instagram_link
+        ]);
+
+        return back()->withErrors('success');
+    }
 }
