@@ -4,10 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AdminViewsController;
 use App\Http\Controllers\Admin\AdminMainController;
-use App\Http\Controllers\Students\StudentAuthController;
-use App\Http\Controllers\Students\StudentViewsController;
 use App\Http\Controllers\Instructor\InstructorAuthController;
 use App\Http\Controllers\Instructor\InstructorViewsController;
+use App\Http\Controllers\Students\StudentAuthController;
+use App\Http\Controllers\Students\StudentViewsController;
+use App\Http\Controllers\Students\StudentMainController;
 use App\Http\Controllers\mainController;
 /*
 |--------------------------------------------------------------------------
@@ -53,11 +54,14 @@ Route::group(['middleware' => ['AdminAuth']], function(){
 	Route::POST('/admin/delete-student', [AdminMainController::class,'delete_student'])->name('admin.delete_student');
 
 	Route::get('/admin/all-courses', [AdminViewsController::class,'all_courses_view']);
-	Route::get('/admin/add-courses', [AdminViewsController::class,'add_courses_view']);
 	Route::POST('/admin/approve-course', [AdminMainController::class,'approve_course'])->name('admin.approve_course');
 	Route::POST('/admin/reject-course', [AdminMainController::class,'reject_course'])->name('admin.reject_course');
 	Route::POST('/admin/ban-course', [AdminMainController::class,'ban_course'])->name('admin.ban_course');
 	Route::POST('/admin/unban-course', [AdminMainController::class,'unban_course'])->name('admin.unban_course');
+	Route::get('/admin/courses-categories', [AdminViewsController::class,'courses_categories_view']);
+	Route::POST('/admin/courses-categories', [AdminMainController::class,'add_category'])->name('admin.add_category');
+	Route::POST('/admin/edit/courses-categories', [AdminMainController::class,'edit_category'])->name('admin.edit_category');
+	Route::POST('/admin/delete/courses-categories', [AdminMainController::class,'delete_category'])->name('admin.delete_category');
 
 	
 	Route::get('/admin/setting', [AdminViewsController::class,'setting_view']);
@@ -122,7 +126,8 @@ Route::group(['middleware' => ['StudentAuth']], function(){
 	Route::get('/student/', [StudentViewsController::class,'student_dashboard']);
 	Route::get('/student/dashboard', [StudentViewsController::class,'dashboard_view']);
 	Route::get('/student/add-course', [StudentViewsController::class,'add_course_view']);
-	Route::get('/student/my-courses', [StudentViewsController::class,'my_courses_view']);
+	Route::get('/student/my-courses', [StudentMainController::class,'my_courses_view']);
+	Route::get('/student/course-categories', [StudentMainController::class,'my_courses_view']);
 	Route::get('/student/edit-profile', [StudentViewsController::class,'edit_profile_view']);
 	Route::post('/student/edit-profile', [StudentViewsController::class,'edit_profile'])->name('student.editPersonalData');
 	Route::post('/student/update/profile-pic', [StudentViewsController::class,'update_profile_pic'])->name('student.updateProfilePic');

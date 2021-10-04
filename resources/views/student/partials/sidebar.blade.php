@@ -17,6 +17,16 @@
                     <a class="nav-link" href="/student/"><i class="fe fe-home nav-icon"></i>My
                     Dashboard</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/student/my-courses"><i class="fe fe-book-open nav-icon"></i>
+                        My Courses
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/student/course-categories"><i class="fe fe-grid nav-icon"></i>
+                        Course Categories
+                    </a>
+                </li>
             </ul>
             <!-- Navbar header -->
             <span class="navbar-header">Account Settings</span>

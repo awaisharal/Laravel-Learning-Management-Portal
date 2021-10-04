@@ -64,86 +64,92 @@
 				</thead>
 				<tbody>
 					@if(!empty($courses))
-					@foreach($courses as $obj)
-						<tr>
-							<td class="border-top-0">
-								<div class="d-lg-flex">
-									<div>
-										<a href="#">
-											<img src="../uploads/thumbnails/{{$obj->filename}}" alt="" class="rounded img-4by3-lg" /></a>
+						@foreach($courses as $obj)
+							<tr>
+								<td class="border-top-0">
+									<div class="d-lg-flex">
+										<div>
+											<a href="#">
+												<img src="../uploads/thumbnails/{{$obj->filename}}" alt="" class="rounded img-4by3-lg" /></a>
+										</div>
+										<div class="ms-lg-3 mt-2 mt-lg-0">
+											<h4 class="mb-1 h5">
+												<a href="#" class="text-inherit">
+													{{$obj->title}}
+												</a>
+											</h4>
+											<ul class="list-inline fs-6 mb-0">
+												<li class="list-inline-item">
+													<i class="far fa-clock me-1"></i>1h 30m
+												</li>
+												<li class="list-inline-item">
+													@if($obj->level == 'Beginner')
+														<svg class="me-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"
+															xmlns="http://www.w3.org/2000/svg">
+															<rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+															<rect x="7" y="5" width="2" height="9" rx="1" fill="#DBD8E9"></rect>
+															<rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
+														</svg>Beginner
+													@elseif($obj->level == 'Intermediate')
+														<svg class="me-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"xmlns="http://www.w3.org/2000/svg">
+															<rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+															<rect x="7" y="5" width="2" height="9" rx="1" fill="#754FFE"></rect>
+															<rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
+														</svg>
+														Intermediate
+													@else
+														<svg class="me-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"xmlns="http://www.w3.org/2000/svg">
+															<rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+															<rect x="7" y="5" width="2" height="9" rx="1" fill="#754FFE"></rect>
+															<rect x="11" y="2" width="2" height="12" rx="1" fill="#754FFE"></rect>
+														</svg>
+														Advance
+													@endif
+												</li>
+											</ul>
+										</div>
 									</div>
-									<div class="ms-lg-3 mt-2 mt-lg-0">
-										<h4 class="mb-1 h5">
-											<a href="#" class="text-inherit">
-												{{$obj->title}}
-											</a>
-										</h4>
-										<ul class="list-inline fs-6 mb-0">
-											<li class="list-inline-item">
-												<i class="far fa-clock me-1"></i>1h 30m
-											</li>
-											<li class="list-inline-item">
-												@if($obj->level == 'Beginner')
-													<svg class="me-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"
-														xmlns="http://www.w3.org/2000/svg">
-														<rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
-														<rect x="7" y="5" width="2" height="9" rx="1" fill="#DBD8E9"></rect>
-														<rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
-													</svg>Beginner
-												@elseif($obj->level == 'Intermediate')
-													<svg class="me-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"xmlns="http://www.w3.org/2000/svg">
-														<rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
-														<rect x="7" y="5" width="2" height="9" rx="1" fill="#754FFE"></rect>
-														<rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
-													</svg>
-													Intermediate
-												@else
-													<svg class="me-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none"xmlns="http://www.w3.org/2000/svg">
-														<rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
-														<rect x="7" y="5" width="2" height="9" rx="1" fill="#754FFE"></rect>
-														<rect x="11" y="2" width="2" height="12" rx="1" fill="#754FFE"></rect>
-													</svg>
-													Advance
-												@endif
-											</li>
-										</ul>
-									</div>
-								</div>
-							</td>
-							<td class="border-top-0">0</td>
-							<td class="border-top-0">
-								<span class="text-warning">4.5<i class="mdi mdi-star"></i></span>(3,250)
-							</td>
-							<td class="border-top-0">
-								@if($obj->status == "Approved")
-									<span class="badge bg-success">Live</span>
-								@elseif($obj->status == 'Not Approved')
-									<span class="badge bg-danger">Rejected</span>
-								@elseif($obj->status == 'Draft')
-									<span class="badge bg-info">Draft</span>
-								@elseif($obj->status == 'Banned')
-									<span class="badge bg-danger">Banned</span>
-								@elseif($obj->status == 'Pending')
-									<span class="badge bg-warning">Pending</span>
-								@endif
-							</td>
-							<td class="text-muted border-top-0">
-								<span class="dropdown dropstart">
-									<a class="text-muted text-decoration-none" href="#" role="button" id="courseDropdown"
-										data-bs-toggle="dropdown"  data-bs-offset="-20,20" aria-expanded="false">
-										<i class="fe fe-more-vertical"></i>
-									</a>
-									<span class="dropdown-menu" aria-labelledby="courseDropdown">
-										<span class="dropdown-header">Setting </span>
-										<a class="dropdown-item" onclick="openApprovalModal('{{$obj->id}}','{{$obj->title}}')"><i class="fe fe-edit dropdown-item-icon"></i>Submit for approval</a>
-										<a class="dropdown-item" href="/instructor/course/{{$obj->id}}/edit"><i class="fe fe-edit dropdown-item-icon"></i>Edit Course</a>
-										<a class="dropdown-item" href="/instructor/course/{{$obj->id}}/curriculum"><i class="fe fe-edit dropdown-item-icon"></i>Edit Curriculum</a>
-										<a class="dropdown-item" href="#"><i class="fe fe-trash dropdown-item-icon"></i>Remove</a>
+								</td>
+								<td class="border-top-0">0</td>
+								<td class="border-top-0">
+									<span class="text-warning">4.5<i class="mdi mdi-star"></i></span>(3,250)
+								</td>
+								<td class="border-top-0">
+									@if($obj->status == "Approved")
+										<span class="badge bg-success">Live</span>
+									@elseif($obj->status == 'Not Approved')
+										<span class="badge bg-danger">Rejected</span>
+									@elseif($obj->status == 'Draft')
+										<span class="badge bg-info">Draft</span>
+									@elseif($obj->status == 'Banned')
+										<span class="badge bg-danger">Banned</span>
+									@elseif($obj->status == 'Pending')
+										<span class="badge bg-warning">Pending</span>
+									@endif
+								</td>
+								<td class="text-muted border-top-0">
+									<span class="dropdown dropstart">
+										<a class="text-muted text-decoration-none" href="#" role="button" id="courseDropdown"
+											data-bs-toggle="dropdown"  data-bs-offset="-20,20" aria-expanded="false">
+											<i class="fe fe-more-vertical"></i>
+										</a>
+										<span class="dropdown-menu" aria-labelledby="courseDropdown">
+											<span class="dropdown-header">Setting </span>
+											<a class="dropdown-item" onclick="openApprovalModal('{{$obj->id}}','{{$obj->title}}')"><i class="fe fe-edit dropdown-item-icon"></i>Submit for approval</a>
+											<a class="dropdown-item" href="/instructor/course/{{$obj->id}}/edit"><i class="fe fe-edit dropdown-item-icon"></i>Edit Course</a>
+											<a class="dropdown-item" href="/instructor/course/{{$obj->id}}/curriculum"><i class="fe fe-edit dropdown-item-icon"></i>Edit Curriculum</a>
+											<a class="dropdown-item" href="#"><i class="fe fe-trash dropdown-item-icon"></i>Remove</a>
+										</span>
 									</span>
-								</span>
+								</td>
+							</tr>
+						@endforeach
+					@else
+						<tr>
+							<td class="border-top-0 text-center">
+								No courses added yet by you.
 							</td>
 						</tr>
-					@endforeach
 					@endif
 
 					{{-- Dont remove this dummy <tr> --}}

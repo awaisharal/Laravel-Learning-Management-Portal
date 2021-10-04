@@ -59,8 +59,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="/admin/add-courses">
-                                Add New Courses
+                            <a class="nav-link " href="/admin/courses-categories">
+                                Courses Categories
                             </a>
                         </li>
                     </ul>

@@ -135,4 +135,56 @@ class AdminMainController extends Controller
             return back()->withErrors('unknownError');
         }
     }
+    public function add_category(Request $request)
+    {
+        $request->validate([
+            'category_name'   => 'required|max:255',
+        ]);
+
+        $name = $request->category_name;
+        $array = [
+            'name'           =>      $name,
+        ];
+        $category = CourseCategory::create($array);
+        if($category)
+        {
+            return back()->withErrors('cat_added');
+        }else{
+            return back()->withErrors('unknownError');
+        }
+        return $request;
+    }
+    public function edit_category(Request $request)
+    {
+        $request->validate([
+            'name'   => 'required|max:255',
+        ]);
+
+        $id = $request->id;
+        $name = $request->name;
+        $array = [
+            'name'           =>      $name,
+        ];
+        $category = CourseCategory::where('id', $id)->update($array);
+        if($category)
+        {
+            return back()->withErrors('cat_updated');
+        }else{
+            return back()->withErrors('unknownError');
+        }
+        return $request;
+    }
+    public function delete_category(Request $request)
+    {
+        // return $request;
+        $id = $request->id;
+        $category = CourseCategory::where('id', $id)->delete();
+        if($category)
+        {
+            return back()->withErrors('cat_deleted');
+        }else{
+            return back()->withErrors('unknownError');
+        }
+        return $request;
+    }
 }

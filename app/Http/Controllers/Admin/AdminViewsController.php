@@ -95,9 +95,10 @@ class AdminViewsController extends Controller
             'not_approved_course'   =>      $not_approved_courses
         ]);
     }
-    public function add_courses_view()
+    public function courses_categories_view()
     {
-        return view('admin.add-courses');
+        $categories = CourseCategory::orderBy('id', 'desc')->get();
+        return view('admin.course-categories', ['categories' => $categories]);
     }
     public function setting_view(Request $request)
     {
