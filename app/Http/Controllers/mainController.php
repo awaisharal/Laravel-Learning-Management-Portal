@@ -110,4 +110,8 @@ class mainController extends Controller
 
         return redirect('/courses');
     }
+    public function course_details_page()
+    {
+        return 2;    
+    }
 }

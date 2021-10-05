@@ -55,12 +55,12 @@
 	            <div class="col-lg-4 col-md-6 col-12">
 	              <!-- Card -->
 	              <div class="card  mb-4 card-hover">
-	                <a href="course-single.html" class="card-img-top"><img src="uploads/thumbnails/{{$obj->filename}}" alt=""
+	                <a href="courses/{{$obj->id}}/details" class="card-img-top"><img src="uploads/thumbnails/{{$obj->filename}}" alt=""
 	                    class="card-img-top rounded-top-md"></a>
 	                <!-- Card body -->
 	                <div class="card-body">
 	                  <h4 class="mb-2 text-truncate-line-2 ">
-	                  	<a href="#" class="text-inherit">
+	                  	<a href="courses/{{$obj->id}}/details" class="text-inherit">
 	                  		{{$obj->title}}
 	                  	</a>
 	                  </h4>
