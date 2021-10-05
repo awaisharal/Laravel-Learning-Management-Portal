@@ -19,7 +19,8 @@ class mainController extends Controller
         $filters = session()->get('filters');
         // session()->forget('filters');
         // return $filters;
-
+        $category_filter = "";
+        $filter_str = "level = 'Advance' || level = 'Intermediate' || level = 'Beginner'";
         $data = [];
         if($filters != "" || $filters != null || !empty($filters))
         {
