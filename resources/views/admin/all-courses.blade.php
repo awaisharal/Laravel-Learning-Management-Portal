@@ -144,7 +144,10 @@
                                                     </td>
                                                     <td class="align-middle border-top-0">
                                                         <div class="d-flex align-items-center">
-                                                            <img src="../../assets/images/avatar/avatar-7.jpg" alt="" class="rounded-circle avatar-xs me-2" />
+                                                            @if ($pending->instructor_img == "")
+                                                            @else
+                                                                <img src="/uploads/profiles/{{$pending->instructor_img}}" alt="" class="rounded-circle avatar-xs me-2" />
+                                                            @endif
                                                             <h5 class="mb-0">
                                                                 {{$pending->instructor_name}}
                                                             </h5>

@@ -74,10 +74,10 @@
                         </div>
                     </div>
                     <h2 class="fw-bold mb-1">
-                        2,456
+                        {{ $live_courses }}
                     </h2>
-                    <span class="text-danger fw-semi-bold">120+</span>
-                    <span class="ms-1 fw-medium">Number of pending</span>
+                    <span class="text-danger fw-semi-bold">{{ $pending_courses }}+</span>
+                    <span class="ms-1 fw-medium"> Pending Courses</span>
                 </div>
             </div>
         </div>
@@ -95,10 +95,10 @@
                         </div>
                     </div>
                     <h2 class="fw-bold mb-1">
-                        1,22,456
+                        {{ $active_students }}
                     </h2>
-                    <span class="text-success fw-semi-bold"><i class="fe fe-trending-up me-1"></i>+1200</span>
-                    <span class="ms-1 fw-medium">Students</span>
+                    <span class="text-danger fw-semi-bold"><i class="fe fe-trending-up me-1"></i>{{ $ban_students }}</span>
+                    <span class="ms-1 fw-medium">Ban Students</span>
                 </div>
             </div>
         </div>
@@ -116,10 +116,10 @@
                         </div>
                     </div>
                     <h2 class="fw-bold mb-1">
-                        22,786
+                        {{ $active_instructors }}
                     </h2>
-                    <span class="text-success fw-semi-bold"><i class="fe fe-trending-up me-1"></i>+200</span>
-                    <span class="ms-1 fw-medium">Instructor</span>
+                    <span class="text-danger fw-semi-bold"><i class="fe fe-trending-up me-1"></i>{{ $ban_instructors }}</span>
+                    <span class="ms-1 fw-medium"> Ban Instructors</span>
                 </div>
             </div>
         </div>
@@ -182,7 +182,11 @@
                                     <tr>
                                         <td class="align-middle border-top-0">
                                             <div class="d-flex align-items-center">
-                                                <img src="../../assets/images/avatar/avatar-12.jpg" alt="" class="rounded-circle avatar-md me-2" />
+                                                @if ($stu->img == "")
+                                                    <img src="../../assets/images/avatar/avatar-12.jpg" alt="" class="rounded-circle avatar-md me-2" />
+                                                @else
+                                                    <img src="/uploads/profiles/students/{{ $stu->img }}" alt="" class="rounded-circle avatar-md me-2" />
+                                                @endif
                                                 <h5 class="mb-0">{{ $stu->name }}</h5>
                                             </div>
                                         </td>

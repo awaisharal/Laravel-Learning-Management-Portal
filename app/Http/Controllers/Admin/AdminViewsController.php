@@ -20,8 +20,49 @@ class AdminViewsController extends Controller
     public function all_instructors_view()
     {
         $instructors = Instructor::orderBy('id', 'desc')->get();
+        if(!empty($instructors))
+        {
+            foreach($instructors as $instr)
+            {
+                $ins_id         =   $instr->id;
+                $course_count   =   Course::where([
+                    ['user_id', '=', $ins_id],
+                    ['status', '!=', 'Draft']
+                ])->get()->count();
+                $instr['course_count'] = $course_count;
+                
+            }
+        }
         $ins = Instructor::orderBy('id', 'desc')->get();
-        return view('admin.all-instructors', ['instructor' => $instructors, 'ins' => $ins]);
+        if(!empty($ins))
+        {
+            foreach($ins as $instr)
+            {
+                $ins_id         =   $instr->id;
+                $course_count   =   Course::where('user_id', $ins_id)->get()->count();
+                $instr['course_count'] = $course_count;
+                
+            }
+        }
+        $live_courses       = Course::where('status', '=', "Approved")->get()->count();
+        $pending_courses    = Course::where('status', '=', "Pending")->get()->count();
+        
+        $active_students    = Student::where('status', '=', 1)->get()->count();
+        $ban_students       = Student::where('status', '=', 0)->get()->count();
+        
+        $active_instructors = Instructor::where('status', '=', 1)->get()->count();
+        $ban_instructors    = Instructor::where('status', '=', 0)->get()->count();
+        
+        return view('admin.all-instructors', [
+            'instructor'        => $instructors, 
+            'ins'               => $ins,
+            'live_courses'      => $live_courses,
+            'pending_courses'   => $pending_courses,
+            'active_students'   => $active_students,
+            'ban_students'      => $ban_students,
+            'active_instructors'=> $active_instructors,
+            'ban_instructors'   => $ban_instructors
+        ]);
     }
     public function add_instructors_view()
     {
@@ -30,7 +71,25 @@ class AdminViewsController extends Controller
     public function all_students_view()
     {
         $students = Student::orderBy('id', 'desc')->get();
-        return view('admin.all-students', ['student' => $students]);
+
+        $live_courses       = Course::where('status', '=', "Approved")->get()->count();
+        $pending_courses    = Course::where('status', '=', "Pending")->get()->count();
+        
+        $active_students    = Student::where('status', '=', 1)->get()->count();
+        $ban_students       = Student::where('status', '=', 0)->get()->count();
+        
+        $active_instructors = Instructor::where('status', '=', 1)->get()->count();
+        $ban_instructors    = Instructor::where('status', '=', 0)->get()->count();
+        
+        return view('admin.all-students', [
+            'student'           => $students,
+            'live_courses'      => $live_courses,
+            'pending_courses'   => $pending_courses,
+            'active_students'   => $active_students,
+            'ban_students'      => $ban_students,
+            'active_instructors'=> $active_instructors,
+            'ban_instructors'   => $ban_instructors
+        ]);
     }
     public function add_students_view()
     {

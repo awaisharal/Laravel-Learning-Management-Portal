@@ -82,10 +82,10 @@
                         </div>
                     </div>
                     <h2 class="fw-bold mb-1">
-                        2,456
+                        {{ $live_courses }}
                     </h2>
-                    <span class="text-danger fw-semi-bold">120+</span>
-                    <span class="ms-1 fw-medium">Number of pending</span>
+                    <span class="text-danger fw-semi-bold">{{ $pending_courses }}+</span>
+                    <span class="ms-1 fw-medium"> Pending Courses</span>
                 </div>
             </div>
         </div>
@@ -103,10 +103,10 @@
                         </div>
                     </div>
                     <h2 class="fw-bold mb-1">
-                        1,22,456
+                        {{ $active_students }}
                     </h2>
-                    <span class="text-success fw-semi-bold"><i class="fe fe-trending-up me-1"></i>+1200</span>
-                    <span class="ms-1 fw-medium">Students</span>
+                    <span class="text-danger fw-semi-bold"><i class="fe fe-trending-up me-1"></i>{{ $ban_students }}</span>
+                    <span class="ms-1 fw-medium">Ban Students</span>
                 </div>
             </div>
         </div>
@@ -124,10 +124,10 @@
                         </div>
                     </div>
                     <h2 class="fw-bold mb-1">
-                        22,786
+                        {{ $active_instructors }}
                     </h2>
-                    <span class="text-success fw-semi-bold"><i class="fe fe-trending-up me-1"></i>+200</span>
-                    <span class="ms-1 fw-medium">Instructor</span>
+                    <span class="text-danger fw-semi-bold"><i class="fe fe-trending-up me-1"></i>{{ $ban_instructors }}</span>
+                    <span class="ms-1 fw-medium"> Ban Instructors</span>
                 </div>
             </div>
         </div>
@@ -167,7 +167,7 @@
                                             @if ($instructor->img == "")
                                                 <img src="/assets/images/instructors/icon.png" class="rounded-circle avatar-xl mb-3" alt="" />
                                             @else
-                                                <img src="/assets/images/instructors/avatar-11.jpg" class="rounded-circle avatar-xl mb-3" alt="" />
+                                                <img src="/uploads/profiles/{{ $instructor->img }}" class="rounded-circle avatar-xl mb-3" alt="" />
                                             @endif
                                             <h4 class="mb-0">{{ $instructor->name }}
                                                 <a href="/admin/view/{{ $instructor->id }}/instructor">
@@ -188,7 +188,9 @@
                                         </div>
                                         <div class="d-flex justify-content-between py-2 border-bottom">
                                             <span>Courses</span>
-                                            <span class="text-dark"> {{ $instructor->courses }} </span>
+                                            <span class="text-dark"> 
+                                                {{ $instructor->course_count }} 
+                                            </span>
                                         </div>
                                         <div class="d-flex justify-content-between pt-2">
                                             <span>Status</span>
@@ -274,7 +276,7 @@
                                                     @if ($instructor->img == "")
                                                         <img src="/assets/images/instructors/icon.png" alt="" class="rounded-circle avatar-md me-2" />
                                                     @else
-                                                       <img src="/assets/images/avatar/avatar-12.jpg" alt="" class="rounded-circle avatar-md me-2" /> 
+                                                       <img src="/uploads/profiles/{{ $instructor->img }}" alt="" class="rounded-circle avatar-md me-2" /> 
                                                     @endif
                                                     <h5 class="mb-0">{{ $instructor->name }}</h5>
                                                 </div>
@@ -291,7 +293,7 @@
                                                 {{ $instructor->students }}
                                             </td>
                                             <td class="align-middle border-top-0">
-                                                {{ $instructor->courses }}
+                                                {{ $instructor->course_count }}
                                             </td>
                                             <td class="align-middle border-top-0">
                                                 7 July, 2020
