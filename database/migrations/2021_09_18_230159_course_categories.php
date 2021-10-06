@@ -16,6 +16,7 @@ class CourseCategories extends Migration
         Schema::create('course_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->enum('status', ['Live','Trashed'])->default('Live');
             $table->timestamps();
         });
     }

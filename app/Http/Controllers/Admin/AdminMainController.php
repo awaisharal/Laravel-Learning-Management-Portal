@@ -142,8 +142,10 @@ class AdminMainController extends Controller
         ]);
 
         $name = $request->category_name;
+        $status = "Live";
         $array = [
             'name'           =>      $name,
+            'status'         =>      $status,
         ];
         $category = CourseCategory::create($array);
         if($category)
@@ -177,14 +179,18 @@ class AdminMainController extends Controller
     public function delete_category(Request $request)
     {
         // return $request;
-        $id = $request->id;
-        $category = CourseCategory::where('id', $id)->delete();
+        $id         = $request->id;
+        $status     = "Trashed";
+        $array = [
+            'status'           =>      $status,
+        ];
+        $category = CourseCategory::where('id', $id)->update($array);
         if($category)
         {
             return back()->withErrors('cat_deleted');
         }else{
             return back()->withErrors('unknownError');
         }
-        return $request;
+        // return $request;
     }
 }

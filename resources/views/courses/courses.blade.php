@@ -76,7 +76,7 @@
 	                        </rect>
 	                        <rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9">
 	                        </rect>
-	                      </svg>Beginner </li>
+	                      </svg>{{$obj->level}} </li>
 	                  </ul>
 	                  <div class="lh-1">
 	                    <span>

@@ -181,11 +181,11 @@
                     <!-- Card body -->
                     <div class="card-body">
                       <input name='tags' value='jquery, bootstrap' autofocus>
-                      <br>
+                      <br>{{-- 
                       <div class="form-group">
                         <label for="">Duration</label>
-                        <input type="">
-                      </div>
+                        <input type="text" class="form-control" placeholder="Course Duration ">
+                      </div> --}}
                     </div>
                   </div>
                   <div class="d-flex justify-content-between mb-22">

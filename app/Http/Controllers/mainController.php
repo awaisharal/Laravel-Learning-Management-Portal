@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Request;
+use App\Models\Student;
+use App\Models\Instructor;
 use App\Models\Course;
 use App\Models\CourseCategory;
+use App\Models\Curriculum;
+use App\Models\Lecture;
 use DB;
+
 
 class mainController extends Controller
 {
@@ -110,8 +115,22 @@ class mainController extends Controller
 
         return redirect('/courses');
     }
-    public function course_details_page()
+    public function course_details_page($id)
     {
-        return 2;    
+        // $course_id = $id;
+        // $course = Course::where('id', $course_id)->get();
+        // return view('courses.course-details', [
+        //     'course'   =>  $course,
+        // ]);    
+        $course = Course::find($id);
+        $sections = Curriculum::where('course_id', $course->id)->get();
+        foreach($sections as $obj)
+        {
+            $id = $obj->id;
+
+            $lectures = Lecture::where('curriculum_id', $id)->get();
+            $obj['lectures'] = $lectures;
+        }
+        return view('courses.course-details', compact('course','sections'));
     }
 }
