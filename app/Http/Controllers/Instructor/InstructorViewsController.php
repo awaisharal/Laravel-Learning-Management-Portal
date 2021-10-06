@@ -168,6 +168,8 @@ class InstructorViewsController extends Controller
             'thumbnail' => 'required|mimes:jpeg,jpg,png|max:10000',
             'url' => 'required',
             'tags' => 'required|max:255',
+            'hrs' => 'required|max:10',
+            'min' => 'required|max:10',
         ]);
 
         $user = session()->get('sessionData')[0];
@@ -180,6 +182,19 @@ class InstructorViewsController extends Controller
         $thumbnail = $request->thumbnail;
         $url = $request->url;
         $tags = $request->tags;
+        $hrs = $request->hrs;
+        $min = $request->min;
+
+        if($hrs > 0)
+        {
+            $duration = $hrs.'h '.$min.'m';
+        }else{
+            $duration = $min.'m';
+        }
+        if($min == 0)
+        {
+            $duration = $hrs.'h';
+        }
 
         $ext = $thumbnail->getClientOriginalExtension();    
         $filename = uniqid(rand(999, 999999)).time().'.'.$ext;
@@ -196,6 +211,7 @@ class InstructorViewsController extends Controller
                 'filename' => $filename,
                 'url' => $url,
                 'tags' => $tags,
+                'duration' => $duration,
                 'user_id' => $user_id
             ]);
 
@@ -213,6 +229,21 @@ class InstructorViewsController extends Controller
         if ($course_count == 0){
             return redirect('/instructor/my-courses');
         }else{
+
+            // Exploding duration
+
+            $duration = $course[0]->duration;
+
+            $ex = explode("h",$duration);
+            $hours = $ex[0];
+            $min_ex = $ex[1];
+            $ex2 = explode("m",$min_ex);
+            $mins = $ex2[0];
+
+            $course[0]->hours = $hours;
+            $course[0]->mins = $mins;
+
+
             return view('instructor.edit-course', ['course' => $course,'categories'=>$categories]);
         }
     }
@@ -224,7 +255,9 @@ class InstructorViewsController extends Controller
             'level' => 'required|max:255',
             'url' => 'required|max:255',
             'description' => 'required',
-            'tags' => 'required'
+            'tags' => 'required',
+            'hrs' => 'required',
+            'min' => 'required'
         ]);
 
         $title = $request->title;
@@ -233,7 +266,20 @@ class InstructorViewsController extends Controller
         $description = $request->description;
         $tags = $request->tags;
         $url = $request->url;
+        $hrs = $request->hrs;
+        $min = $request->min;
         $id = $request->id;
+
+        if($hrs > 0)
+        {
+            $duration = $hrs.'h '.$min.'m';
+        }else{
+            $duration = $min.'m';
+        }
+        if($min == 0)
+        {
+            $duration = $hrs.'h';
+        }
 
         Course::where('id', $id)->update([
             'title' => $title,
@@ -241,6 +287,7 @@ class InstructorViewsController extends Controller
             'category' => $category,
             'description' => $description,
             'url' => $url,
+            'duration' => $duration,
             'tags' => $tags
         ]);
 

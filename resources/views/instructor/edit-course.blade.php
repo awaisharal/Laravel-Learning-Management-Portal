@@ -79,6 +79,60 @@
                     <label for="" class="form-label">Tags</label>
                     <input name='tags' value='jquery, bootstrap' autofocus>
                   </div>
+                  <div class="mb-3">
+                    <label for="" class="form-label">Duration</label>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group mb-3">
+                          <select name="hrs" class="form-control" required>
+                            <option selected>{{$course[0]->hours}}</option>
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                          </select>
+                          <span class="input-group-text">Hours</span>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group mb-3">
+                          <select name="min" class="form-control" required>
+                            @if($course[0]->mins == "")
+                              <option selected>0</option>
+                            @else
+                              <option selected>{{$course[0]->mins}}</option>
+                            @endif
+                            <option>0</option>
+                            <option>5</option>
+                            <option>10</option>
+                            <option>15</option>
+                            <option>20</option>
+                            <option>25</option>
+                            <option>30</option>
+                            <option>35</option>
+                            <option>40</option>
+                            <option>45</option>
+                            <option>50</option>
+                            <option>55</option>
+                          </select>
+                          <span class="input-group-text">minutes</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div class="mb-3 text-right">
                     <input type="hidden" name="id" value="{{$course[0]->id}}" />
                     <button type="submit" class="btn btn-primary">Update</button>

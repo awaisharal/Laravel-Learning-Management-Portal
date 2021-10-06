@@ -80,7 +80,8 @@
 											</h4>
 											<ul class="list-inline fs-6 mb-0">
 												<li class="list-inline-item">
-													<i class="far fa-clock me-1"></i>1h 30m
+													<i class="far fa-clock me-1"></i>
+													{{$obj->duration}}
 												</li>
 												<li class="list-inline-item">
 													@if($obj->level == 'Beginner')

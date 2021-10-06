@@ -66,8 +66,9 @@
 	                  </h4>
 	                   <!-- List inline -->
 	                  <ul class="mb-3 list-inline">
-	                    <li class="list-inline-item"><i class="far fa-clock me-1"></i>3h 56m
+	                    <li class="list-inline-item"><i class="far fa-clock me-1"></i>{{$obj->duration}}
 	                    </li>
+	                    @if($obj->level == "Beginner")
 	                    <li class="list-inline-item"><svg class="me-1 mt-n1" width="16" height="16" viewBox="0 0 16 16"
 	                        fill="none" xmlns="http://www.w3.org/2000/svg">
 	                        <rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE">
@@ -76,7 +77,27 @@
 	                        </rect>
 	                        <rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9">
 	                        </rect>
-	                      </svg>{{$obj->level}} </li>
+	                      </svg>{{$obj->level}} 
+	                  	</li>
+	                  	@elseif($obj->level == "Intermediate")
+	                  	<li class="list-inline-item">
+	                  		<svg class="me-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+								<rect x="7" y="5" width="2" height="9" rx="1" fill="#754FFE"></rect>
+								<rect x="11" y="2" width="2" height="12" rx="1" fill="#DBD8E9"></rect>
+							</svg>
+	                  		{{$obj->level}} 
+	                  	</li>
+	                  	@elseif($obj->level == "Advance")
+	                  	<li class="list-inline-item">
+	                  		<svg class="me-1 mt-n1" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<rect x="3" y="8" width="2" height="6" rx="1" fill="#754FFE"></rect>
+								<rect x="7" y="5" width="2" height="9" rx="1" fill="#754FFE"></rect>
+								<rect x="11" y="2" width="2" height="12" rx="1" fill="#754FFE"></rect>
+							</svg>
+	                  		{{$obj->level}} 
+	                  	</li>
+	                  	@endif
 	                  </ul>
 	                  <div class="lh-1">
 	                    <span>
