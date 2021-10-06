@@ -131,6 +131,14 @@ class mainController extends Controller
             $lectures = Lecture::where('curriculum_id', $id)->get();
             $obj['lectures'] = $lectures;
         }
-        return view('courses.course-details', compact('course','sections'));
+
+        $ins_id = $course->user_id;
+
+        $instructor = Instructor::find($ins_id);
+        $c = Course::where('user_id', $ins_id)->get();
+
+        $instructor['course_count'] = count($c);
+
+        return view('courses.course-details', compact('course','sections','instructor'));
     }
 }

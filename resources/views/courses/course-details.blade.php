@@ -480,14 +480,18 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="position-relative">
-                                <img src="../assets/images/avatar/avatar-1.jpg" alt="" class="rounded-circle avatar-xl" />
-                                <a href="#" class="position-absolute mt-2 ms-n3" data-bs-toggle="tooltip" data-placement="top" title="Verifed">
+                                @if($instructor->img == null || $instructor->img == "")
+                                <img src="../assets/images/avatar/avatar-3.jpg" alt="" class="rounded-circle avatar-xl" />
+                                @else
+                                <img src="uploads/profiles/{{$instructor->img}}" alt="" class="rounded-circle avatar-xl" />
+                                @endif
+                                {{-- <a href="#" class="position-absolute mt-2 ms-n3" data-bs-toggle="tooltip" data-placement="top" title="Verifed">
                                     <img src="../assets/images/svg/checked-mark.svg" alt="" height="30" width="30" />
-                                </a>
+                                </a> --}}
                             </div>
                             <div class="ms-4">
-                                <h4 class="mb-0">Jenny Wilson</h4>
-                                <p class="mb-1 fs-6">Front-end Developer, Designer</p>
+                                <h4 class="mb-0">{{$instructor->name}}</h4>
+                                <p class="mb-1 fs-6">{{$instructor->title}}</p>
                                 <span class="fs-6"><span class="text-warning">4.5</span><span class="mdi mdi-star text-warning me-2"></span>Instructor Rating</span>
                             </div>
                         </div>
@@ -500,7 +504,7 @@
                             </div>
                             <div class="col border-start">
                                 <div class="pe-1 ps-3 py-3">
-                                    <h5 class="mb-0">32</h5>
+                                    <h5 class="mb-0">{{$instructor->course_count}}</h5>
                                     <span>Courses</span>
                                 </div>
                             </div>
