@@ -76,6 +76,11 @@ class StudentAuthController extends Controller
                 }else{
                     $request->session()->put('StudentEmail',$email);
                     $request->session()->put('sessionData',$user);
+
+                    if(isset($request->enrol_page))
+                    {
+                        return back();
+                    }
                     return redirect('/student');
                 }
             }

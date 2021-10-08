@@ -470,8 +470,18 @@
                     <!-- Card body -->
                     <div class="card-body">
                         <div class="d-grid">
-                        <a href="pricing.html" class="btn btn-outline-primary">Enroll to get Access</a>
-                    </div>
+                            @if(empty($user))
+                                <button class="btn btn-outline-primary" onclick="openLoginModal()">Login to Enrol</button>
+                            @else
+                            <form action="{{route('course.enrol')}}" method="post">
+                                @csrf
+                                <input type="hidden" name="student_id" value="{{$user->id}}" />
+                                <input type="hidden" name="instructor_id" value="{{$instructor->id}}" />
+                                <input type="hidden" name="course_id" value="{{$course->id}}" />
+                                <button class="btn btn-outline-primary" type="submit">Enroll to get Access</button>
+                            </form>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <!-- Card -->
@@ -723,4 +733,80 @@
     </div>
 </div>
   
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="addSectionModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="padding-bottom: 0!important;">
+      <div class="modal-header">
+        <h4 class="modal-title" id="addSectionModalLabel1">
+          Login
+        </h4>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" onclick="dismissModal()">
+            <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @if(count($errors) > 0)
+            @if($errors->first() == 'email_not_match')
+                <div class="alert alert-warning">
+                    Email address is invalid. Please try again.
+                </div>
+            @endif
+            @if($errors->first() == 'pass_not_match')
+                <div class="alert alert-warning">
+                    Password is invalid. Please try again.
+                </div>
+            @endif
+            @if($errors->first() == 'banned')
+                <div class="alert alert-warning">
+                    You are currently banned. Please contact customer support.
+                </div>
+            @endif
+        @endif
+        <form action="{{route('student.login')}}" method="post">
+        @csrf
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" class="form-control" name="email" value="{{old('email')}}">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password" value="{{old('password')}}">
+            </div>
+            <br>
+            <hr>
+            <input type="hidden" name="enrol_page" value="1">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-md">Login</button>
+                <button type="button" class="btn btn-default btn-md" onclick="dismissModal()">Cancel</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+</script> 
+
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+    function openLoginModal()
+    {
+        $("#loginModal").modal('show');
+    }
+</script>
+
+@if(count($errors) > 0)
+    @if($errors->first() == 'email_not_match' || $errors->first() == 'pass_not_match' || $errors->first() == 'banned')
+        <script>
+            $(document).ready(function(){
+                $("#loginModal").modal('show');
+            });
+        </script>
+    @endif
+@endif
 @endsection
+

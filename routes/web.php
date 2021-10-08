@@ -123,6 +123,7 @@ Route::POST('/login', [StudentAuthController::class,'login'])->name('student.log
 Route::get('/courses', [mainController::class,'courses']);
 Route::post('/courses', [mainController::class,'filter_courses'])->name('course.filter');
 Route::get('/courses/{id}/details', [mainController::class,'course_details_page']);
+Route::post('/course/enrol', [mainController::class,'enrol_course'])->name('course.enrol');
 
 
 Route::group(['middleware' => ['StudentAuth']], function(){
@@ -142,4 +143,3 @@ Route::group(['middleware' => ['StudentAuth']], function(){
 	Route::post('/student/social-profiles', [StudentViewsController::class,'update_social_profile'])->name('update.StudentSocial');
 
 });
-// this is testing

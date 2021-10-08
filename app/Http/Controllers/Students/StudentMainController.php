@@ -17,6 +17,6 @@ class StudentMainController extends Controller
     public function my_courses_view()
     {
         $categories = CourseCategory::orderBy('id', 'desc')->get();
-        return view('student.course-categories', ['categories' => $categories]);
+        return view('student.my-courses', ['categories' => $categories]);
     }
 }

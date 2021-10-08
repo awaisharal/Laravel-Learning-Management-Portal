@@ -10,6 +10,7 @@ use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\Curriculum;
 use App\Models\Lecture;
+use App\Models\Enrolment;
 use DB;
 
 
@@ -22,8 +23,7 @@ class mainController extends Controller
     public function courses()
     {
         $filters = session()->get('filters');
-        // session()->forget('filters');
-        // return $filters;
+    
         $category_filter = "";
         $filter_str = "level = 'Advance' || level = 'Intermediate' || level = 'Beginner'";
         $data = [];
@@ -93,8 +93,8 @@ class mainController extends Controller
 
         $maxPage = 20;
         $query = "SELECT * FROM courses WHERE status='Approved' $category_filter && ($filter_str)";
-        // return $query;
         $courses = DB::select(DB::raw($query));
+        return $courses;
         $courses = new Paginator($courses, $maxPage);
 
         $categories = CourseCategory::where('status', 'Live')->get();
@@ -117,11 +117,6 @@ class mainController extends Controller
     }
     public function course_details_page($id)
     {
-        // $course_id = $id;
-        // $course = Course::where('id', $course_id)->get();
-        // return view('courses.course-details', [
-        //     'course'   =>  $course,
-        // ]);    
         $course = Course::find($id);
         $sections = Curriculum::where('course_id', $course->id)->get();
         foreach($sections as $obj)
@@ -140,5 +135,36 @@ class mainController extends Controller
         $instructor['course_count'] = count($c);
 
         return view('courses.course-details', compact('course','sections','instructor'));
+    }
+    public function enrol_course(Request $request)
+    {
+        $request->validate([
+            'student_id' => 'required',
+            'instructor_id' => 'required',
+            'course_id' => 'required'
+        ]);
+        $student_id = $request->student_id;
+        $instructor_id = $request->instructor_id;
+        $course_id = $request->course_id;
+        
+        $check = Enrolment::where([
+            ['student_id','=',$student_id],
+            ['instructor_id','=',$instructor_id],
+            ['course_id','=',$course_id]
+        ])->get();
+
+        $count = count($check);
+        if($count == 0)
+        {
+            Enrolment::create([
+                'student_id' => $student_id,
+                'instructor_id' => $instructor_id,
+                'course_id' => $course_id
+            ]);
+
+            return redirect('/student/my-courses')->withErrors('course_enroled');
+        }else{
+            return back();
+        }
     }
 }

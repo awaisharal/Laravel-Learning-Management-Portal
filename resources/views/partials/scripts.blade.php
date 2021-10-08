@@ -1,4 +1,4 @@
-<script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/libs/odometer/odometer.min.js"></script>
 <script src="/assets/libs/jquery-slimscroll/jquery.slimscroll.min.js"></script>
@@ -28,3 +28,4 @@
 <script src="/assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.12/clipboard.min.js"></script>
 <script src="/assets/js/theme.min.js"></script>
+<script src="/assets/js/custom.js"></script>
