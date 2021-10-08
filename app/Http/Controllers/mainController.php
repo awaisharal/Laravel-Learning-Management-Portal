@@ -94,7 +94,7 @@ class mainController extends Controller
         $maxPage = 20;
         $query = "SELECT * FROM courses WHERE status='Approved' $category_filter && ($filter_str)";
         $courses = DB::select(DB::raw($query));
-        return $courses;
+        
         $courses = new Paginator($courses, $maxPage);
 
         $categories = CourseCategory::where('status', 'Live')->get();
@@ -117,6 +117,8 @@ class mainController extends Controller
     }
     public function course_details_page($id)
     {
+        $session = session()->get('sessionData')[0];
+        $user_id = $session->id;
         $course = Course::find($id);
         $sections = Curriculum::where('course_id', $course->id)->get();
         foreach($sections as $obj)
@@ -134,7 +136,14 @@ class mainController extends Controller
 
         $instructor['course_count'] = count($c);
 
-        return view('courses.course-details', compact('course','sections','instructor'));
+        $enrolCheck = Enrolment::where([
+            ['student_id','=',$user_id],
+            ['course_id','=',$id],
+            ['instructor_id','=',$ins_id],
+        ])->get();
+
+        $enrolCount = count($enrolCheck);
+        return view('courses.course-details', compact('course','sections','instructor','enrolCount'));
     }
     public function enrol_course(Request $request)
     {

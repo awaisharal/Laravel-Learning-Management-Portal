@@ -1,7 +1,7 @@
 <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-default">
         <div class="container-fluid px-0">
-            <a class="navbar-brand" href="./index.html"
+            <a class="navbar-brand" href="/"
                 ><img src="/assets/images/brand/logo/logo.svg" alt=""
             /></a>
             <!-- Mobile view nav wrap -->
@@ -266,7 +266,7 @@
                         <div class="dropdown-divider"></div>
                         <ul class="list-unstyled">
                             <li>
-                                <a class="dropdown-item" href="./index.html">
+                                <a class="dropdown-item" href="/student/logout">
                                     <i class="fe fe-power me-2"></i>Sign Out
                                 </a>
                             </li>

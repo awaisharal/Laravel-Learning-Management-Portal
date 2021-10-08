@@ -478,7 +478,11 @@
                                 <input type="hidden" name="student_id" value="{{$user->id}}" />
                                 <input type="hidden" name="instructor_id" value="{{$instructor->id}}" />
                                 <input type="hidden" name="course_id" value="{{$course->id}}" />
-                                <button class="btn btn-outline-primary" type="submit">Enroll to get Access</button>
+                                @if($enrolCount == 0)
+                                <button class="btn btn-outline-primary" type="submit">Enrol to get Access</button>
+                                @else
+                                <button class="btn btn-outline-muted" disabled>Already Enroled</button>
+                                @endif
                             </form>
                             @endif
                         </div>
