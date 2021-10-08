@@ -95,6 +95,20 @@ class mainController extends Controller
         $query = "SELECT * FROM courses WHERE status='Approved' $category_filter && ($filter_str)";
         $courses = DB::select(DB::raw($query));
         
+        foreach($courses as $obj)
+        {
+            $ins_id = $obj->user_id;
+            $instructor = Instructor::find($ins_id);
+
+            $instructor_id = $instructor->id;
+            $instructor_name = $instructor->name;
+            $instructor_img = $instructor->img;
+
+            $obj->instructor_id = $instructor_id;
+            $obj->instructor_name = $instructor_name;
+            $obj->instructor_img = $instructor_img;
+        }
+        
         $courses = new Paginator($courses, $maxPage);
 
         $categories = CourseCategory::where('status', 'Live')->get();
@@ -117,8 +131,12 @@ class mainController extends Controller
     }
     public function course_details_page($id)
     {
-        $session = session()->get('sessionData')[0];
-        $user_id = $session->id;
+        if(session()->get('sessionData') != null || session()->get('sessionData') != "")
+        {
+            $session = session()->get('sessionData')[0];
+            $user_id = $session->id;
+        }
+        
         $course = Course::find($id);
         $sections = Curriculum::where('course_id', $course->id)->get();
         foreach($sections as $obj)
@@ -136,13 +154,18 @@ class mainController extends Controller
 
         $instructor['course_count'] = count($c);
 
-        $enrolCheck = Enrolment::where([
-            ['student_id','=',$user_id],
-            ['course_id','=',$id],
-            ['instructor_id','=',$ins_id],
-        ])->get();
+        if(session()->get('sessionData') != null || session()->get('sessionData') != "")
+        {
+            $enrolCheck = Enrolment::where([
+                ['student_id','=',$user_id],
+                ['course_id','=',$id],
+                ['instructor_id','=',$ins_id],
+            ])->get();
 
-        $enrolCount = count($enrolCheck);
+            $enrolCount = count($enrolCheck);
+        }else{
+            $enrolCount = 0;
+        }
         return view('courses.course-details', compact('course','sections','instructor','enrolCount'));
     }
     public function enrol_course(Request $request)

@@ -299,7 +299,7 @@
                     <li class="nav-item dropdown">
                         <a
                             class="nav-link dropdown-toggle"
-                            href="#"
+                            href="/courses"
                             id="navbarBrowse"
                             data-bs-toggle="dropdown"
                             aria-haspopup="true"
@@ -311,6 +311,11 @@
                         <ul
                             class="dropdown-menu dropdown-menu-arrow"
                             aria-labelledby="navbarBrowse">
+                            <li>
+                                <a href="/courses" class="dropdown-item">
+                                    Browse All
+                                </a>
+                            </li>
                             <li class="dropdown-submenu dropend">
                                 <a
                                     class="dropdown-item dropdown-list-group-item dropdown-toggle"
@@ -531,9 +536,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        @if(!isset($user))
                         <a class="nav-link" href="/student/" >
                             Sign In
                         </a>
+                        @endif
                     </li>
                 </ul>
                 <form class="mt-3 mt-lg-0 d-flex align-items-center" style="margin-right: 30px;">
@@ -547,7 +554,9 @@
                     />
                 </form>
                 <ul class="navbar-nav navbar-right-wrap d-none d-lg-block">
-                    <li class="dropdown d-inline-block stopevent">
+                    
+                    {{-- Notifications --}}
+                    {{-- <li class="dropdown d-inline-block stopevent">
                         <a
                             class="btn btn-light btn-icon rounded-circle text-muted indicator indicator-primary"
                             href="#"
@@ -764,8 +773,8 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
-
+                    </li> --}}
+                    @if(isset($user))
                     <li class="dropdown ms-2 d-inline-block">
                         <a
                             class="rounded-circle"
@@ -777,8 +786,8 @@
                             <div class="avatar avatar-md avatar-indicators avatar-online">
                                 <img
                                     alt="avatar"
-                                    src="/assets/images/avatar/avatar-1.jpg"
-                                    class="rounded-circle"
+                                    src="uploads/profiles/students/{{$user->img}}"
+                                    class="rounded-circle" style="box-shadow:0px 0px 3px 0px #e9e9e9;"
                                 />
                             </div>
                         </a>
@@ -788,13 +797,15 @@
                                     <div class="avatar avatar-md avatar-indicators avatar-online">
                                         <img
                                             alt="avatar"
-                                            src="/assets/images/avatar/avatar-1.jpg"
+                                            src="uploads/profiles/students/{{$user->img}}"
                                             class="rounded-circle"
                                         />
                                     </div>
                                     <div class="ms-3 lh-1">
-                                        <h5 class="mb-1">Annette Black</h5>
-                                        <p class="mb-0 text-muted">annette@geeksui.com</p>
+                                        <h5 class="mb-1">{{$user->name}}</h5>
+                                        <p class="mb-0 text-muted">
+                                            {{$user->email}}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -803,7 +814,7 @@
                                 <li>
                                     <a
                                         class="dropdown-item"
-                                        href="./pages/profile-edit.html"
+                                        href="/student/"
                                     >
                                         <i class="fe fe-user me-2"></i>Profile
                                     </a>
@@ -832,6 +843,7 @@
                             </ul>
                         </div>
                     </li>
+                    @endif
                 </ul>
             </div>
         </div>

@@ -116,15 +116,15 @@
 	                   <!-- Row -->
 	                  <div class="row align-items-center g-0">
 	                    <div class="col-auto">
-	                      <img src="../assets/images/avatar/avatar-1.jpg" class="rounded-circle avatar-xs" alt="">
+	                      <img src="uploads/profiles/{{$obj->instructor_img}}" class="rounded-circle avatar-xs" alt="">
 	                    </div>
 	                    <div class="col ms-2">
-	                      <span>Morris Mccoy</span>
+	                      <span>{{$obj->instructor_name}}</span>
 	                    </div>
 	                    <div class="col-auto">
-	                     <a href="#" class="text-muted bookmark">
-	                <i class="fe fe-bookmark  "></i>
-	              </a>
+	                      <a href="#" class="text-muted bookmark">
+			                <i class="fe fe-bookmark  "></i>
+			              </a>
 	                    </div>
 	                  </div>
 	                </div>

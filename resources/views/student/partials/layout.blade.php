@@ -10,7 +10,7 @@
         @yield('css')
     </head>
     <body>
-        @include('student.partials.header')
+        @include('partials.header')
         <div class="pt-5 pb-5">
             <div class="container">
                 @include('student.partials.top_section')
