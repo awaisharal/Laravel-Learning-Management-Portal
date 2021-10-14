@@ -124,6 +124,7 @@ Route::get('/courses', [mainController::class,'courses']);
 Route::post('/courses', [mainController::class,'filter_courses'])->name('course.filter');
 Route::get('/courses/{id}/details', [mainController::class,'course_details_page']);
 Route::post('/course/enrol', [mainController::class,'enrol_course'])->name('course.enrol');
+Route::post('/course/bookmark', [mainController::class,'bookmark_course'])->name('course.bookmark');
 
 
 Route::group(['middleware' => ['StudentAuth']], function(){
@@ -141,5 +142,6 @@ Route::group(['middleware' => ['StudentAuth']], function(){
 	Route::get('/student/logout', [StudentAuthController::class,'logoutStudent']);
 	Route::get('/student/social-profiles', [StudentViewsController::class,'social_profile_view']);
 	Route::post('/student/social-profiles', [StudentViewsController::class,'update_social_profile'])->name('update.StudentSocial');
+	Route::get('/courses/{id}/watch', [mainController::class,'watch_course']);
 
 });

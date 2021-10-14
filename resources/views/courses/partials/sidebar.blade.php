@@ -26,52 +26,7 @@
       @endforeach
       @endif
     </div>
-    <!-- Card body -->
-    <div class="card-body border-top">
-      <span class="dropdown-header px-0 mb-2"> Ratings</span>
-      <!-- Custom control -->
-      <div class="custom-control custom-radio mb-1">
-        <input type="radio" class="form-check-input" id="starRadio1" name="customRadio">
-        <label class="form-check-label" for="starRadio1">
-          <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star text-warning "></i>
-          <span class="fs-6">4.5 & UP</span>
-        </label>
-      </div>
-      <!-- Custom control -->
-      <div class="custom-control custom-radio mb-1">
-        <input type="radio" class="form-check-input" id="starRadio2" name="customRadio" checked>
-        <label class="form-check-label" for="starRadio2"> <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star text-warning "></i>
-          <span class="fs-6">4.0 & UP</span></label>
-      </div>
-      <!-- Custom control -->
-      <div class="custom-control custom-radio mb-1">
-        <input type="radio" class="form-check-input" id="starRadio3" name="customRadio">
-        <label class="form-check-label" for="starRadio3"> <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star text-warning "></i>
-          <span class="fs-6">3.5 & UP</span></label>
-      </div>
-      <!-- Custom control -->
-      <div class="custom-control custom-radio mb-1">
-        <input type="radio" class="form-check-input" id="starRadio4" name="customRadio">
-        <label class="form-check-label" for="starRadio4"> <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star me-n1 text-warning"></i>
-          <i class="mdi mdi-star text-warning "></i>
-          <span class="fs-6">3.0 & UP</span></label>
-      </div>
-    </div>
+ 
     <!-- Card body -->
     <div class="card-body border-top">
       <span class="dropdown-header px-0 mb-2"> Skill Level</span>

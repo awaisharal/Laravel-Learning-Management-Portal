@@ -21,6 +21,7 @@
   <link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
   <!-- Theme CSS -->
   <link rel="stylesheet" href="assets/css/theme.min.css">
+  <link rel="stylesheet" href="assets/css/custom.css">
   @yield('meta')
 </head>
 <body>
@@ -29,7 +30,7 @@
 
   @yield('main_content')
   <!-- Footer -->
-  @include('partials.footer')
+  {{-- @include('partials.footer') --}}
   @include('partials.scripts')
 
 </body>

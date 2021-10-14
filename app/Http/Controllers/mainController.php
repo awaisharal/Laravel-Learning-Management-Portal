@@ -11,6 +11,7 @@ use App\Models\CourseCategory;
 use App\Models\Curriculum;
 use App\Models\Lecture;
 use App\Models\Enrolment;
+use App\Models\Bookmark;
 use DB;
 
 
@@ -22,8 +23,13 @@ class mainController extends Controller
     }
     public function courses()
     {
+        if(session()->has('sessionData')){
+            $session = session()->get('sessionData')[0];
+            $session_id = $session->id;    
+        }    
+
         $filters = session()->get('filters');
-    
+        
         $category_filter = "";
         $filter_str = "level = 'Advance' || level = 'Intermediate' || level = 'Beginner'";
         $data = [];
@@ -98,6 +104,9 @@ class mainController extends Controller
         foreach($courses as $obj)
         {
             $ins_id = $obj->user_id;
+            $id = $obj->id;
+
+            // find course instructor
             $instructor = Instructor::find($ins_id);
 
             $instructor_id = $instructor->id;
@@ -107,6 +116,17 @@ class mainController extends Controller
             $obj->instructor_id = $instructor_id;
             $obj->instructor_name = $instructor_name;
             $obj->instructor_img = $instructor_img;
+
+            // Check bookmarks
+            if(session()->has('sessionData'))
+            {
+                $check = Bookmark::where([
+                    ['user_id','=',$session_id],
+                    ['course_id','=',$id]
+                ])->count();
+                $obj->bookmark = $check;
+            }
+            
         }
         
         $courses = new Paginator($courses, $maxPage);
@@ -129,7 +149,7 @@ class mainController extends Controller
 
         return redirect('/courses');
     }
-    public function course_details_page($id)
+    public function course_details_page($course_id)
     {
         if(session()->get('sessionData') != null || session()->get('sessionData') != "")
         {
@@ -137,7 +157,7 @@ class mainController extends Controller
             $user_id = $session->id;
         }
         
-        $course = Course::find($id);
+        $course = Course::find($course_id);
         $sections = Curriculum::where('course_id', $course->id)->get();
         foreach($sections as $obj)
         {
@@ -158,14 +178,14 @@ class mainController extends Controller
         {
             $enrolCheck = Enrolment::where([
                 ['student_id','=',$user_id],
-                ['course_id','=',$id],
-                ['instructor_id','=',$ins_id],
+                ['course_id','=',$course_id]
             ])->get();
 
             $enrolCount = count($enrolCheck);
         }else{
             $enrolCount = 0;
         }
+
         return view('courses.course-details', compact('course','sections','instructor','enrolCount'));
     }
     public function enrol_course(Request $request)
@@ -197,6 +217,90 @@ class mainController extends Controller
             return redirect('/student/my-courses')->withErrors('course_enroled');
         }else{
             return back();
+        }
+    }
+    public function bookmark_course(Request $request)
+    {
+        $user_id = $request->user_id;
+        $course_id = $request->course_id;
+    
+        $check = Bookmark::where([
+            ['user_id','=',$user_id],
+            ['course_id','=',$course_id]
+        ])->get();
+
+        $count = count($check);
+
+        if($count == 0)
+        {
+            Bookmark::create([
+                'user_id' => $user_id,
+                'course_id' => $course_id,
+            ]);
+
+            return back();
+        }else{
+            Bookmark::where([
+                ['user_id','=',$user_id],
+                ['course_id','=',$course_id]
+            ])->delete();
+
+            return back();
+        }
+    }
+    public function watch_course($course_id)
+    {
+        if(session()->has('sessionData'))
+        {
+            $user = session()->get('sessionData')[0];
+            $user_id = $user->id;
+
+            $enrolCheck = Enrolment::where([
+                ['student_id','=',$user_id],
+                ['course_id','=',$course_id]
+            ])->get();
+
+            $enrolCount = count($enrolCheck);
+
+            if($enrolCount == 1)
+            {
+                // =======================
+                // Get Course Details     |
+                // =======================
+
+                $course = Course::find($course_id);
+                $curriculums = Curriculum::where('course_id', $course_id)->get();
+
+                foreach($curriculums as $obj)
+                {
+                    $curriculum_id = $obj->id;
+                    $curriculum_name = $obj->name;
+                    $lectures = Lecture::where('curriculum_id', $curriculum_id)->get();
+                    $obj->lectures = $lectures;
+                }  
+                if(isset($_GET['s']))
+                {
+                    if($_GET['s'] != "")
+                    {
+                        $lec_getID = $_GET['s'];
+                        $lecture = Lecture::find($lec_getID);
+                    }else{
+                        $first_c = Curriculum::where('course_id', $course_id)->orderBy('id','asc')->first();
+                        $lecture = Lecture::where('curriculum_id', $first_c->id)->first();
+                    }
+                }
+                else{
+                    $first_c = Curriculum::where('course_id', $course_id)->orderBy('id','asc')->first();
+                    $lecture = Lecture::where('curriculum_id', $first_c->id)->first();
+                }
+
+                return view('courses.watch',['course'=>$course,'curriculums'=>$curriculums,'lecture'=>$lecture]);
+            }else{
+                return redirect('/courses/'.$course_id.'/details');
+            }
+
+        }else{
+            return redirect('/login');
         }
     }
 }

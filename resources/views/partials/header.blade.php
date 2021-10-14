@@ -292,11 +292,16 @@
             <div class="collapse navbar-collapse mr-auto" id="navbar-default">
                 <ul class="navbar-nav ms-auto" style="margin-right: 30px;">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/instructor/" >
+                        <a class="nav-link active" href="/" >
                             Home
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/courses" >
+                            Browse Courses
+                        </a>
+                    </li>
+                    {{-- <li class="nav-item dropdown">
                         <a
                             class="nav-link dropdown-toggle"
                             href="/courses"
@@ -529,7 +534,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link" href="/instructor/" >
                             Instructor
@@ -836,7 +841,7 @@
                             <div class="dropdown-divider"></div>
                             <ul class="list-unstyled">
                                 <li>
-                                    <a class="dropdown-item" href="./index.html">
+                                    <a class="dropdown-item" href="/student/logout">
                                         <i class="fe fe-power me-2"></i>Sign Out
                                     </a>
                                 </li>

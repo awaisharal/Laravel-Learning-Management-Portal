@@ -2,7 +2,7 @@
 
 @section('meta')
 
-<title>Browse Courses | {{config('app.name')}}</title>
+<title>Course Details | {{config('app.name')}}</title>
 
 @endsection
 
@@ -473,17 +473,20 @@
                             @if(empty($user))
                                 <button class="btn btn-outline-primary" onclick="openLoginModal()">Login to Enrol</button>
                             @else
-                            <form action="{{route('course.enrol')}}" method="post">
-                                @csrf
-                                <input type="hidden" name="student_id" value="{{$user->id}}" />
-                                <input type="hidden" name="instructor_id" value="{{$instructor->id}}" />
-                                <input type="hidden" name="course_id" value="{{$course->id}}" />
-                                @if($enrolCount == 0)
-                                <button class="btn btn-outline-primary" type="submit">Enrol to get Access</button>
-                                @else
-                                <button class="btn btn-outline-muted" disabled>Already Enroled</button>
+                                <form action="{{route('course.enrol')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="student_id" value="{{$user->id}}" />
+                                    <input type="hidden" name="instructor_id" value="{{$instructor->id}}" />
+                                    <input type="hidden" name="course_id" value="{{$course->id}}" />
+                                    @if($enrolCount == 0)
+                                    <button class="btn btn-outline-primary" type="submit">Enrol to get Access</button>
+                                    @endif
+                                </form>
+                                @if($enrolCount != 0)
+                                    <a href="/courses/{{$course->id}}/watch">
+                                        <button class="btn btn-primary">Watch Course</button>
+                                    </a>
                                 @endif
-                            </form>
                             @endif
                         </div>
                     </div>
@@ -535,7 +538,7 @@
             </div>
         </div>
         <!-- Card -->
-        <div class="pt-12 pb-3">
+        {{-- <div class="pt-12 pb-3">
             <div class="row d-md-flex align-items-center mb-4">
                 <div class="col-12">
                     <h2 class="mb-0">Related Courses</h2>
@@ -733,7 +736,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
   

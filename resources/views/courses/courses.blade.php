@@ -116,16 +116,40 @@
 	                   <!-- Row -->
 	                  <div class="row align-items-center g-0">
 	                    <div class="col-auto">
+	                      @if($obj->instructor_img == null || $obj->instructor_img == "")
+	                      <img src="assets/images/avatar/avatar-3.jpg" class="rounded-circle avatar-xs" alt="">
+	                      @else
 	                      <img src="uploads/profiles/{{$obj->instructor_img}}" class="rounded-circle avatar-xs" alt="">
+	                      @endif
 	                    </div>
 	                    <div class="col ms-2">
 	                      <span>{{$obj->instructor_name}}</span>
 	                    </div>
-	                    <div class="col-auto">
-	                      <a href="#" class="text-muted bookmark">
-			                <i class="fe fe-bookmark  "></i>
-			              </a>
-	                    </div>
+	                    @if(isset($user))
+	                    	@if($obj->bookmark == 0)
+			                    <div class="col-auto">
+			                      <form action="{{route('course.bookmark')}}" method="post">
+			                      @csrf
+			                      	  <input type="hidden" name="user_id" value="{{$user->id}}" />
+			                      	  <input type="hidden" name="course_id" value="{{$obj->id}}" />
+				                      <button class="text-muted bookmark no-bg">
+						                <i class="fe fe-bookmark  "></i>
+						              </button>
+					              </form>
+			                    </div>
+			                @else
+			                	<div class="col-auto">
+			                      <form action="{{route('course.bookmark')}}" method="post">
+			                      @csrf
+			                      	  <input type="hidden" name="user_id" value="{{$user->id}}" />
+			                      	  <input type="hidden" name="course_id" value="{{$obj->id}}" />
+				                      <button class="text-muted bookmark no-bg">
+						                <i class="fa fa-bookmark" style="color:#E13E31;"></i>
+						              </button>
+					              </form>
+			                    </div>
+			                @endif
+	                    @endif
 	                  </div>
 	                </div>
 	              </div>
