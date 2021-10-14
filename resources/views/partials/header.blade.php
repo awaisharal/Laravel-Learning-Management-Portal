@@ -789,22 +789,22 @@
                             aria-expanded="false"
                         >
                             <div class="avatar avatar-md avatar-indicators avatar-online">
-                                <img
-                                    alt="avatar"
-                                    src="uploads/profiles/students/{{$user->img}}"
-                                    class="rounded-circle" style="box-shadow:0px 0px 3px 0px #e9e9e9;"
-                                />
+                                @if($user->img != "" || $user->img != null)
+                                <img alt="avatar" src="uploads/profiles/students/{{$user->img}}" class="rounded-circle" style="box-shadow:0px 0px 3px 0px #e9e9e9;"/>
+                                @else
+                                  <img alt="avatar" src="assets/images/avatar/avatar-3.jpg" class="rounded-circle" style="box-shadow:0px 0px 3px 0px #e9e9e9;"/> 
+                                @endif
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <div class="dropdown-item">
                                 <div class="d-flex">
                                     <div class="avatar avatar-md avatar-indicators avatar-online">
-                                        <img
-                                            alt="avatar"
-                                            src="uploads/profiles/students/{{$user->img}}"
-                                            class="rounded-circle"
-                                        />
+                                        @if($user->img != "" || $user->img != null)
+                                        <img alt="avatar" src="uploads/profiles/students/{{$user->img}}" class="rounded-circle"/>
+                                        @else
+                                        <img alt="avatar" src="assets/images/avatar/avatar-3.jpg" class="rounded-circle"/>
+                                        @endif
                                     </div>
                                     <div class="ms-3 lh-1">
                                         <h5 class="mb-1">{{$user->name}}</h5>
