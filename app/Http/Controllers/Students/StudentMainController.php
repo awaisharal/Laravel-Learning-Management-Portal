@@ -60,6 +60,45 @@ class StudentMainController extends Controller
             }
         }
 
+        // Check Completed Courses
+        // =======================================
+
+        $completed = Enrolment::where('student_id', $session_id)->where('status','Finished')->get();
+        $ccount = count($completed);
+        $completed_courses = [];
+        if($ccount > 0)
+        {
+            foreach($completed as $obj)
+            {
+                $course_id = $obj->course_id;
+                $course = Course::find($course_id);
+
+                $ins_id = $course->user_id;
+
+                // find course instructor
+                $instructor = Instructor::find($ins_id);
+
+                $instructor_id = $instructor->id;
+                $instructor_name = $instructor->name;
+                $instructor_img = $instructor->img;
+
+                $arr = [
+                    'id' => $course->id,
+                    'title' => $course->title,
+                    'level' => $course->level,
+                    'category' => $course->category,
+                    'description' => $course->description,
+                    'filename' => $course->filename,
+                    'duration' => $course->duration,
+                    'instructor_id' => $instructor_id,
+                    'instructor_name' => $instructor_name,
+                    'instructor_img' => $instructor_img
+                ];
+
+                array_push($completed_courses, $arr);
+            }
+        }
+
         // Check for Bookmarked courses
         // ========================================
 
@@ -98,6 +137,6 @@ class StudentMainController extends Controller
                 array_push($bookmarked_courses, $arr);
             }
         }
-        return view('student.my-courses', ['categories' => $categories,'enroled_courses'=>$enroled_courses,'bookmarked_courses'=>$bookmarked_courses]);
+        return view('student.my-courses', ['categories' => $categories,'enroled_courses'=>$enroled_courses,'bookmarked_courses'=>$bookmarked_courses,'completed_courses'=>$completed_courses]);
     }
 }

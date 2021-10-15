@@ -21,3 +21,19 @@ button.no-bg{
 	font-size: 17px;
 	margin-top: 20px;
 }
+.thanksContainer{
+	border-radius: 12px;
+	padding: 30px 20px 30px 20px;
+}
+.thanksContainer .hooray{
+	width: 150px;
+}
+.thanksContainer .title{
+	font-weight: 600;
+	font-size: 22px;
+	margin-top: 13px;
+	color: #555;
+}
+.btn-finish-course{
+	border-radius: 30px;
+}

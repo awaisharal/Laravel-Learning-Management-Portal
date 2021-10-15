@@ -18,7 +18,7 @@ class CreateEnrolmentsMigration extends Migration
             $table->string('student_id');
             $table->string('instructor_id');
             $table->string('course_id');
-            $table->enum('status',['Active','Cancelled'])->default('Active');
+            $table->enum('status',['Active','Cancelled','Finished'])->default('Active');
             $table->timestamps();
         });
     }

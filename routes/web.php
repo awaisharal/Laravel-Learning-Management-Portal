@@ -143,5 +143,7 @@ Route::group(['middleware' => ['StudentAuth']], function(){
 	Route::get('/student/social-profiles', [StudentViewsController::class,'social_profile_view']);
 	Route::post('/student/social-profiles', [StudentViewsController::class,'update_social_profile'])->name('update.StudentSocial');
 	Route::get('/courses/{id}/watch', [mainController::class,'watch_course']);
+	Route::post('/course/finish', [mainController::class,'finish_course'])->name('course.finish');
+	Route::get('/course/completed', [mainController::class,'thankyou']);
 
 });

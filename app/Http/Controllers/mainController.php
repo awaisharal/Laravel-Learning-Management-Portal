@@ -284,9 +284,15 @@ class mainController extends Controller
                     {
                         $lec_getID = $_GET['s'];
                         $lecture = Lecture::find($lec_getID);
-                    }else{
+                    }
+                    else{
                         $first_c = Curriculum::where('course_id', $course_id)->orderBy('id','asc')->first();
                         $lecture = Lecture::where('curriculum_id', $first_c->id)->first();
+                    }
+                    if($_GET['s'] == "complete")
+                    {
+                        $lec_getID = $_GET['s'];
+                        $lecture = "complete";
                     }
                 }
                 else{
@@ -294,7 +300,15 @@ class mainController extends Controller
                     $lecture = Lecture::where('curriculum_id', $first_c->id)->first();
                 }
 
-                return view('courses.watch',['course'=>$course,'curriculums'=>$curriculums,'lecture'=>$lecture]);
+                // Fetching last lecture
+                // ======================
+
+                $last_cur = Curriculum::where('course_id', $course_id)->orderBy('id','desc')->first();
+                $last_lecture = Lecture::where('curriculum_id', $last_cur->id)->orderBy('id','desc')->first();
+                $last_lecture_id = $last_lecture->id;
+                 
+
+                return view('courses.watch',['course'=>$course,'curriculums'=>$curriculums,'lecture'=>$lecture,'last_lecture_id'=>$last_lecture_id]);
             }else{
                 return redirect('/courses/'.$course_id.'/details');
             }
@@ -302,5 +316,22 @@ class mainController extends Controller
         }else{
             return redirect('/login');
         }
+    }
+    public function thankyou()
+    {
+        return view('courses.thankyou');
+    }
+    public function finish_course(Request $request)
+    {
+        $user = session()->get('sessionData')[0];
+        $user_id = $user->id;
+        $course_id = $request->course_id;
+        
+        Enrolment::where([
+            ['student_id','=',$user_id],
+            ['course_id','=',$course_id]
+        ])->update(['status'=>'Finished']);
+
+        return redirect('/course/completed');
     }
 }
