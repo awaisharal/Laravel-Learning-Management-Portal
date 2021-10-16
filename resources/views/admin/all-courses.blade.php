@@ -163,7 +163,7 @@
                                                             Reject
                                                         </a>
                                                         <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#approve-course-modal" onclick="approveCourse('<?php echo $pending->id; ?>', '<?php echo $pending->title; ?>')">
-                                                            Approved
+                                                            Approve
                                                         </a>
                                                     </td>
                                                 </tr>

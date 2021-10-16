@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Instructor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\EmailsController;
 use App\Models\Instructor;
 
 class InstructorAuthController extends Controller
@@ -43,8 +44,12 @@ class InstructorAuthController extends Controller
                 'status'         =>      $status,
             ];
             $user = Instructor::create($array);
+            
             if($user)
             {
+                // Sending welcome email
+                // =====================
+                EmailsController::instructor_welcome($name, $email, $confirm_password);    
                 return back()->withErrors('user_created');
             }else{
                 return back()->withErrors('unknownError');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Instructor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\EmailsController;
 use App\Models\Instructor;
 use App\Models\Course;
 use App\Models\CourseCategory;
@@ -174,6 +175,8 @@ class InstructorViewsController extends Controller
 
         $user = session()->get('sessionData')[0];
         $user_id = $user->id;
+        $user_name = $user->name;
+        $user_email = $user->email;
 
         $title = $request->title;
         $category = $request->category;
@@ -215,6 +218,8 @@ class InstructorViewsController extends Controller
                 'user_id' => $user_id
             ]);
 
+            // Sending Email to Admin
+            EmailsController::new_course($user_name,$user_email, $title); 
             return redirect("/instructor/my-courses");
         }else{
             return back()->withErrors('serverError');

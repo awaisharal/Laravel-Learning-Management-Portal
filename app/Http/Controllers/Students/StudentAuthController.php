@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Students;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\EmailsController;
 use App\Models\Student;
 
 class StudentAuthController extends Controller
@@ -41,7 +42,9 @@ class StudentAuthController extends Controller
             $user = Student::create($array);
             if($user)
             {
-                // $request->session()->put('email', $email);
+                // Sending welcome email
+                // =====================
+                EmailsController::student_welcome($name, $email, $confirm_password);
                 return back()->withErrors('user_created');
             }else{
                 return back()->withErrors('unknownError');

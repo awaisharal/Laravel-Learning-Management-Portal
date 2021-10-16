@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Request;
+use App\Http\Controllers\EmailsController;
 use App\Models\Student;
 use App\Models\Instructor;
 use App\Models\Course;
@@ -214,6 +215,21 @@ class mainController extends Controller
                 'course_id' => $course_id
             ]);
 
+            $course = Course::find($course_id);
+            $title = $course->title;
+            $ins_id = $course->user_id;
+            
+            $student = Student::find($id);
+            $student_name = $student->name;
+            $student_email = $student->email;
+            
+            $ins = Instructor::find($ins_id);
+            $ins_name = $ins->name;
+            $ins_email = $ins->email;
+
+            // Sending emails
+            EmailsController::course_enrol_student($title, $student_name, $student_email);
+            EmailsController::course_enrol_instructor($title, $ins_name, $ins_email);
             return redirect('/student/my-courses')->withErrors('course_enroled');
         }else{
             return back();
@@ -331,6 +347,18 @@ class mainController extends Controller
             ['student_id','=',$user_id],
             ['course_id','=',$course_id]
         ])->update(['status'=>'Finished']);
+
+        
+        $student_name = $user->name;
+        $student_email = $user->email;
+        
+        $course = Course::find($course_id);
+        $ins_id = $course->user_id;
+        $ins = Instructor::find($ins_id);
+        $ins_name = $ins->name;
+        $ins_email = $ins->email;
+
+        EmailsController::course_completion($title, $student_name, $student_email, $ins_name, $ins_email);
 
         return redirect('/course/completed');
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\EmailsController;
 use Illuminate\Http\Request;
 use App\Models\Instructor;
 use App\Models\Student;
@@ -18,7 +19,16 @@ class AdminMainController extends Controller
         $id = $request->id;
         $new_status = "Approved";
         $query = DB::table('courses')->where('id', $id)->update(['status' => $new_status]);
+
+        $course = Course::find($id);
+        $title = $course->title;
+        $ins_id = $course->user_id;
+        $ins = Instructor::find($id);
+        $ins_name = $ins->name;
+        $ins_email = $ins->email;
+
         if ($query) {
+            EmailsController::course_approval($title, $ins_name, $ins_email);
             return back()->withErrors('course_approved');
         }else{
             return back()->withErrors('unknownError');
@@ -29,7 +39,17 @@ class AdminMainController extends Controller
         $id = $request->id;
         $new_status = "Not Approved";
         $query = DB::table('courses')->where('id', $id)->update(['status' => $new_status]);
+
+        $course = Course::find($id);
+        $title = $course->title;
+        $ins_id = $course->user_id;
+        $ins = Instructor::find($id);
+        $ins_name = $ins->name;
+        $ins_email = $ins->email;
+
+        
         if ($query) {
+            EmailsController::course_rejection($title, $ins_name, $ins_email);
             return back()->withErrors('course_rejected');
         }else{
             return back()->withErrors('unknownError');
