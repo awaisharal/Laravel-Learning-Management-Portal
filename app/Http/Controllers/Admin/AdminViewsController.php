@@ -156,7 +156,13 @@ class AdminViewsController extends Controller
     }
     public function courses_categories_view()
     {
-        $categories = CourseCategory::orderBy('id', 'desc')->get();
+        $categories = CourseCategory::orderBy('id', 'desc')->paginate(5);
+        foreach($categories as $cat)
+        {
+            $id = $cat->id;
+            $count = Course::where('category', $id)->count();
+            $cat->course_count = $count;
+        }
         return view('admin.course-categories', ['categories' => $categories]);
     }
     public function setting_view(Request $request)

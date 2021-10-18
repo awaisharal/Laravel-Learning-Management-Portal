@@ -1,6 +1,6 @@
 <nav class="navbar-vertical navbar">
     <div class="nav-scroller">
-        <a class="navbar-brand" href="/index.html">
+        <a class="navbar-brand" href="/admin">
             <img src="/assets/images/brand/logo/logo-inverse.svg" alt="" />
         </a>
         <ul class="navbar-nav flex-column" id="sideNavbar">
@@ -60,7 +60,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link " href="/admin/courses-categories">
-                                Courses Categories
+                                Course Categories
                             </a>
                         </li>
                     </ul>

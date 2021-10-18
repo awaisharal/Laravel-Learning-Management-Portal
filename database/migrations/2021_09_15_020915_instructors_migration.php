@@ -22,6 +22,7 @@ class InstructorsMigration extends Migration
             $table->string('password');
             $table->longText('img')->nullable();
             $table->string('title')->nullable();
+            $table->string('join_date')->nullable();
             $table->bigInteger('students')->nullable();
             $table->bigInteger('courses')->nullable();
             $table->enum('role', ['student','admin','instructor'])->default('instructor');

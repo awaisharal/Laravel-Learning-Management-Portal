@@ -51,8 +51,8 @@
                         <form class="row" action="{{ route('admin.add_instructor') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3 col-12 col-md-6">
-                                <label class="form-label" for="fname">First Name</label>
-                                <input type="text" id="fname" class="form-control" placeholder="First Name" required name="first_name" />
+                                <label class="form-label" for="fname">First Name <small class="text-danger">(Required)</small></label>
+                                <input type="text" id="fname" class="form-control" placeholder="First Name" required name="first_name" value="{{old('first_name')}}" />
                                 @error('first_name')
                                     <span>
                                         <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
@@ -60,8 +60,8 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                                <label class="form-label" for="lname">Last Name</label>
-                                <input type="text" id="lname" class="form-control" placeholder="Last Name" required name="last_name" />
+                                <label class="form-label" for="lname">Last Name <small class="text-danger">(Required)</small></label>
+                                <input type="text" id="lname" class="form-control" placeholder="Last Name" required name="last_name" value="{{old('last_name')}}" />
                                 @error('last_name')
                                     <span>
                                         <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
@@ -69,8 +69,8 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                                <label class="form-label" for="phone">Phone</label>
-                                <input type="text" id="phone" class="form-control" placeholder="Phone" required name="phone" />
+                                <label class="form-label" for="phone">Phone <small class="text-danger">(Required)</small></label>
+                                <input type="text" id="phone" class="form-control" placeholder="Phone" required name="phone" value="{{old('phone')}}" />
                                 @error('phone')
                                     <span>
                                         <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
@@ -78,8 +78,8 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                                <label class="form-label" for="email">Email</label>
-                                <input type="email" id="email" class="form-control" placeholder="Enter email" required name="email" />
+                                <label class="form-label" for="email">Email <small class="text-danger">(Required)</small></label>
+                                <input type="email" id="email" class="form-control" placeholder="Enter email" required name="email" value="{{old('email')}}" />
                                 @error('email')
                                     <span>
                                         <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
@@ -87,7 +87,25 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                                <label class="form-label" for="password">Enter Password</label>
+                                <label class="form-label" for="title">Title</label>
+                                <input type="text" id="title" class="form-control" placeholder="Full Stack Web Developer" required name="title" value="{{old('title')}}" />
+                                @error('title')
+                                    <span>
+                                        <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                <label class="form-label" for="date">Joining Date</label>
+                                <input type="date" id="date" class="form-control" placeholder="instructor joining date" required name="date" value="{{old('date')}}" />
+                                @error('date')
+                                    <span>
+                                        <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                <label class="form-label" for="password">Enter Password <small class="text-danger">(Required)</small></label>
                                 <input type="password" id="password" class="form-control" placeholder="Enter Password" required name="password" />
                                 @error('password')
                                     <span>
@@ -96,7 +114,7 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                                <label class="form-label" for="confirm_password">Confirm Password</label>
+                                <label class="form-label" for="confirm_password">Confirm Password <small class="text-danger">(Required)</small></label>
                                 <input type="password" id="confirm_password" class="form-control" placeholder="Confirm Password" required name="confirm_password" />
                                 @error('confirm_password')
                                     <span>

@@ -20,7 +20,7 @@
                 <div class="mb-2 mb-lg-0">
                     <h1 class="mb-1 h2 fw-bold">
                         Course Categories
-                        <span class="fs-5 text-muted">(12,105)</span>
+                        <span class="fs-5 text-muted">({{count($categories)}})</span>
                     </h1>
                     <!-- Breadcrumb  -->
                     <nav aria-label="breadcrumb">
@@ -28,7 +28,7 @@
                             <li class="breadcrumb-item">
                                 <a href="/admin">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="/admin/courses-categories">Course Categories</a></li>
+                            <li class="breadcrumb-item"><a>Course Categories</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -56,11 +56,11 @@
                             Category updated successfully.
                         </div>
                     @elseif($errors->first() == 'cat_deleted')
-                        <div class="mx-4 my-2 alert alert-danger" role="alert">
+                        <div class="mx-4 my-2 alert alert-success" role="alert">
                             Category deleted successfully.
                         </div>
                     @elseif($errors->first() == 'unknownError')
-                        <div class="mx-4 my-2 alert alert-danger" role="alert">
+                        <div class="mx-4 my-2 alert alert-warning" role="alert">
                             Try Again Please.
                         </div>
                     @endif
@@ -73,7 +73,13 @@
                                     Category Title
                                 </th>
                                 <th scope="col" class="border-0">
+                                    Total Courses
+                                </th>
+                                <th scope="col" class="border-0">
                                     Status
+                                </th>
+                                <th scope="col" class="border-0">
+                                    Date Added
                                 </th>
                                 <th scope="col" class="border-0" style="text-align: right;">
                                     Action
@@ -94,12 +100,18 @@
                                             {{ $cat->name }}
                                         </td>
                                         <td class="align-middle border-top-0">
+                                            {{ $cat->course_count }}
+                                        </td>
+                                        <td class="align-middle border-top-0">
                                             @if ( $cat->status == "Trashed")
                                                 <span class="text-danger">Deleted</span>
                                             @elseif ( $cat->status == "Live")
                                                 <span class="text-success">Active</span>
                                             
                                             @endif
+                                        </td>
+                                        <td class="align-middle border-top-0">
+                                            <?php echo date('d M, Y', strtotime($cat->created_at)); ?>
                                         </td>
                                         <td class="text-muted px-4 py-3 align-middle border-top-0" style="text-align: right; padding-right: 20px;">
                                             <span class="dropdown dropstart">
@@ -110,9 +122,11 @@
                                                 <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit-category-modal" onclick="editCategory('<?php echo $cat->id; ?>', '<?php echo $cat->name; ?>')">
                                                     Edit
                                                 </a>
+                                                @if($cat->course_count == 0)
                                                 <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete-category-modal" onclick="deleteCategory('<?php echo $cat->id; ?>', '<?php echo $cat->name; ?>')">
                                                     Delete
                                                 </a>
+                                                @endif
                                             </span>
                                             </span>
                                         </td>
@@ -122,26 +136,8 @@
                         </tbody>
                     </table>
                     <!-- Pagination -->
-                    <div class="pb-4 pt-4">
-                        <nav>
-                            <ul class="pagination justify-content-center mb-0">
-                                <li class="page-item disabled">
-                                    <a class="page-link mx-1 rounded" href="#" tabindex="-1" aria-disabled="true"><i class="mdi mdi-chevron-left"></i></a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link mx-1 rounded" href="#">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link mx-1 rounded" href="#">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link mx-1 rounded" href="#">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link mx-1 rounded" href="#"><i class="mdi mdi-chevron-right"></i></a>
-                                </li>
-                            </ul>
-                        </nav>
+                    <div class="pb-4 pt-4 pagination">
+                        {{$categories->links()}}
                     </div>
                 </div>
             </div>

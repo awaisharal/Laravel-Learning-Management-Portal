@@ -3,7 +3,7 @@
                     <a id="nav-toggle" href="#">
                         <i class="fe fe-menu"></i>
                     </a>
-                    <div class="ms-lg-3 d-none d-md-none d-lg-block">
+                    {{-- <div class="ms-lg-3 d-none d-md-none d-lg-block">
                         <!-- Form -->
                         <form class="d-flex align-items-center">
                             <span class="position-absolute ps-3 search-icon">
@@ -11,10 +11,10 @@
                                 </span>
                             <input type="search" class="form-control form-control-sm ps-6" placeholder="Search Entire Dashboard" />
                         </form>
-                    </div>
+                    </div> --}}
                     <!--Navbar nav -->
                     <ul class="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
-                        <li class="dropdown stopevent">
+                        {{-- <li class="dropdown stopevent">
                             <a class="btn btn-light btn-icon rounded-circle indicator indicator-primary text-muted" href="#" role="button" id="dropdownNotification" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fe fe-bell"></i>
                             </a>
@@ -217,23 +217,27 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
+                        </li> --}}
                         <!-- List -->
                         <li class="dropdown ms-2">
                             <a class="rounded-circle" href="#" role="button" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="avatar avatar-md avatar-indicators avatar-online">
-                                    <img alt="avatar" src="../../assets/images/avatar/avatar-1.jpg" class="rounded-circle" />
+                                    <img alt="avatar" src="assets/images/avatar/avatar-3.png" class="rounded-circle" />
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
                                 <div class="dropdown-item">
                                     <div class="d-flex">
                                         <div class="avatar avatar-md avatar-indicators avatar-online">
-                                            <img alt="avatar" src="../../assets/images/avatar/avatar-1.jpg" class="rounded-circle" />
+                                            <img alt="avatar" src="assets/images/avatar/avatar-3.png" class="rounded-circle" />
                                         </div>
                                         <div class="ms-3 lh-1">
-                                            <h5 class="mb-1">Annette Black</h5>
-                                            <p class="mb-0 text-muted">annette@geeksui.com</p>
+                                            <h5 class="mb-1">
+                                                {{$admin->name}}
+                                            </h5>
+                                            <p class="mb-0 text-muted">
+                                                {{$admin->email}}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

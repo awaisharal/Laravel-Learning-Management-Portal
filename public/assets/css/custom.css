@@ -37,3 +37,12 @@ button.no-bg{
 .btn-finish-course{
 	border-radius: 30px;
 }
+.pagination{
+	padding-left: 25px;
+}
+.pagination span svg{
+	width: 20px;
+}
+.pagination p.leading-5{
+	margin-top: 10px;
+}

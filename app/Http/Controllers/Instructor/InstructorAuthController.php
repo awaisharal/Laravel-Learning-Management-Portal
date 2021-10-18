@@ -16,13 +16,16 @@ class InstructorAuthController extends Controller
             'last_name'         => 'required|max:14',
             'email'             => 'required|unique:instructors|email|max:255',
             'phone'             => 'required|max:16',
-            'password'          => 'required|max:14',
+            'title'             => 'max:30',
+            'password'          => 'required|min:6|max:14',
             'confirm_password'  => 'required|same:password|max:14'
         ]);
         $first_name            =        $request->first_name;
         $last_name             =        $request->last_name;
         $phone                 =        $request->phone;
         $email                 =        $request->email;
+        $title                 =        $request->title;
+        $date                  =        $request->date;
         $password              =        $request->password;
         $confirm_password      =        $request->confirm_password;
         $status                =        1;
@@ -38,6 +41,8 @@ class InstructorAuthController extends Controller
                 'name'           =>      $name,
                 'email'          =>      $email,
                 'phone'          =>      $phone,
+                'title'          =>      $title,
+                'join_date'      =>      $date,
                 'password'       =>      $password,
                 'students'       =>      $students,
                 'courses'        =>      $courses,
