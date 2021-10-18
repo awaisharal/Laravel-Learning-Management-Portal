@@ -788,13 +788,13 @@
                                 <li>
                                     <a
                                         class="dropdown-item"
-                                        href="./pages/profile-edit.html"
+                                        href="/instructor/edit-profile"
                                     >
                                         <i class="fe fe-user me-2"></i>Profile
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="/instructor/security">
                                         <i class="fe fe-settings me-2"></i>Settings
                                     </a>
                                 </li>

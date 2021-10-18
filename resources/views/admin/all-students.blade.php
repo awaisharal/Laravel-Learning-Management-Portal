@@ -20,17 +20,17 @@
                 <div class="mb-2 mb-lg-0">
                     <h1 class="mb-1 h2 fw-bold">
                         Students
-                        <span class="fs-5 text-muted">(12,105)</span>
+                        <span class="fs-5 text-muted">({{ $student->count(); }})</span>
                     </h1>
                     <!-- Breadcrumb  -->
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="../dashboard/admin-dashboard.html">Dashboard</a>
+                                <a href="/admin">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="#">User</a></li>
+                            <li class="breadcrumb-item"><a href="/admin/all-students">Students</a></li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Students
+                                All
                             </li>
                         </ol>
                     </nav>
@@ -128,30 +128,29 @@
         <div class="col-lg-12 col-md-12 col-12">
             <div class="card">
                 <div class="card-header">
-                    <input type="search" class="form-control" placeholder="Search Student" />
+                    <input type="search" id="search" class="form-control" placeholder="Search Student" />
                 </div>
                 @if($errors->any())
-                        @if($errors->first() == 'course_approved')
-                            <div class="mx-4 my-2 alert alert-danger" role="alert">
-                                Student deleted successfully.
-                            </div>
-                        @elseif($errors->first() == 'student_banned')
-                            <div class="mx-4 my-2 alert alert-warning" role="alert">
-                                Student banned successfully.
-                            </div>
-                        @elseif($errors->first() == 'student_unbanned')
-                            <div class="mx-4 my-2 alert alert-success" role="alert">
-                                Student Unbanned successfully.
-                            </div>
-                        @elseif($errors->first() == 'unknownError')
-                            <div class="mx-4 my-2 alert alert-danger" role="alert">
-                                Try Again Please.
-                            </div>
-                        @endif
-                    @endif                
+                    @if($errors->first() == 'course_approved')
+                        <div class="mx-4 my-2 alert alert-danger" role="alert">
+                            Student deleted successfully.
+                        </div>
+                    @elseif($errors->first() == 'student_banned')
+                        <div class="mx-4 my-2 alert alert-warning" role="alert">
+                            Student banned successfully.
+                        </div>
+                    @elseif($errors->first() == 'student_unbanned')
+                        <div class="mx-4 my-2 alert alert-success" role="alert">
+                            Student Unbanned successfully.
+                        </div>
+                    @elseif($errors->first() == 'unknownError')
+                        <div class="mx-4 my-2 alert alert-danger" role="alert">
+                            Try Again Please.
+                        </div>
+                    @endif
+                @endif                
                 <div class="table-responsive">
-                    
-                    <table class="table mb-0 text-nowrap">
+                    <table class="table mb-0 text-nowrap" id="table">
                         <thead class="table-light">
                             <tr>
                                 <th scope="col" class="border-0">Name</th>
@@ -173,17 +172,16 @@
                             @if ($student->count() == 0)
                                 <tr>
                                     <td class="border-top-0 text-center" colspan="5">
-                                        
+                                        No Students Found
                                     </td>
-                                    
                                 </tr>
                             @else
                                 @foreach ($student as $stu)
                                     <tr>
                                         <td class="align-middle border-top-0">
                                             <div class="d-flex align-items-center">
-                                                @if ($stu->img == "")
-                                                    <img src="../../assets/images/avatar/avatar-12.jpg" alt="" class="rounded-circle avatar-md me-2" />
+                                                @if ($stu->img == null)
+                                                    <img src="/assets/images/avatar/student.png" alt="" class="rounded-circle avatar-md me-2" />
                                                 @else
                                                     <img src="/uploads/profiles/students/{{ $stu->img }}" alt="" class="rounded-circle avatar-md me-2" />
                                                 @endif
@@ -231,7 +229,6 @@
                             @endif
                         </tbody>
                     </table>
-                    <!-- Pagination -->
                     <div class="pb-4 pt-4">
                         <nav>
                             <ul class="pagination justify-content-center mb-0">
@@ -360,5 +357,14 @@
       $("#unban-student-modal #name").html(name);
       $("#unban-student-modal #id").val(id);
     }
+    var $rows = $('#table tr');
+    $('#search').keyup(function() {
+        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+        
+        $rows.show().filter(function() {
+            var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+            return !~text.indexOf(val);
+        }).hide();
+    });
   </script> 
 @endsection

@@ -7,7 +7,7 @@
 @endsection
 
 @section('css')
-
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
 
 @endsection
 
@@ -73,12 +73,16 @@
 						<input type="text" id="name" name="name" class="form-control" placeholder="Your name here.." value="{{$user->name}}" required />
 					</div>
 					<div class="mb-3 col-12 col-md-6">
+						<label class="form-label" for="title">Title</label>
+						<input type="text" id="title" name="title" class="form-control" placeholder="Your title here.." value="{{$user->title}}" required />
+					</div>
+					<div class="mb-3 col-12 col-md-6">
 						<label class="form-label" for="phone">Phone</label>
 						<input type="text" id="phone" class="form-control" placeholder="Phone" name="phone" value="{{$user->phone}}" required />
 					</div>
 					<div class="mb-3 col-12 col-md-6">
 						<label class="form-label" for="birth">Birthday</label>
-						<input class="form-control flatpickr" type="text" placeholder="Birth of Date" id="birth"
+						<input class="form-control flatpickr" type="text" placeholder="Birth of Date" id="birth datepicker"
 							name="birthday" value="{{$user->birthday}}"/>
 					</div>
 					<div class="col-12">
@@ -195,7 +199,19 @@
    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
 
+<script type="text/javascript">
+$(function() {
+	var date = new Date();
+	var currentMonth = date.getMonth();
+	var currentDate = date.getDate();
+	var currentYear = date.getFullYear();
+	$('#datepicker').datepicker({
+	maxDate: new Date(currentYear, currentMonth, currentDate)
+	});
+	});
+</script>
 <script>
 	$("#sidenav ul li#profile").addClass("active");
 	$("#chooseFile").click(function(){
@@ -205,5 +221,6 @@
 		$("#dpModal").modal('hide');
 		console.log('a')
 	});
+
 </script>
 @endsection

@@ -20,17 +20,17 @@
                 <div class="mb-2 mb-lg-0">
                     <h1 class="mb-1 h2 fw-bold">
                         Instructor
-                        <span class="fs-5 text-muted">(12,105)</span>
+                        <span class="fs-5 text-muted">({{ $instructor->Count() }})</span>
                     </h1>
                     <!-- Breadcrumb  -->
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="../dashboard/admin-dashboard.html">Dashboard</a>
+                                <a href="/admin">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="#">User</a></li>
+                            <li class="breadcrumb-item"><a href="/admin/all-instructors">Instructors</a></li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Instructor
+                                All
                             </li>
                         </ol>
                     </nav>
@@ -138,9 +138,6 @@
             <div class="tab-content">
                 <!-- Tab pane -->
                 <div class="tab-pane fade show active" id="tabPaneGrid" role="tabpanel" aria-labelledby="tabPaneGrid">
-                    <div class="mb-4">
-                        <input type="search" class="form-control" placeholder="Search Instructor" />
-                    </div>
                     <div class="row">
                         @if($errors->any())
                             @if($errors->first() == 'instructor_banned')
@@ -238,11 +235,11 @@
                     <div class="card">
                         <!-- card header -->
                         <div class="card-header">
-                            <input type="search" class="form-control" placeholder="Search Instructor" />
+                            <input type="search" class="form-control" placeholder="Search Instructor" id="search" />
                         </div>
                         <!-- table -->
                         <div class="table-responsive">
-                            <table class="table mb-0 text-nowrap">
+                            <table class="table mb-0 text-nowrap" id="table">
                                 <thead class="table-light">
                                     <tr>
                                         <th scope="col" class="border-0">
@@ -425,5 +422,14 @@
       $("#unban-instructor-modal #name").html(name);
       $("#unban-instructor-modal #id").val(id);
     }
+    var $rows = $('#table tr');
+    $('#search').keyup(function() {
+        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+        
+        $rows.show().filter(function() {
+            var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+            return !~text.indexOf(val);
+        }).hide();
+    });
   </script> 
 @endsection

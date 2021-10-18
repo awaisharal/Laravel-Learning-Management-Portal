@@ -24,7 +24,7 @@
 			<!-- Form -->
 			<form class="row">
 				<div class="col-lg-9 col-md-7 col-12 mb-lg-0 mb-2">
-					<input type="search" class="form-control" placeholder="Search Your Courses" />
+					<input type="search" id="search" class="form-control" placeholder="Search Your Courses" />
 				</div>
 				<div class="col-lg-3 col-md-5 col-12">
 					<select class="selectpicker" data-width="100%">
@@ -52,7 +52,7 @@
 		@endif
 		</div>
 		<div class="table-responsive border-0 overflow-y-hidden">
-			<table class="table mb-0 text-nowrap">
+			<table class="table mb-0 text-nowrap" id="table">
 				<thead class="table-light">
 					<tr>
 						<th scope="col" class="border-0">Courses</th>
@@ -63,7 +63,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					@if(!empty($courses))
+					@if($courses->Count() == 0)
+						<tr>
+							<td class="border-top-0 text-center" colspan="5">
+								No courses added yet by you.
+							</td>
+						</tr>
+					@else
 						@foreach($courses as $obj)
 							<tr>
 								<td class="border-top-0">
@@ -148,12 +154,6 @@
 								</td>
 							</tr>
 						@endforeach
-					@else
-						<tr>
-							<td class="border-top-0 text-center">
-								No courses added yet by you.
-							</td>
-						</tr>
 					@endif
 
 					{{-- Dont remove this dummy <tr> --}}
@@ -253,5 +253,14 @@
 		$("#approvalModal #id").val(id);
 		$("#approvalModal").modal('show');
 	}
+	var $rows = $('#table tr');
+    $('#search').keyup(function() {
+        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+        
+        $rows.show().filter(function() {
+            var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+            return !~text.indexOf(val);
+        }).hide();
+    });
 </script>
 @endsection

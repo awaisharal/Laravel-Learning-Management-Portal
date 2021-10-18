@@ -26,12 +26,9 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="../dashboard/admin-dashboard.html">Dashboard</a>
+                                <a href="/admin">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="#">Course</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">
-                                Categories
-                            </li>
+                            <li class="breadcrumb-item"><a href="/admin/courses-categories">Course Categories</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -47,7 +44,7 @@
         <div class="col-lg-12 col-md-12 col-12">
             <div class="card">
                 <div class="card-header">
-                    <input type="search" class="form-control" placeholder="Search Category" />
+                    <input type="search" id="search" class="form-control" placeholder="Search Category" />
                 </div>
                 @if($errors->any())
                     @if($errors->first() == 'cat_added')
@@ -69,11 +66,14 @@
                     @endif
                 @endif                
                 <div class="table-responsive">
-                    <table class="table mb-0 text-nowrap">
+                    <table class="table mb-0 text-nowrap" id="table">
                         <thead class="table-light">
                             <tr>
                                 <th scope="col" class="border-0">
                                     Category Title
+                                </th>
+                                <th scope="col" class="border-0">
+                                    Status
                                 </th>
                                 <th scope="col" class="border-0" style="text-align: right;">
                                     Action
@@ -92,6 +92,14 @@
                                     <tr>
                                         <td class="align-middle border-top-0">
                                             {{ $cat->name }}
+                                        </td>
+                                        <td class="align-middle border-top-0">
+                                            @if ( $cat->status == "Trashed")
+                                                <span class="text-danger">Deleted</span>
+                                            @elseif ( $cat->status == "Live")
+                                                <span class="text-success">Active</span>
+                                            
+                                            @endif
                                         </td>
                                         <td class="text-muted px-4 py-3 align-middle border-top-0" style="text-align: right; padding-right: 20px;">
                                             <span class="dropdown dropstart">
@@ -205,16 +213,11 @@
                         </div>
                     </div>
                     <div class="" style="display:flex; float: right;">
-                        <button class="btn btn-outline-primary" type="submit" style="margin-right:20px;">
+                        <button class="btn btn-outline-primary" type="submit">
                             Update Category
                         </button>
-                        <button class="btn btn-outline-white" data-bs-dismiss="modal" aria-label="Close">
-                            Close
-                        </button>
                     </div>
-                    
                 </form>
-                
             </div>
         </div>
     </div>
@@ -260,13 +263,14 @@
       $("#delete-category-modal #name").html(name);
       $("#delete-category-modal #id").val(id);
     }
-    // function banStudent(id, name){
-    //   $("#ban-student-modal #name").html(name);
-    //   $("#ban-student-modal #id").val(id);
-    // }
-    // function unbanStudent(id, name){
-    //   $("#unban-student-modal #name").html(name);
-    //   $("#unban-student-modal #id").val(id);
-    // }
+    var $rows = $('#table tr');
+    $('#search').keyup(function() {
+        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+        
+        $rows.show().filter(function() {
+            var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+            return !~text.indexOf(val);
+        }).hide();
+    });
   </script> 
 @endsection

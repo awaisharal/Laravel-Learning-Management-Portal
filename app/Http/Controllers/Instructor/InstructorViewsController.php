@@ -60,10 +60,12 @@ class InstructorViewsController extends Controller
     {
         $validate = $request->validate([
             'name' => 'required|max:255',
+            'title' => 'required|max:255',
             'phone' => 'required|max:255'
         ]);
 
         $name       =   $request->name;
+        $title      =   $request->title;
         $phone      =   $request->phone;
         $birthday   =   $request->birthday;
 
@@ -72,6 +74,7 @@ class InstructorViewsController extends Controller
 
         Instructor::where('id',$user_id)->update([
             'name'      =>  $name,
+            'title'      =>  $title,
             'phone'     =>  $phone,
             'birthday'  =>  $birthday
         ]);

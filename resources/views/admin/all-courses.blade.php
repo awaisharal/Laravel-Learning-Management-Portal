@@ -23,10 +23,10 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="../dashboard/admin-dashboard.html">Dashboard</a>
+                                <a href="/admin">Dashboard</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="#">Courses</a>
+                                <a href="/admin/all-courses">Courses</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
                                 All
@@ -47,17 +47,18 @@
                         <!-- Nav -->
                         <ul class="nav nav-lb-tab" id="tab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="pending-tab" data-bs-toggle="pill" href="#pending" role="tab" aria-controls="pending" aria-selected="true">Pending</a>
+                                <a class="nav-link active" id="pending-tab" data-bs-toggle="pill" href="#pending" role="tab" aria-controls="pending" aria-selected="true">Pending ({{ $pending_course->count() }})</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="approved-tab" data-bs-toggle="pill" href="#approved" role="tab" aria-controls="approved" aria-selected="false">Approved</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="not-approved-tab" data-bs-toggle="pill" href="#not-approved" role="tab" aria-controls="not-approved" aria-selected="false">Not Approved
+                                <a class="nav-link" id="approved-tab" data-bs-toggle="pill" href="#approved" role="tab" aria-controls="approved" aria-selected="false">Approved ({{ $approved_course->count() }})
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="banned-tab" data-bs-toggle="pill" href="#banned" role="tab" aria-controls="banned" aria-selected="false">Banned
+                                <a class="nav-link" id="not-approved-tab" data-bs-toggle="pill" href="#not-approved" role="tab" aria-controls="not-approved" aria-selected="false">Not Approved ({{ $not_approved_course->count() }})
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="banned-tab" data-bs-toggle="pill" href="#banned" role="tab" aria-controls="banned" aria-selected="false">Banned ({{ $banned_course->count() }})
                                 </a>
                             </li>
                         </ul>
@@ -69,7 +70,7 @@
                         <span class="position-absolute ps-3 search-icon">
                         <i class="fe fe-search"></i>
                         </span>
-                        <input type="search" class="form-control ps-6" placeholder="Search Course" />
+                        <input type="search" class="form-control ps-6" placeholder="Search Course" id="search" />
                     </form>
                 </div>
                 <div>
@@ -97,10 +98,9 @@
                                 </div>
                             @endif
                         @endif
-                        <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
-                            
+                        <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">                          
                             <div class="table-responsive border-0 overflow-y-hidden">
-                                <table class="table mb-0 text-nowrap">
+                                <table class="table mb-0 text-nowrap" id="table">
                                     <thead class="table-light">
                                         <tr>
                                             <th scope="col" class="border-0 text-uppercase">
@@ -175,7 +175,7 @@
                         </div>
                         <div class="tab-pane fade" id="approved" role="tabpanel" aria-labelledby="approved-tab">
                             <div class="table-responsive border-0 overflow-y-hidden">
-                                <table class="table mb-0 text-nowrap">
+                                <table class="table mb-0 text-nowrap" id="table">
                                     <thead class="table-light">
                                         <tr>
                                             <th scope="col" class="border-0 text-uppercase">
@@ -253,7 +253,7 @@
                         </div>
                         <div class="tab-pane fade" id="not-approved" role="tabpanel" aria-labelledby="not-approved-tab">
                             <div class="table-responsive border-0 overflow-y-hidden">
-                                <table class="table mb-0 text-nowrap">
+                                <table class="table mb-0 text-nowrap" id="table">
                                     <thead class="table-light">
                                         <tr>
                                             <th scope="col" class="border-0 text-uppercase">
@@ -330,7 +330,7 @@
                         </div>
                         <div class="tab-pane fade" id="banned" role="tabpanel" aria-labelledby="banned-tab">
                             <div class="table-responsive border-0 overflow-y-hidden">
-                                <table class="table mb-0 text-nowrap">
+                                <table class="table mb-0 text-nowrap" id="table">
                                     <thead class="table-light">
                                         <tr>
                                             <th scope="col" class="border-0 text-uppercase">
@@ -555,5 +555,14 @@
       $("#unban-course-modal #name").html(name);
       $("#unban-course-modal #id").val(id);
     }
+    var $rows = $('#table tr');
+    $('#search').keyup(function() {
+        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+        
+        $rows.show().filter(function() {
+            var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+            return !~text.indexOf(val);
+        }).hide();
+    });
   </script> 
 @endsection

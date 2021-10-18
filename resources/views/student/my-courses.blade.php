@@ -128,11 +128,6 @@
 						@endforeach
 						@endif
 					</div>
-					<div class="row">
-						<div class="offset-lg-3 col-lg-6 col-md-12 col-12 text-center mt-5">
-							<p>You’ve reached the end of the list</p>
-						</div>
-					</div>
 				</div>
 				{{-- Bookmarked Courses --}}
 				<div class="tab-pane fade show active" id="finished" role="tabpanel" aria-labelledby="bookmarked-tab">
@@ -221,12 +216,11 @@
 							</div>
 						</div>
 						@endforeach
-						@endif
-					</div>
-					<div class="row">
-						<div class="offset-lg-3 col-lg-6 col-md-12 col-12 text-center mt-5">
-							<p>You’ve reached the end of the list</p>
+						@else
+						<div class="row text-center">
+							<p>No Completed Courses to show.</p>
 						</div>
+						@endif
 					</div>
 				</div>
 				{{-- Bookmarked Courses --}}
@@ -326,11 +320,6 @@
 						</div>
 						@endforeach
 						@endif
-					</div>
-					<div class="row">
-						<div class="offset-lg-3 col-lg-6 col-md-12 col-12 text-center mt-5">
-							<p>You’ve reached the end of the list</p>
-						</div>
 					</div>
 				</div>
 			</div>
