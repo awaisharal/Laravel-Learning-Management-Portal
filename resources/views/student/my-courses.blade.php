@@ -17,7 +17,7 @@
 			<!-- Side Navbar -->
 			<ul class="nav nav-lb-tab mb-6" id="tab" role="tablist">
 				<li class="nav-item ms-0" role="presentation">
-					<a class="nav-link active " id="bookmarked-tab" data-bs-toggle="pill" href="#bookmarked" role="tab"
+					<a class="nav-link active " id="bookmarked-tab" data-bs-toggle="pill" href="#enroled" role="tab"
 						aria-controls="bookmarked" aria-selected="true">Enroled </a>
 				</li>
 				<li class="nav-item" role="presentation">
@@ -40,7 +40,7 @@
 			<!-- Tab content -->
 			<div class="tab-content" id="tabContent">
 				{{-- Active Courses --}}
-				<div class="tab-pane fade show active" id="bookmarked" role="tabpanel" aria-labelledby="bookmarked-tab">
+				<div class="tab-pane fade show active" id="enroled" role="tabpanel" aria-labelledby="enroled-tab">
 					<div class="row">
 						@if(!empty($enroled_courses))
 						@foreach($enroled_courses as $obj)
@@ -96,7 +96,7 @@
 					                  	@endif
 
 									</ul>
-									<div class="lh-1">
+									{{-- <div class="lh-1">
 										<span>
 										<i class="mdi mdi-star text-warning me-n1"></i>
 										<i class="mdi mdi-star text-warning me-n1"></i>
@@ -106,7 +106,7 @@
 										</span>
 										<span class="text-warning">4.5</span>
 										<span class="fs-6 text-muted">(9,300)</span>
-									</div>
+									</div> --}}
 								</div>
 								<!-- Card footer -->
 								<div class="card-footer">
@@ -126,6 +126,10 @@
 							</div>
 						</div>
 						@endforeach
+						@else
+						<div class="row text-center">
+							<p>No Enroled Courses to show.</p>
+						</div>
 						@endif
 					</div>
 				</div>
@@ -186,7 +190,7 @@
 					                  	@endif
 
 									</ul>
-									<div class="lh-1">
+									{{-- <div class="lh-1">
 										<span>
 										<i class="mdi mdi-star text-warning me-n1"></i>
 										<i class="mdi mdi-star text-warning me-n1"></i>
@@ -196,7 +200,7 @@
 										</span>
 										<span class="text-warning">4.5</span>
 										<span class="fs-6 text-muted">(9,300)</span>
-									</div>
+									</div> --}}
 								</div>
 								<!-- Card footer -->
 								<div class="card-footer">
@@ -277,7 +281,7 @@
 					                  	@endif
 
 									</ul>
-									<div class="lh-1">
+									{{-- <div class="lh-1">
 										<span>
 										<i class="mdi mdi-star text-warning me-n1"></i>
 										<i class="mdi mdi-star text-warning me-n1"></i>
@@ -287,7 +291,7 @@
 										</span>
 										<span class="text-warning">4.5</span>
 										<span class="fs-6 text-muted">(9,300)</span>
-									</div>
+									</div> --}}
 								</div>
 								<!-- Card footer -->
 								<div class="card-footer">
@@ -319,6 +323,10 @@
 							</div>
 						</div>
 						@endforeach
+						@else
+						<div class="row text-center">
+							<p>No Bookmarked Courses to show.</p>
+						</div>
 						@endif
 					</div>
 				</div>

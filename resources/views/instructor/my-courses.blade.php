@@ -48,6 +48,10 @@
 				<div class="alert alert-success">
 					Course submitted for approval
 				</div>
+			@elseif($errors->first() == "courseRemoved")
+				<div class="alert alert-success">
+					Course successfully removed!
+				</div>
 			@endif
 		@endif
 		</div>
@@ -57,7 +61,7 @@
 					<tr>
 						<th scope="col" class="border-0">Courses</th>
 						<th scope="col" class="border-0">Students</th>
-						<th scope="col" class="border-0">Rating</th>
+						{{-- <th scope="col" class="border-0">Rating</th> --}}
 						<th scope="col" class="border-0">Status</th>
 						<th scope="col" class="border-0"></th>
 					</tr>
@@ -118,9 +122,9 @@
 									</div>
 								</td>
 								<td class="border-top-0">0</td>
-								<td class="border-top-0">
+								{{-- <td class="border-top-0">
 									<span class="text-warning">4.5<i class="mdi mdi-star"></i></span>(3,250)
-								</td>
+								</td> --}}
 								<td class="border-top-0">
 									@if($obj->status == "Approved")
 										<span class="badge bg-success">Live</span>
@@ -148,7 +152,7 @@
 											@endif
 											<a class="dropdown-item" href="/instructor/course/{{$obj->id}}/edit"><i class="fe fe-edit dropdown-item-icon"></i>Edit Course</a>
 											<a class="dropdown-item" href="/instructor/course/{{$obj->id}}/curriculum"><i class="fe fe-edit dropdown-item-icon"></i>Edit Curriculum</a>
-											<a class="dropdown-item" href="#"><i class="fe fe-trash dropdown-item-icon"></i>Remove</a>
+											<a class="dropdown-item" onclick="openDeleteCourseModal('{{$obj->id}}','{{$obj->title}}')"><i class="fe fe-trash dropdown-item-icon"></i>Remove</a>
 										</span>
 									</span>
 								</td>
@@ -244,6 +248,34 @@
    </div>
 </div>
 
+{{-- Delete Course Modal --}}
+<div class="modal fade" id="deleteCourseModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Remove Course</h5>
+            <button type="button" class="close no-bg" data-dismiss="modal" onclick="dismissModal()" aria-label="Close">
+            	<span aria-hidden="true">×</span>
+            </button>
+         </div>
+         <form action="{{route('course.delete')}}" method="post">
+         @csrf
+         <div class="modal-body">
+            <div class="container">
+            	<input type="hidden" name="id" id="id" value="">
+            	<p>Are you sure to want to delete this course <b id="title">Advance Javascript Bootcamp</b>? It will not be restored once deleted.
+            	</p>
+            </div>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" onclick="dismissModal()">Cancel</button>
+            <button type="submit" class="btn btn-danger" id="update">Delete Course</button>
+         </div>
+     	</form>
+      </div>
+   </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
 	$("#sidenav ul li#myCourses").addClass("active");
@@ -252,6 +284,12 @@
 		$("#approvalModal #modalLabel").html(name);
 		$("#approvalModal #id").val(id);
 		$("#approvalModal").modal('show');
+	}
+	function openDeleteCourseModal(id, name)
+	{
+		$("#deleteCourseModal #title").html(name);
+		$("#deleteCourseModal #id").val(id);
+		$("#deleteCourseModal").modal('show');
 	}
 	var $rows = $('#table tr');
     $('#search').keyup(function() {

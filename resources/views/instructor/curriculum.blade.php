@@ -149,7 +149,7 @@
         <h4 class="modal-title" id="addSectionModalLabel1">
           Add New Section
         </h4>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close-btn no-bg" data-dismiss="modal" aria-label="Close" onclick="dismissModal()">
             <span aria-hidden="true"><i class="fe fe-x-circle"></i></span>
         </button>
       </div>
@@ -161,7 +161,7 @@
 	        <button class="btn btn-primary" type="submit">
 	            Add Section
 	        </button>
-	        <button type="button" class="btn btn-outline-white" data-dismiss="modal" aria-label="Close">
+	        <button type="button" class="btn btn-outline-white" data-dismiss="modal" aria-label="Close" onclick="dismissModal()">
             	Close
           	</button>
         </form>
@@ -180,7 +180,7 @@
         <h4 class="modal-title" id="addLectureModalLabel1">
           Add New Lecture
         </h4>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="no-bg" data-dismiss="modal" aria-label="Close" onclick="dismissModal()">
             <span aria-hidden="true"><i class="fe fe-x-circle"></i></span>
         </button>
       </div>
@@ -218,7 +218,7 @@
         <h4 class="modal-title" id="addSectionModalLabel1">
           Update Section
         </h4>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="no-bg" onclick="dismissModal()" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="fe fe-x-circle"></i></span>
         </button>
       </div>
@@ -230,7 +230,7 @@
 	        <button class="btn btn-primary" type="submit">
 	            Update Section
 	        </button>
-	        <button type="button" class="btn btn-outline-white" data-dismiss="modal" aria-label="Close">
+	        <button type="button" class="btn btn-outline-white" data-dismiss="modal" aria-label="Close" onclick="dismissModal()">
             	Close
           	</button>
         </form>
@@ -248,7 +248,7 @@
         <h4 class="modal-title" id="addSectionModalLabel1">
           Delete Section
         </h4>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="no-bg" onclick="dismissModal()" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="fe fe-x-circle"></i></span>
         </button>
       </div>
@@ -277,7 +277,7 @@
         <h4 class="modal-title" id="addSectionModalLabel1">
           Delete Lecture
         </h4>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="btn-close" onclick="dismissModal()" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"></span>
         </button>
       </div>

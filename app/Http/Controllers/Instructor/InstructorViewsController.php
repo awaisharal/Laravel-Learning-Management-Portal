@@ -10,6 +10,8 @@ use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\Curriculum;
 use App\Models\Lecture;
+use App\Models\Student;
+use App\Models\Enrolment;
 
 class InstructorViewsController extends Controller
 {
@@ -48,8 +50,73 @@ class InstructorViewsController extends Controller
     {
         return view('instructor.reviews');
     }
+    public function my_array_unique($array, $keep_key_assoc = false){
+        $duplicate_keys = array();
+        $tmp = array();       
+
+        foreach ($array as $key => $val){
+            // convert objects to arrays, in_array() does not support objects
+            if (is_object($val)){
+                $val = (array)$val;
+            }
+            if (!in_array($val, $tmp))
+            {
+                $tmp[] = $val;
+            }
+            else{
+                $duplicate_keys[] = $key;
+            }
+        }
+        foreach ($duplicate_keys as $key){
+            unset($array[$key]);
+        }
+        return $keep_key_assoc ? $array : array_values($array);
+    }
     public function students_view ()
     {
+        $user = session()->get('sessionData')[0];
+        $session_id = $user->id;
+
+        $courses = Course::where('user_id', $session_id)->get();
+        $students = [];
+        $index = [];
+        $added = [];
+
+        if(!empty($courses))
+        {
+            foreach($courses as $course)
+            {
+                $id = $course->id;
+                $title = $course->title;
+                $thumbnail = $course->filename;
+
+                $enrols = Enrolment::where('course_id', $id)->get();
+
+                if(!empty($enrols))
+                {
+                    foreach($enrols as $e)
+                    {
+                        $student_id = $e->student_id;
+                        
+                        $student = Student::find($student_id);
+                        $list = [
+                            'id' => $student->id,
+                            'name' => $student->name,
+                            'email' => $student->email,
+                            'phone' => $student->phone,
+                            'img' => $student->img,
+                            'username' => $student->username,
+                            'course_id' => $id,
+                            'course_title' => $title,
+                            'course_img' => $thumbnail
+                        ];
+
+                        array_push($students, $list);
+                    }
+                }
+            }
+        }
+
         return view('instructor.my-students');
     }
     public function edit_profile_view ()
@@ -483,5 +550,25 @@ class InstructorViewsController extends Controller
         Course::where('id', $id)->update(['status'=>$status]);
 
         return back()->withErrors('CourseSubmitSuccess');
+    }
+    public function deleteCourse(Request $request)
+    {
+        $id = $request->id;
+        
+        $course = Course::find($id);
+    
+        if(!empty($course))
+        {
+            $course->delete();
+        }else{
+            return back();
+        }
+
+        Curriculum::where('course_id', $id)->delete();
+        Lecture::where('course_id', $id)->delete();
+        Enrolment::where('course_id', $id)->delete();
+        
+        return back()->withErrors('courseRemoved');
+
     }
 }

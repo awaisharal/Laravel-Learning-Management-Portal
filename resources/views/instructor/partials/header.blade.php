@@ -291,7 +291,7 @@
             <!-- Collapse -->
             <div class="collapse navbar-collapse mr-auto" id="navbar-default">
                 <ul class="navbar-nav ms-auto" style="margin-right: 30px;">
-                    <li class="nav-item dropdown">
+                    {{-- <li class="nav-item dropdown">
                         <a
                             class="nav-link dropdown-toggle"
                             href="#"
@@ -301,7 +301,7 @@
                             aria-expanded="false"
                             data-bs-display="static"
                         >
-                            Browse
+                            Browse 
                         </a>
                         <ul
                             class="dropdown-menu dropdown-menu-arrow"
@@ -519,20 +519,20 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
-                        <a class="nav-link" href="/student/" >
-                            Student
+                        <a class="nav-link" href="/courses" >
+                            Browse Courses
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/instructor/" >
-                            Instructor
+                        <a class="nav-link" href="/instructor/dashboard" >
+                            Dashboard
                         </a>
                     </li>
                 </ul>
                 <ul class="navbar-nav navbar-right-wrap d-none d-lg-block">
-                    <li class="dropdown d-inline-block stopevent">
+                    {{-- <li class="dropdown d-inline-block stopevent">
                         <a
                             class="btn btn-light btn-icon rounded-circle text-muted indicator indicator-primary"
                             href="#"
@@ -749,7 +749,7 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </li> --}}
 
                     <li class="dropdown ms-2 d-inline-block">
                         <a
@@ -760,26 +760,28 @@
                             aria-expanded="false"
                         >
                             <div class="avatar avatar-md avatar-indicators avatar-online">
-                                <img
-                                    alt="avatar"
-                                    src="/assets/images/avatar/avatar-1.jpg"
-                                    class="rounded-circle"
-                                />
+                                @if($user->img != "" || $user->img != null)
+                                    <img alt="avatar" src="uploads/profiles/{{$user->img}}" class="rounded-circle" />
+                                @else
+                                <img alt="avatar" src="/assets/images/avatar/avatar-3.jpg" class="rounded-circle" />
+                                @endif
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <div class="dropdown-item">
                                 <div class="d-flex">
                                     <div class="avatar avatar-md avatar-indicators avatar-online">
-                                        <img
-                                            alt="avatar"
-                                            src="/assets/images/avatar/avatar-1.jpg"
-                                            class="rounded-circle"
-                                        />
+                                        @if($user->img != "" || $user->img != null)
+                                            <img alt="avatar" src="uploads/profiles/{{$user->img}}" class="rounded-circle" />
+                                        @else
+                                        <img alt="avatar" src="/assets/images/avatar/avatar-3.jpg" class="rounded-circle" />
+                                        @endif
                                     </div>
                                     <div class="ms-3 lh-1">
-                                        <h5 class="mb-1">Annette Black</h5>
-                                        <p class="mb-0 text-muted">annette@geeksui.com</p>
+                                        <h5 class="mb-1">{{$user->name}}</h5>
+                                        <p class="mb-0 text-muted">
+                                            {{$user->email}}
+                                        </p>
                                     </div>
                                 </div>
                             </div>

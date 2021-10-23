@@ -46,3 +46,6 @@ button.no-bg{
 .pagination p.leading-5{
 	margin-top: 10px;
 }
+.dropdown-menu{
+	/*transform: translate(-20px, -120px)!important;*/
+}

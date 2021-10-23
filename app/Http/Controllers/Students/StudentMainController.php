@@ -65,6 +65,7 @@ class StudentMainController extends Controller
 
         $completed = Enrolment::where('student_id', $session_id)->where('status','Finished')->get();
         $ccount = count($completed);
+
         $completed_courses = [];
         if($ccount > 0)
         {

@@ -219,7 +219,7 @@ class mainController extends Controller
             $title = $course->title;
             $ins_id = $course->user_id;
             
-            $student = Student::find($id);
+            $student = Student::find($student_id);
             $student_name = $student->name;
             $student_email = $student->email;
             

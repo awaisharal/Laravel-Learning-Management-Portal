@@ -79,7 +79,7 @@
         <h4 class="modal-title" id="addLectureModalLabel1">
           Add New Lecture
         </h4>
-        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="btn-close" onclick="dismissModal()">
             <span aria-hidden="true"><i class="fe fe-x-circle"></i></span>
         </button>
       </div>

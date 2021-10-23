@@ -22,9 +22,9 @@
                     <a class="nav-link" href="/instructor/my-courses"><i class="fe fe-book nav-icon"></i>My Courses</a>
                 </li>
                 <!-- Nav item -->
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="/instructor/reviews"><i class="fe fe-star nav-icon"></i>Reviews</a>
-                </li>
+                </li> --}}
                 <!-- Nav item -->
                 <li class="nav-item">
                     <a class="nav-link" href="/instructor/students"><i class="fe fe-users nav-icon"></i>Students</a>
