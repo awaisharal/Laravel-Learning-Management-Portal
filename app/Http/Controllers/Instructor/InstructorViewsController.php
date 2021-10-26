@@ -77,47 +77,35 @@ class InstructorViewsController extends Controller
         $user = session()->get('sessionData')[0];
         $session_id = $user->id;
 
-        $courses = Course::where('user_id', $session_id)->get();
-        $students = [];
-        $index = [];
-        $added = [];
+        $enrolments = Enrolment::where('instructor_id', $session_id)->where([
+            ['status','!=','Cancelled']
+        ])->get();
 
-        if(!empty($courses))
+        $data = [];
+
+        if(!empty($enrolments))
         {
-            foreach($courses as $course)
+            foreach($enrolments as $obj)
             {
-                $id = $course->id;
-                $title = $course->title;
-                $thumbnail = $course->filename;
+                $id = $obj->student_id;
 
-                $enrols = Enrolment::where('course_id', $id)->get();
+                $student = Student::find($id);
 
-                if(!empty($enrols))
-                {
-                    foreach($enrols as $e)
-                    {
-                        $student_id = $e->student_id;
-                        
-                        $student = Student::find($student_id);
-                        $list = [
-                            'id' => $student->id,
-                            'name' => $student->name,
-                            'email' => $student->email,
-                            'phone' => $student->phone,
-                            'img' => $student->img,
-                            'username' => $student->username,
-                            'course_id' => $id,
-                            'course_title' => $title,
-                            'course_img' => $thumbnail
-                        ];
+                $list = [
+                    'id' => $student->id,
+                    'name' => $student->name,
+                    'email' => $student->email,
+                    'phone' => $student->phone,
+                    'img' => $student->img,
+                    'username' => $student->username,
+                    'date' => $student->created_at
+                ];
 
-                        array_push($students, $list);
-                    }
-                }
+                array_push($data, $list);
             }
         }
 
-        return view('instructor.my-students');
+        return view('instructor.my-students',['students'=>$data]);
     }
     public function edit_profile_view ()
     {

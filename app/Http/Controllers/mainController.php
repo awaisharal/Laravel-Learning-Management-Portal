@@ -13,6 +13,7 @@ use App\Models\Curriculum;
 use App\Models\Lecture;
 use App\Models\Enrolment;
 use App\Models\Bookmark;
+use App\Models\Assign;
 use DB;
 
 
@@ -215,6 +216,20 @@ class mainController extends Controller
                 'course_id' => $course_id
             ]);
 
+            // Check if student already exist for this instructor
+            $student_check = Assign::where([
+                ['student_id','=',$student_id],
+                ['instructor_id','=',$instructor_id]
+            ])->get();
+            $student_check = count($student_check);
+            if($student_check == 0)
+            {
+                Assign::create([
+                    'student_id' => $student_id,
+                    'instructor_id' => $instructor_id
+                ]);
+            }
+            
             $course = Course::find($course_id);
             $title = $course->title;
             $ins_id = $course->user_id;
