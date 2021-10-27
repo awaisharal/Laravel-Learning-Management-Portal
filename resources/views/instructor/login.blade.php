@@ -22,6 +22,7 @@
   <link href="/assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
   <!-- Theme CSS -->
   <link rel="stylesheet" href="/assets/css/theme.min.css">
+  <link rel="stylesheet" href="/assets/css/custom.css">
   <title>Instructor Sign in</title>
 </head>
 <body>
@@ -51,6 +52,10 @@
                     <div class="alert alert-danger" role="alert">
                       You are banned by admin.
                     </div>
+                @elseif($errors->first() == 'password_changed')
+                    <div class="alert alert-success" role="alert">
+                      Password successfully changed. Please login to continue
+                    </div>
                 @endif
             @endif
             <form method="post" action="{{ route('instructor.login') }}">
@@ -79,7 +84,7 @@
                   <label class="form-check-label " for="rememberme">Remember me</label>
                 </div>
                 <div>
-                  <a href="forget-password.html">Forgot your password?</a>
+                  <button type="button" class="no-bg" style="color:#754FFE;" data-bs-toggle="modal" data-bs-target="#ForgotModal">Forgot your password?</button>
                 </div>
               </div>
               <div>
@@ -97,9 +102,49 @@
     </div>
   </div>
 
+<div class="modal fade" id="ForgotModal" tabindex="-1" role="dialog" aria-labelledby="addSectionModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="padding-bottom: 0!important;">
+      <div class="modal-header">
+        <h4 class="modal-title" id="addSectionModalLabel1">
+          Reset Password
+        </h4>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <form action="{{route('instructor.forgetPassword')}}" method="POST">
+      @csrf
+      <div class="modal-body">
+        @if(count($errors) > 0)
+          @if($errors->first() == 'emailMatchError')
+            <div class="alert alert-warning">
+              Email address does not match with our records.
+            </div>
+          @elseif($errors->first() == 'resetSuccess')
+            <div class="alert alert-success">
+              We have sent the password reset instructions. Please check your mailbox.
+            </div>
+          @endif
+        @endif
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" class="form-control" name="email" placeholder="Enter your email address here" required>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="id" id="id" />
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Recover</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- Scripts -->
   <!-- Libs JS -->
-<script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/libs/odometer/odometer.min.js"></script>
 <script src="/assets/libs/jquery-slimscroll/jquery.slimscroll.min.js"></script>
@@ -137,6 +182,21 @@
 
 <!-- Theme JS -->
 <script src="/assets/js/theme.min.js"></script>
+@if(count($errors) > 0)
+  @if($errors->first() == 'emailMatchError')
+    <script>
+      $(document).ready(function(){
+        $("#ForgotModal").modal('show');
+      })
+    </script>
+  @elseif($errors->first() == 'resetSuccess')
+    <script>
+      $(document).ready(function(){
+        $("#ForgotModal").modal('show');
+      })
+    </script>
+  @endif
+@endif
 </body>
 
 </html>

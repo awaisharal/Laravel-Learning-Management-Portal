@@ -95,6 +95,77 @@ class StudentAuthController extends Controller
             return back()->withErrors('email_not_match');
         }
     }
+    public function forget_password(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|max:255'
+        ]);
+
+        $email = $request->email;
+
+        $student = Student::where(['email'=> $email])->get();
+        if(!$student->isEmpty())
+        {
+            $id = $student[0]->id;
+            $name = $student[0]->name;
+            
+            $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$_';
+            $len = 48;
+            $l = strlen($chars) - 1;
+            $hash = '';
+            for ($i = 0; $i < $len; ++$i) {
+                $hash .= $chars[rand(0, $l)];
+            }
+            $hash = $id.$hash;
+
+            EmailsController::forget_password_student($name, $email, $hash);
+
+            return back()->withErrors('resetSuccess');
+        }else{
+            return back()->withErrors('emailMatchError');
+        }
+        
+    }
+    public function reset_password_page($hash)
+    {
+        $id = $hash[0];
+        $student = Student::find($id);
+        if(empty($student))
+        {
+            return redirect('/login');
+        }
+
+        return view('student.change-password',['id'=>$id]);
+    }
+    public function reset_password(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'pass1' => 'required|max:255',
+            'pass2' => 'required|max:255'
+        ]);
+
+        $id = $request->id;
+        $pass1 = $request->pass1;
+        $pass2 = $request->pass2;
+
+        $student = Student::find($id);
+        if(empty($student))
+        {
+            return redirect('/login');
+        }
+
+        if($pass1 != $pass2)
+        {
+            return back()->withErrors('pass_not_match');
+        }
+
+        $hash = bcrypt($pass1);
+
+        Student::where('id', $id)->update(['password'=> $hash]);
+
+        return redirect('/login')->withErrors('password_changed');
+    }
     public function logoutStudent()
     {
         session()->forget('StudentEmail');

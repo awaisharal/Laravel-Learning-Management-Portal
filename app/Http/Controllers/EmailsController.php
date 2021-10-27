@@ -5,6 +5,8 @@
 
 // Replace all local URL.
 // Replace all Vendor addresses.
+// Replace Logo and its URL
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -1371,5 +1373,737 @@ class EmailsController extends Controller
        } catch (Exception $e) {
            return $e;
        }       
+    }
+    public static function certificate_rejection($name, $email, $ins_name, $ins_email, $title)
+    {
+        require '../vendor/autoload.php';
+
+        // Environment Variables
+        $mail_host = env('MAIL_HOST','default');
+        $mail_username = env('MAIL_USERNAME','default');
+        $mail_password = env('MAIL_PASSWORD','default');
+        $mail_port = env('MAIL_PORT','default');
+        $mail_from_address = env('MAIL_FROM_ADDRESS','default');
+        $mail_from_name = env('MAIL_FROM_NAME','default');
+        $mail_reply_to_address = env('MAIL_REPLYTO_ADDRESS','default');
+        $mail_admin_address = env('MAIL_ADMIN_ADDRESS','default');
+
+        $mail = new PHPMailer(true);
+        try {
+            $mail->SMTPDebug = 2;
+            $mail->Host = $mail_host;
+            $mail->SMTPAuth   = true;
+            $mail->Username = $mail_username;
+            $mail->Password = $mail_password;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port = $mail_port;
+
+            $mail->setFrom($mail_from_address,$mail_from_name);
+            $mail->addAddress($email, $name);
+
+            $mail->addReplyTo($mail_reply_to_address, $mail_from_name);
+            // $mail->addCC('cc@example.com');
+            // $mail->addBCC('bcc@example.com');
+           
+            $mail->isHTML(true);
+
+            $mail->Subject = 'Certificate request not approved';
+            $mail->Body    = '<!DOCTYPE html>
+                <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+                <head>
+                  <meta charset="utf-8">
+                  <meta name="viewport" content="width=device-width,initial-scale=1">
+                  <meta name="x-apple-disable-message-reformatting">
+                  <title></title>
+                  <!--[if mso]>
+                  <style>
+                    table {border-collapse:collapse;border-spacing:0;border:none;margin:0;}
+                    div, td {padding:0;}
+                    div {margin:0 !important;}
+                  </style>
+                  <noscript>
+                    <xml>
+                      <o:OfficeDocumentSettings>
+                        <o:PixelsPerInch>96</o:PixelsPerInch>
+                      </o:OfficeDocumentSettings>
+                    </xml>
+                  </noscript>
+                  <![endif]-->
+                  <style>
+                    table, td, div, h1, p {
+                      font-family: Arial, sans-serif;
+                    }
+                    table.data{
+                        width:100%;
+                    }
+                    table.data tr th{
+                      background: #eee;
+                    }
+                    table.data tr, table.data td, table.data th{
+                      margin: 0!important;
+                    }
+                    table.data tr th, table.data tr td{
+                       padding: 13px;
+                    }
+                    table.data tr td{
+                       background: #f7f7f7;
+                    }
+                    @media screen and (max-width: 530px) {
+                      .unsub {
+                        display: block;
+                        padding: 8px;
+                        margin-top: 14px;
+                        border-radius: 6px;
+                        background-color: #555555;
+                        text-decoration: none !important;
+                        font-weight: bold;
+                      }
+                      .col-lge {
+                        max-width: 100% !important;
+                      }
+                    }
+                    @media screen and (min-width: 531px) {
+                      .col-sml {
+                        max-width: 27% !important;
+                      }
+                      .col-lge {
+                        max-width: 73% !important;
+                      }
+                    }
+                    table.ins {
+                      width: 100%;
+                      border-collapse: collapse;
+                    }
+                    table.ins th{
+                      border: 1px solid #f7f7f7;
+                      background: #f7f7f7;
+                      padding: 7px;
+                    }
+                    table.ins td{
+                      border: 1px solid #f7f7f7;
+                      padding: 7px;
+                    }
+                  </style>
+                </head>
+                <body style="margin:0;padding:0;word-spacing:normal;background-color:#f7f7f7;">
+                  <div role="article" aria-roledescription="email" lang="en" style="text-size-adjust:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#f7f7f7;">
+                    <table role="presentation" style="width:100%;border:none;border-spacing:0;">
+                      <tr>
+                        <td align="center" style="padding:0;">
+                          <!--[if mso]>
+                          <table role="presentation" align="center" style="width:600px;">
+                          <tr>
+                          <td>
+                          <![endif]-->
+                          <table>
+                            <tr style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
+                              <td style="padding:40px 30px 30px 30px;text-align:center;font-size:24px;font-weight:bold;">
+                                <a href="https://lms.nutasurgical.com" style="text-decoration:none;">
+                                  <img src="https://lms.nutasurgical.com/assets/images/brand/logo/logo.png" alt="Logo" style="width:80%;max-width:180px;height:auto;border:none;text-decoration:none;color:#ffffff;">
+                                </a>
+                              </td>
+                            </tr>
+                          </table>
+                          <!-- Body -->
+                          <table role="presentation" style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
+                            <tr>
+                              <td style="padding:30px 30px 0px 30px;background-color:#ffffff;">
+                                <h1 style="margin-top:0;margin-bottom:10px;font-size:26px;line-height:25px;font-weight:bold;letter-spacing:-0.02em;text-align: center;">
+                                    Certificate Not Approved 
+                                </h1>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding:20px;font-size:18px;background:#fff;">
+                                <p>
+                                    Dear '.$name.',
+                                </p>
+                                <p>
+                                  Your instructor rejected your certification request. For more information you can contact our customer support or you can contact your instructor directly.
+                                </p>
+                                <table class="ins">
+                                  <tr>
+                                    <th>Instructor Name</th>
+                                    <td>'.$ins_name.'</td>
+                                  </tr>
+                                  <tr>
+                                    <th>Instructor Email</th>
+                                    <td>'.$ins_email.'</td>
+                                  </tr>
+                                  <tr>
+                                    <th>Course</th>
+                                    <td>'.$title.'</td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                          </table>
+                          <!-- footer -->
+                          <table style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
+                            <tr>
+                              <td style="padding:30px;text-align:center;font-size:12px;background-color:#404040;color:#cccccc;">
+                                <p style="margin:0 0 8px 0;">
+                                  &copy; Copyright 2021. All rights reserved.
+                                </p>
+                              </td>
+                            </tr>
+                          </table>
+                          <!--[if mso]>
+                          </td>
+                          </tr>
+                          </table>
+                          <![endif]-->
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+
+                </body>
+                </html>';
+
+            $mail->send();     
+       } catch (Exception $e) {
+           return $e;
+       }       
+    }
+    public static function certificate_approval($name, $email, $title, $file)
+    {
+        require '../vendor/autoload.php';
+
+        $certificate = "https://lms.nutasurgical.com/uploads/certificates/".$file;
+        // Environment Variables
+        $mail_host = env('MAIL_HOST','default');
+        $mail_username = env('MAIL_USERNAME','default');
+        $mail_password = env('MAIL_PASSWORD','default');
+        $mail_port = env('MAIL_PORT','default');
+        $mail_from_address = env('MAIL_FROM_ADDRESS','default');
+        $mail_from_name = env('MAIL_FROM_NAME','default');
+        $mail_reply_to_address = env('MAIL_REPLYTO_ADDRESS','default');
+        $mail_admin_address = env('MAIL_ADMIN_ADDRESS','default');
+
+        $mail = new PHPMailer(true);
+        try {
+            $mail->SMTPDebug = 2;
+            $mail->Host = $mail_host;
+            $mail->SMTPAuth   = true;
+            $mail->Username = $mail_username;
+            $mail->Password = $mail_password;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port = $mail_port;
+
+            $mail->setFrom($mail_from_address,$mail_from_name);
+            $mail->addAddress($email, $name);
+
+            $mail->addReplyTo($mail_reply_to_address, $mail_from_name);
+            $mail->addAttachment($certificate, 'Certificate');
+           
+            $mail->isHTML(true);
+
+            $mail->Subject = 'Certification | LMS';
+            $mail->Body    = '<!DOCTYPE html>
+                <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+                <head>
+                  <meta charset="utf-8">
+                  <meta name="viewport" content="width=device-width,initial-scale=1">
+                  <meta name="x-apple-disable-message-reformatting">
+                  <title></title>
+                  <!--[if mso]>
+                  <style>
+                    table {border-collapse:collapse;border-spacing:0;border:none;margin:0;}
+                    div, td {padding:0;}
+                    div {margin:0 !important;}
+                  </style>
+                  <noscript>
+                    <xml>
+                      <o:OfficeDocumentSettings>
+                        <o:PixelsPerInch>96</o:PixelsPerInch>
+                      </o:OfficeDocumentSettings>
+                    </xml>
+                  </noscript>
+                  <![endif]-->
+                  <style>
+                    table, td, div, h1, p {
+                      font-family: Arial, sans-serif;
+                    }
+                    table.data{
+                        width:100%;
+                    }
+                    table.data tr th{
+                      background: #eee;
+                    }
+                    table.data tr, table.data td, table.data th{
+                      margin: 0!important;
+                    }
+                    table.data tr th, table.data tr td{
+                       padding: 13px;
+                    }
+                    table.data tr td{
+                       background: #f7f7f7;
+                    }
+                    @media screen and (max-width: 530px) {
+                      .unsub {
+                        display: block;
+                        padding: 8px;
+                        margin-top: 14px;
+                        border-radius: 6px;
+                        background-color: #555555;
+                        text-decoration: none !important;
+                        font-weight: bold;
+                      }
+                      .col-lge {
+                        max-width: 100% !important;
+                      }
+                    }
+                    @media screen and (min-width: 531px) {
+                      .col-sml {
+                        max-width: 27% !important;
+                      }
+                      .col-lge {
+                        max-width: 73% !important;
+                      }
+                    }
+                    table.ins {
+                      width: 100%;
+                      border-collapse: collapse;
+                    }
+                    table.ins th{
+                      border: 1px solid #f7f7f7;
+                      background: #f7f7f7;
+                      padding: 7px;
+                    }
+                    table.ins td{
+                      border: 1px solid #f7f7f7;
+                      padding: 7px;
+                    }
+                  </style>
+                </head>
+                <body style="margin:0;padding:0;word-spacing:normal;background-color:#f7f7f7;">
+                  <div role="article" aria-roledescription="email" lang="en" style="text-size-adjust:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#f7f7f7;">
+                    <table role="presentation" style="width:100%;border:none;border-spacing:0;">
+                      <tr>
+                        <td align="center" style="padding:0;">
+                          <!--[if mso]>
+                          <table role="presentation" align="center" style="width:600px;">
+                          <tr>
+                          <td>
+                          <![endif]-->
+                          <table>
+                            <tr style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
+                              <td style="padding:40px 30px 30px 30px;text-align:center;font-size:24px;font-weight:bold;">
+                                <a href="https://lms.nutasurgical.com" style="text-decoration:none;">
+                                  <img src="https://lms.nutasurgical.com/assets/images/brand/logo/logo.png" alt="Logo" style="width:80%;max-width:180px;height:auto;border:none;text-decoration:none;color:#ffffff;">
+                                </a>
+                              </td>
+                            </tr>
+                          </table>
+                          <!-- Body -->
+                          <table role="presentation" style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
+                            <tr>
+                              <td style="padding:30px 30px 0px 30px;background-color:#ffffff;">
+                                <h1 style="margin-top:0;margin-bottom:10px;font-size:26px;line-height:25px;font-weight:bold;letter-spacing:-0.02em;text-align: center;">
+                                    Congratulations
+                                </h1>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding:20px;font-size:18px;background:#fff;">
+                                <p>
+                                    Dear '.$name.',
+                                </p>
+                                <p>
+                                  Your instructor has approved your certification request for the course <i><b>('.$title.')</b></i>. Please download the below attached certificate. In case of any queries, please contact our customer support. We wish you a bright future.
+                                </p>
+                              </td>
+                            </tr>
+                          </table>
+                          <!-- footer -->
+                          <table style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
+                            <tr>
+                              <td style="padding:30px;text-align:center;font-size:12px;background-color:#404040;color:#cccccc;">
+                                <p style="margin:0 0 8px 0;">
+                                  &copy; Copyright 2021. All rights reserved.
+                                </p>
+                              </td>
+                            </tr>
+                          </table>
+                          <!--[if mso]>
+                          </td>
+                          </tr>
+                          </table>
+                          <![endif]-->
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+
+                </body>
+                </html>';
+
+            $mail->send();     
+       } catch (Exception $e) {
+           return $e;
+       }       
+    }
+    public static function forget_password_student($name, $email, $hash)
+    {
+        require '../vendor/autoload.php';
+
+        // Environment Variables
+        $mail_host = env('MAIL_HOST','default');
+        $mail_username = env('MAIL_USERNAME','default');
+        $mail_password = env('MAIL_PASSWORD','default');
+        $mail_port = env('MAIL_PORT','default');
+        $mail_from_address = env('MAIL_FROM_ADDRESS','default');
+        $mail_from_name = env('MAIL_FROM_NAME','default');
+        $mail_reply_to_address = env('MAIL_REPLYTO_ADDRESS','default');
+        $mail_admin_address = env('MAIL_ADMIN_ADDRESS','default');
+
+        $mail = new PHPMailer(true);
+        try {
+            $mail->SMTPDebug = 2;
+            $mail->Host = $mail_host;
+            $mail->SMTPAuth   = true;
+            $mail->Username = $mail_username;
+            $mail->Password = $mail_password;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port = $mail_port;
+
+            $mail->setFrom($mail_from_address,$mail_from_name);
+            $mail->addAddress($email, $name);
+
+            $mail->addReplyTo($mail_reply_to_address, $mail_from_name);
+           
+            $mail->isHTML(true);
+
+            $mail->Subject = 'Reset Password | LMS';
+            $mail->Body    = '<!DOCTYPE html>
+                <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+                <head>
+                  <meta charset="utf-8">
+                  <meta name="viewport" content="width=device-width,initial-scale=1">
+                  <meta name="x-apple-disable-message-reformatting">
+                  <title></title>
+                  <!--[if mso]>
+                  <style>
+                    table {border-collapse:collapse;border-spacing:0;border:none;margin:0;}
+                    div, td {padding:0;}
+                    div {margin:0 !important;}
+                  </style>
+                  <noscript>
+                    <xml>
+                      <o:OfficeDocumentSettings>
+                        <o:PixelsPerInch>96</o:PixelsPerInch>
+                      </o:OfficeDocumentSettings>
+                    </xml>
+                  </noscript>
+                  <![endif]-->
+                  <style>
+                    table, td, div, h1, p {
+                      font-family: Arial, sans-serif;
+                    }
+                    table.data{
+                        width:100%;
+                    }
+                    table.data tr th{
+                      background: #eee;
+                    }
+                    table.data tr, table.data td, table.data th{
+                      margin: 0!important;
+                    }
+                    table.data tr th, table.data tr td{
+                       padding: 13px;
+                    }
+                    table.data tr td{
+                       background: #f7f7f7;
+                    }
+                    @media screen and (max-width: 530px) {
+                      .unsub {
+                        display: block;
+                        padding: 8px;
+                        margin-top: 14px;
+                        border-radius: 6px;
+                        background-color: #555555;
+                        text-decoration: none !important;
+                        font-weight: bold;
+                      }
+                      .col-lge {
+                        max-width: 100% !important;
+                      }
+                    }
+                    @media screen and (min-width: 531px) {
+                      .col-sml {
+                        max-width: 27% !important;
+                      }
+                      .col-lge {
+                        max-width: 73% !important;
+                      }
+                    }
+                    table.ins {
+                      width: 100%;
+                      border-collapse: collapse;
+                    }
+                    table.ins th{
+                      border: 1px solid #f7f7f7;
+                      background: #f7f7f7;
+                      padding: 7px;
+                    }
+                    table.ins td{
+                      border: 1px solid #f7f7f7;
+                      padding: 7px;
+                    }
+                  </style>
+                </head>
+                <body style="margin:0;padding:0;word-spacing:normal;background-color:#f7f7f7;">
+                  <div role="article" aria-roledescription="email" lang="en" style="text-size-adjust:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#f7f7f7;">
+                    <table role="presentation" style="width:100%;border:none;border-spacing:0;">
+                      <tr>
+                        <td align="center" style="padding:0;">
+                          <!--[if mso]>
+                          <table role="presentation" align="center" style="width:600px;">
+                          <tr>
+                          <td>
+                          <![endif]-->
+                          <table>
+                            <tr style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
+                              <td style="padding:40px 30px 30px 30px;text-align:center;font-size:24px;font-weight:bold;">
+                                <a href="https://lms.nutasurgical.com" style="text-decoration:none;">
+                                  <img src="https://lms.nutasurgical.com/assets/images/brand/logo/logo.png" alt="Logo" style="width:80%;max-width:180px;height:auto;border:none;text-decoration:none;color:#ffffff;">
+                                </a>
+                              </td>
+                            </tr>
+                          </table>
+                          <!-- Body -->
+                          <table role="presentation" style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
+                            <tr>
+                              <td style="padding:30px 30px 0px 30px;background-color:#ffffff;">
+                                <h1 style="margin-top:0;margin-bottom:10px;font-size:26px;line-height:25px;font-weight:bold;letter-spacing:-0.02em;text-align: center;">
+                                    Recover Password
+                                </h1>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding:20px;font-size:18px;background:#fff;">
+                                <p>
+                                    Dear '.$name.',
+                                </p>
+                                <p>
+                                  We have received a password reset request from your email. To recover your password click the recover button. If you have not done this, simply ignore this email.
+                                </p>
+                                <a href="https://lms.nutasurgical.com/student/recover/'.$hash.'" target="_blank">
+                                  <button style="background:#754FFE;padding:8px 15px 8px 15px;color:#fff;border:1px solid #754FFE;border-radius: 4px;font-size: 16px;">
+                                      Recover your password
+                                  </button>
+                                </a>
+                              </td>
+                            </tr>
+                          </table>
+                          <!-- footer -->
+                          <table style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
+                            <tr>
+                              <td style="padding:30px;text-align:center;font-size:12px;background-color:#404040;color:#cccccc;">
+                                <p style="margin:0 0 8px 0;">
+                                  &copy; Copyright 2021. All rights reserved.
+                                </p>
+                              </td>
+                            </tr>
+                          </table>
+                          <!--[if mso]>
+                          </td>
+                          </tr>
+                          </table>
+                          <![endif]-->
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+
+                </body>
+                </html>';
+
+            $mail->send();     
+       } catch (Exception $e) {
+           return $e;
+       }    
+    }
+    public static function forget_password_instructor($name, $email, $hash)
+    {
+        require '../vendor/autoload.php';
+
+        // Environment Variables
+        $mail_host = env('MAIL_HOST','default');
+        $mail_username = env('MAIL_USERNAME','default');
+        $mail_password = env('MAIL_PASSWORD','default');
+        $mail_port = env('MAIL_PORT','default');
+        $mail_from_address = env('MAIL_FROM_ADDRESS','default');
+        $mail_from_name = env('MAIL_FROM_NAME','default');
+        $mail_reply_to_address = env('MAIL_REPLYTO_ADDRESS','default');
+        $mail_admin_address = env('MAIL_ADMIN_ADDRESS','default');
+
+        $mail = new PHPMailer(true);
+        try {
+            $mail->SMTPDebug = 2;
+            $mail->Host = $mail_host;
+            $mail->SMTPAuth   = true;
+            $mail->Username = $mail_username;
+            $mail->Password = $mail_password;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port = $mail_port;
+
+            $mail->setFrom($mail_from_address,$mail_from_name);
+            $mail->addAddress($email, $name);
+
+            $mail->addReplyTo($mail_reply_to_address, $mail_from_name);
+           
+            $mail->isHTML(true);
+
+            $mail->Subject = 'Reset Password | LMS';
+            $mail->Body    = '<!DOCTYPE html>
+                <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+                <head>
+                  <meta charset="utf-8">
+                  <meta name="viewport" content="width=device-width,initial-scale=1">
+                  <meta name="x-apple-disable-message-reformatting">
+                  <title></title>
+                  <!--[if mso]>
+                  <style>
+                    table {border-collapse:collapse;border-spacing:0;border:none;margin:0;}
+                    div, td {padding:0;}
+                    div {margin:0 !important;}
+                  </style>
+                  <noscript>
+                    <xml>
+                      <o:OfficeDocumentSettings>
+                        <o:PixelsPerInch>96</o:PixelsPerInch>
+                      </o:OfficeDocumentSettings>
+                    </xml>
+                  </noscript>
+                  <![endif]-->
+                  <style>
+                    table, td, div, h1, p {
+                      font-family: Arial, sans-serif;
+                    }
+                    table.data{
+                        width:100%;
+                    }
+                    table.data tr th{
+                      background: #eee;
+                    }
+                    table.data tr, table.data td, table.data th{
+                      margin: 0!important;
+                    }
+                    table.data tr th, table.data tr td{
+                       padding: 13px;
+                    }
+                    table.data tr td{
+                       background: #f7f7f7;
+                    }
+                    @media screen and (max-width: 530px) {
+                      .unsub {
+                        display: block;
+                        padding: 8px;
+                        margin-top: 14px;
+                        border-radius: 6px;
+                        background-color: #555555;
+                        text-decoration: none !important;
+                        font-weight: bold;
+                      }
+                      .col-lge {
+                        max-width: 100% !important;
+                      }
+                    }
+                    @media screen and (min-width: 531px) {
+                      .col-sml {
+                        max-width: 27% !important;
+                      }
+                      .col-lge {
+                        max-width: 73% !important;
+                      }
+                    }
+                    table.ins {
+                      width: 100%;
+                      border-collapse: collapse;
+                    }
+                    table.ins th{
+                      border: 1px solid #f7f7f7;
+                      background: #f7f7f7;
+                      padding: 7px;
+                    }
+                    table.ins td{
+                      border: 1px solid #f7f7f7;
+                      padding: 7px;
+                    }
+                  </style>
+                </head>
+                <body style="margin:0;padding:0;word-spacing:normal;background-color:#f7f7f7;">
+                  <div role="article" aria-roledescription="email" lang="en" style="text-size-adjust:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#f7f7f7;">
+                    <table role="presentation" style="width:100%;border:none;border-spacing:0;">
+                      <tr>
+                        <td align="center" style="padding:0;">
+                          <!--[if mso]>
+                          <table role="presentation" align="center" style="width:600px;">
+                          <tr>
+                          <td>
+                          <![endif]-->
+                          <table>
+                            <tr style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
+                              <td style="padding:40px 30px 30px 30px;text-align:center;font-size:24px;font-weight:bold;">
+                                <a href="https://lms.nutasurgical.com" style="text-decoration:none;">
+                                  <img src="https://lms.nutasurgical.com/assets/images/brand/logo/logo.png" alt="Logo" style="width:80%;max-width:180px;height:auto;border:none;text-decoration:none;color:#ffffff;">
+                                </a>
+                              </td>
+                            </tr>
+                          </table>
+                          <!-- Body -->
+                          <table role="presentation" style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
+                            <tr>
+                              <td style="padding:30px 30px 0px 30px;background-color:#ffffff;">
+                                <h1 style="margin-top:0;margin-bottom:10px;font-size:26px;line-height:25px;font-weight:bold;letter-spacing:-0.02em;text-align: center;">
+                                    Recover Password
+                                </h1>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding:20px;font-size:18px;background:#fff;">
+                                <p>
+                                    Dear '.$name.',
+                                </p>
+                                <p>
+                                  We have received a password reset request from your email. To recover your password click the recover button. If you have not done this, simply ignore this email.
+                                </p>
+                                <a href="https://lms.nutasurgical.com/instructor/recover/'.$hash.'" target="_blank">
+                                  <button style="background:#754FFE;padding:8px 15px 8px 15px;color:#fff;border:1px solid #754FFE;border-radius: 4px;font-size: 16px;">
+                                      Recover your password
+                                  </button>
+                                </a>
+                              </td>
+                            </tr>
+                          </table>
+                          <!-- footer -->
+                          <table style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:16px;line-height:22px;color:#363636;">
+                            <tr>
+                              <td style="padding:30px;text-align:center;font-size:12px;background-color:#404040;color:#cccccc;">
+                                <p style="margin:0 0 8px 0;">
+                                  &copy; Copyright 2021. All rights reserved.
+                                </p>
+                              </td>
+                            </tr>
+                          </table>
+                          <!--[if mso]>
+                          </td>
+                          </tr>
+                          </table>
+                          <![endif]-->
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+
+                </body>
+                </html>';
+
+            $mail->send();     
+       } catch (Exception $e) {
+           return $e;
+       }    
     }
 }

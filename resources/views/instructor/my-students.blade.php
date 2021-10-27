@@ -2,7 +2,7 @@
 
 @section('meta')
 
-<title>Instructor Reviews | {{config('app.name')}}</title>
+<title>My Students | {{config('app.name')}}</title>
 
 @endsection
 

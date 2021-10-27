@@ -12,6 +12,7 @@ use App\Models\Curriculum;
 use App\Models\Lecture;
 use App\Models\Student;
 use App\Models\Enrolment;
+use App\Models\Certificate;
 
 class InstructorViewsController extends Controller
 {
@@ -558,5 +559,108 @@ class InstructorViewsController extends Controller
         
         return back()->withErrors('courseRemoved');
 
+    }
+    public function certifications_view()
+    {
+        $user = session()->get('sessionData')[0];
+        $instructor_id = $user->id;
+
+        $data = [];
+
+        $requests = Certificate::where([
+            ['instructor_id','=',$instructor_id],
+            ['status','=','Pending']
+        ])->get();
+
+        if(!empty($requests))
+        {
+            foreach($requests as $obj)
+            {
+                $id = $obj->id;
+                $student_id = $obj->student_id;
+                $course_id = $obj->course_id;
+                $date = $obj->created_at;
+
+                $student = Student::find($student_id);
+                $course  = Course::find($course_id);
+
+                $student_name = $student->name;
+                $student_email = $student->email;
+                $student_img = $student->img;
+                $student_phone = $student->phone;
+
+                $list = [   
+                    'id' => $id,
+                    'name' => $student_name,
+                    'email' => $student_email,
+                    'img' => $student_img,
+                    'phone' => $student_phone,
+                    'course_id' => $course->title,
+                    'course_title' => $course->title,
+                    'date' => $date
+                ];
+
+                array_push($data, $list);
+            }
+        }
+
+        return view('instructor.certifications',['data'=> $data]);
+    }
+    public function reject_certification(Request $request)
+    {
+        $id = $request->id;
+    
+        $rec = Certificate::find($id);
+
+        $student_id = $rec->student_id;
+        $instructor_id = $rec->instructor_id;
+        $course_id = $rec->course_id;
+    
+        $student = Student::find($student_id);
+        $instructor = Instructor::find($instructor_id);
+        $course = Course::find($course_id);
+
+        $rec->delete();
+
+        // send mail here
+        EmailsController::certificate_rejection($student->name, $student->email, $instructor->name, $instructor->email, $course->title);
+        return back()->withErrors('CourseRejected');
+    }
+    public function approve_certification(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'file' => 'required|mimes:jpeg,jpg,png|max:10000'
+        ]);
+        $id = $request->id;
+        $file = $request->file;
+        
+        $rec = Certificate::find($id);
+
+        $student_id = $rec->student_id;
+        $instructor_id = $rec->instructor_id;
+        $course_id = $rec->course_id;
+    
+        $student = Student::find($student_id);
+        $instructor = Instructor::find($instructor_id);
+        $course = Course::find($course_id);
+
+        $ext = $file->getClientOriginalExtension();    
+        $filename = uniqid(rand(999, 999999)).time().'.'.$ext;
+
+        $filepath = "uploads/certificates/";
+
+        if(move_uploaded_file($_FILES['file']['tmp_name'], $filepath.$filename))
+        {
+            Certificate::where([
+                ['instructor_id','=',$instructor_id],
+                ['student_id','=',$student_id],
+                ['course_id','=',$course_id],
+            ])->update(['status'=> 'Completed','file'=>$filename]);
+        }
+
+        // Send mail here
+        EmailsController::certificate_approval($student->name, $student->email, $course->title, $filename);
+        return back()->withErrors('CourseAccepted');
     }
 }

@@ -13,7 +13,7 @@ use App\Models\Curriculum;
 use App\Models\Lecture;
 use App\Models\Enrolment;
 use App\Models\Bookmark;
-use App\Models\Assign;
+use App\Models\Certificate;
 use DB;
 
 
@@ -328,17 +328,27 @@ class mainController extends Controller
                 }
                 else{
                     $first_c = Curriculum::where('course_id', $course_id)->orderBy('id','asc')->first();
-                    $lecture = Lecture::where('curriculum_id', $first_c->id)->first();
+                    if($first_c != null)
+                    {
+                        $lecture = Lecture::where('curriculum_id', $first_c->id)->first();
+                    }
+                    else{
+                        $lecture = [];
+                    }
                 }
 
                 // Fetching last lecture
                 // ======================
 
                 $last_cur = Curriculum::where('course_id', $course_id)->orderBy('id','desc')->first();
-                $last_lecture = Lecture::where('curriculum_id', $last_cur->id)->orderBy('id','desc')->first();
-                $last_lecture_id = $last_lecture->id;
-                 
-
+                if($last_cur != null)
+                {
+                    $last_lecture = Lecture::where('curriculum_id', $last_cur->id)->orderBy('id','desc')->first();
+                    $last_lecture_id = $last_lecture->id;
+                }else{
+                    $last_lecture_id = null;
+                }
+                
                 return view('courses.watch',['course'=>$course,'curriculums'=>$curriculums,'lecture'=>$lecture,'last_lecture_id'=>$last_lecture_id]);
             }else{
                 return redirect('/courses/'.$course_id.'/details');
@@ -363,15 +373,30 @@ class mainController extends Controller
             ['course_id','=',$course_id]
         ])->update(['status'=>'Finished']);
 
-        
         $student_name = $user->name;
         $student_email = $user->email;
         
         $course = Course::find($course_id);
         $ins_id = $course->user_id;
+        $title = $course->title;
         $ins = Instructor::find($ins_id);
         $ins_name = $ins->name;
         $ins_email = $ins->email;
+
+        $cert_check = Certificate::where([
+            ['student_id','=',$user_id],
+            ['instructor_id','=',$ins_id],
+            ['course_id','=',$course_id]
+        ])->count();
+
+        if($cert_check == 0)
+        {
+            Certificate::create([
+                'student_id' => $user_id,
+                'instructor_id' => $ins_id,
+                'course_id' => $course_id
+            ]);
+        }
 
         EmailsController::course_completion($title, $student_name, $student_email, $ins_name, $ins_email);
 

@@ -74,6 +74,10 @@ Route::group(['middleware' => ['AdminAuth']], function(){
 Route::get('/instructor/login', [InstructorAuthController::class,'login_view']);
 Route::POST('/instructor/login', [InstructorAuthController::class,'login'])->name('instructor.login');
 
+Route::POST('/instructor/forget-password', [InstructorAuthController::class,'forget_password'])->name('instructor.forgetPassword');
+Route::get('/instructor/recover/{hash}', [InstructorAuthController::class,'reset_password_page']);
+Route::POST('/instructor/recover/', [InstructorAuthController::class,'reset_password'])->name('instructor.resetPassword');
+
 Route::group(['middleware' => ['InstructorAuth']], function(){
 
 	Route::get('/instructor/', [InstructorViewsController::class,'instructor_dashboard']);
@@ -100,6 +104,11 @@ Route::group(['middleware' => ['InstructorAuth']], function(){
 	Route::get('/instructor/reviews', [InstructorViewsController::class,'reviews_view']);
 	Route::get('/instructor/students', [InstructorViewsController::class,'students_view']);
 
+	Route::get('/instructor/certifications', [InstructorViewsController::class,'certifications_view']);
+	Route::post('/instructor/certification/reject', [InstructorViewsController::class,'reject_certification'])->name('certificate.reject');
+	Route::post('/instructor/certification/approve', [InstructorViewsController::class,'approve_certification'])->name('certificate.approve');
+
+
 	Route::get('/instructor/edit-profile', [InstructorViewsController::class,'edit_profile_view']);
 	Route::post('/instructor/edit-profile', [InstructorViewsController::class,'edit_profile'])->name('instructor.updateProfile');
 	Route::post('instructor/dp/update', [InstructorViewsController::class,'update_profile_pic'])->name('instructor.updateProfilePic');
@@ -120,6 +129,11 @@ Route::group(['middleware' => ['InstructorAuth']], function(){
 
 Route::get('/login', [StudentAuthController::class,'login_view']);
 Route::POST('/login', [StudentAuthController::class,'login'])->name('student.login');
+Route::POST('/forget-password', [StudentAuthController::class,'forget_password'])->name('student.forgetPassword');
+Route::get('/student/recover/{hash}', [StudentAuthController::class,'reset_password_page']);
+Route::POST('/student/recover/', [StudentAuthController::class,'reset_password'])->name('student.resetPassword');
+
+
 Route::get('/courses', [mainController::class,'courses']);
 Route::post('/courses', [mainController::class,'filter_courses'])->name('course.filter');
 Route::get('/courses/{id}/details', [mainController::class,'course_details_page']);

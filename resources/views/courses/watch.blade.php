@@ -134,6 +134,7 @@
           <div class="collapse @if($i == 1) show @endif" id="course-{{$i}}" data-bs-parent="#courseAccordion">
             <div class="py-4 nav" id="course-tabOne" role="tablist" aria-orientation="vertical"
               style="display: inherit;">
+              @if(!empty($obj->lectures))
               @foreach($obj->lectures as $lec)
               <a class="mb-2 d-flex justify-content-between align-items-center text-decoration-none"
                 id="course-intro-tab" href="/courses/{{$course->id}}/watch?s={{$lec->id}}" >
@@ -149,6 +150,7 @@
                 </div>
               </a>
               @endforeach
+              @endif
         
             </div>
           </div>

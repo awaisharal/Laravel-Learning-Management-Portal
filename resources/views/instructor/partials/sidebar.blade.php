@@ -29,6 +29,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/instructor/students"><i class="fe fe-users nav-icon"></i>Students</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/instructor/certifications"><i class="fe fe-paperclip nav-icon"></i>Certifications</a>
+                </li>
             </ul>
             <!-- Navbar header -->
             <span class="navbar-header">Account Settings</span>

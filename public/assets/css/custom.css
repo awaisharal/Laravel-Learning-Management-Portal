@@ -1,8 +1,8 @@
 button.no-bg{
-	background: none;
-	border: none;
-	outline: none;
-	box-shadow: none;
+	background: none!important;
+	border: none!important;
+	outline: none!important;
+	box-shadow: none!important;
 }
 .profileSocialLinks{
 	/*background: red;*/

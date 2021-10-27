@@ -1,7 +1,5 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <base href="/">
   <meta charset="utf-8">
@@ -23,7 +21,7 @@
   <!-- Theme CSS -->
   <link rel="stylesheet" href="/assets/css/theme.min.css">
   <link rel="stylesheet" href="/assets/css/custom.css">
-  <title>Student Sign in</title>
+  <title>Recover Account</title>
 </head>
 <body>
   <!-- Page content -->
@@ -36,13 +34,13 @@
           <div class="card-body p-6">
             <div class="mb-4">
               <a href="/"><img src="/assets/images/brand/logo/logo-icon.svg" class="mb-4" alt=""></a>
-              <h1 class="mb-1 fw-bold">Student Sign in</h1>
+              <h1 class="mb-1 fw-bold">Recover Password</h1>
             </div>
             <!-- Form -->
             @if($errors->any())
                 @if($errors->first() == 'pass_not_match')
                     <div class="alert alert-danger" role="alert">
-                      Credentials doesnot match.
+                      Passwords does not match.
                     </div>
                 @elseif($errors->first() == 'email_not_match')
                     <div class="alert alert-danger" role="alert">
@@ -52,48 +50,35 @@
                     <div class="alert alert-danger" role="alert">
                       You are banned by admin.
                     </div>
-                @elseif($errors->first() == 'password_changed')
-                    <div class="alert alert-success" role="alert">
-                      Password successfully changed. Please login to continue
-                    </div>
                 @endif
             @endif
-            <form method="post" action="{{ route('student.login') }}">
+            <form method="post" action="{{ route('student.resetPassword') }}">
               @csrf
               <div class="mb-3">
-                <label for="email" class="form-label">Email Adress</label>
-                <input type="email" id="email" class="form-control" name="email" placeholder="Email address here" required>
-                @error('email')
+                <label for="password" class="form-label">New Password</label>
+                <input type="password" id="password" class="form-control" name="pass1" placeholder="New password here" required>
+                @error('pass1')
                     <span>
                         <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
                     </span>
                 @enderror
               </div>
               <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" class="form-control" name="password" placeholder="**************" required>
-                @error('password')
+                <label for="password2" class="form-label">Confirm Password</label>
+                <input type="password" id="password2" class="form-control" name="pass2" placeholder="Re enter password here" required>
+                @error('pass2')
                     <span>
                         <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
                     </span>
                 @enderror
-              </div>
-              <div class="d-lg-flex justify-content-between align-items-center mb-4">
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="rememberme">
-                  <label class="form-check-label " for="rememberme">Remember me</label>
-                </div>
-                <div>
-                  <button type="button" class="no-bg" style="color:#754FFE;" data-bs-toggle="modal" data-bs-target="#ForgotModal">Forgot your password?</button>
-                </div>
               </div>
               <div>
                 	<!-- Button -->
                   <div class="d-grid">
-                <button type="submit" class="btn btn-primary ">Sign in</button>
+                    <input type="hidden" name="id" value="{{$id}}">
+                    <button type="submit" class="btn btn-primary ">Reset Password</button>
+                  </div>
               </div>
-              </div>
-              <hr class="my-4">
               
             </form>
           </div>
@@ -144,6 +129,8 @@
   <!-- Scripts -->
   <!-- Libs JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+{{-- <script src="/assets/libs/jquery/dist/jquery.min.js"></script> --}}
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/libs/odometer/odometer.min.js"></script>
 <script src="/assets/libs/jquery-slimscroll/jquery.slimscroll.min.js"></script>
@@ -182,21 +169,6 @@
 <!-- Theme JS -->
 <script src="/assets/js/theme.min.js"></script>
 
-@if(count($errors) > 0)
-  @if($errors->first() == 'emailMatchError')
-    <script>
-      $(document).ready(function(){
-        $("#ForgotModal").modal('show');
-      })
-    </script>
-  @elseif($errors->first() == 'resetSuccess')
-    <script>
-      $(document).ready(function(){
-        $("#ForgotModal").modal('show');
-      })
-    </script>
-  @endif
-@endif
 </body>
 
 </html>
