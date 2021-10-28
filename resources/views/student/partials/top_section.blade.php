@@ -15,7 +15,7 @@
                     @else
                     <img src="uploads/profiles/students/{{$user->img}}" class="avatar-xl rounded-circle border border-4 border-white position-relative" />
                     @endif
-                    <a href="#" class="position-absolute top-0 end-0" data-bs-toggle="tooltip" data-placement="top" title=""
+                    <a href="/student/edit-profile" class="position-absolute top-0 end-0" data-bs-toggle="tooltip" data-placement="top" title=""
                         data-original-title="Verified">
                     <img src="/assets/images/svg/checked-mark.svg" alt="" height="30" width="30" />
                     </a>

@@ -7,7 +7,11 @@
 @endsection
 
 @section('css')
-
+    <style>
+        div span.shadow-sm{
+            
+        }
+    </style>
 
 @endsection
 
@@ -171,6 +175,12 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                @if ($pending_course->count() == 0)
+                                @else
+                                    <div class="pb-4 pt-4 pagination">
+                                        {{ $pending_course->links() }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="tab-pane fade" id="approved" role="tabpanel" aria-labelledby="approved-tab">
@@ -219,7 +229,10 @@
                                                     </td>
                                                     <td class="align-middle border-top-0">
                                                         <div class="d-flex align-items-center">
-                                                            <img src="../../assets/images/avatar/avatar-10.jpg" alt="" class="rounded-circle avatar-xs me-2" />
+                                                            @if ($approve_course->instructor_img == "")
+                                                            @else
+                                                                <img src="/uploads/profiles/{{$approve_course->instructor_img}}" alt="" class="rounded-circle avatar-xs me-2" />
+                                                            @endif
                                                             <h5 class="mb-0">{{$approve_course->instructor_name}}</h5>
                                                         </div>
                                                     </td>
@@ -249,6 +262,9 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                <div class="pb-4 pt-4 pagination">
+                                    {{ $approved_course->links() }}
+                                </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="not-approved" role="tabpanel" aria-labelledby="not-approved-tab">
@@ -297,7 +313,10 @@
                                                     </td>
                                                     <td class="align-middle border-top-0">
                                                         <div class="d-flex align-items-center">
-                                                            <img src="../../assets/images/avatar/avatar-7.jpg" alt="" class="rounded-circle avatar-xs me-2" />
+                                                            @if ($not_approve_course->instructor_img == "")
+                                                            @else
+                                                                <img src="/uploads/profiles/{{$not_approve_course->instructor_img}}" alt="" class="rounded-circle avatar-xs me-2" />
+                                                            @endif
                                                             <h5 class="mb-0">{{$not_approve_course->instructor_name}}</h5>
                                                         </div>
                                                     </td>
@@ -374,7 +393,10 @@
                                                     </td>
                                                     <td class="align-middle border-top-0">
                                                         <div class="d-flex align-items-center">
-                                                            <img src="../../assets/images/avatar/avatar-7.jpg" alt="" class="rounded-circle avatar-xs me-2" />
+                                                            @if ($ban_course->instructor_img == "")
+                                                            @else
+                                                                <img src="/uploads/profiles/{{$ban_course->instructor_img}}" alt="" class="rounded-circle avatar-xs me-2" />
+                                                            @endif
                                                             <h5 class="mb-0">{{$ban_course->instructor_name}}</h5>
                                                         </div>
                                                     </td>
@@ -394,7 +416,7 @@
                     </div>
                 </div>
                 <!-- Card Footer -->
-                <div class="card-footer border-top-0">
+                {{-- <div class="card-footer border-top-0">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center mb-0">
                             <li class="page-item disabled">
@@ -415,7 +437,7 @@
                             </li>
                         </ul>
                     </nav>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

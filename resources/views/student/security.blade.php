@@ -36,6 +36,10 @@
 						<div class="alert alert-warning mt-5 mb-3">
 							New passwords does not match 
 						</div>
+					@elseif($errors->first() == 'resetSuccess')
+			            <div class="alert alert-success">
+			              We have sent the password reset instructions. Please check your mailbox.
+			            </div>
 					@endif
 				@endif
 				<h4 class="mb-0">Change Password</h4>
@@ -82,12 +86,39 @@
 					<div class="col-12 mt-4">
 						<p class="mb-0">
 							Can't remember your current password?
-							<a href="#">Reset your password via email</a>
+							<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#ForgotModal">Reset your password via email</a>
 						</p>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+</div>
+<div class="modal fade" id="ForgotModal" tabindex="-1" role="dialog" aria-labelledby="addSectionModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="padding-bottom: 0!important;">
+      <div class="modal-header">
+        <h4 class="modal-title" id="addSectionModalLabel1">
+          Reset Password
+        </h4>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <form action="{{route('student.forgetPassword')}}" method="POST">
+      @csrf
+      <input type="hidden" name="id" value="{{ $user_id }}">
+      <input type="hidden" name="email" value="{{ $user_email }}">
+      <div class="modal-body">
+        Are you sure you want to reset your password?
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="id" id="id" />
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Reset</button>
+      </div>
+    </div>
+  </div>
 </div>
 @endsection

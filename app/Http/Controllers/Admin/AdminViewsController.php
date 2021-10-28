@@ -19,7 +19,7 @@ class AdminViewsController extends Controller
     }
     public function all_instructors_view()
     {
-        $instructors = Instructor::orderBy('id', 'desc')->get();
+        $instructors = Instructor::orderBy('id', 'desc')->paginate(1);
         if(!empty($instructors))
         {
             foreach($instructors as $instr)
@@ -33,7 +33,7 @@ class AdminViewsController extends Controller
                 
             }
         }
-        $ins = Instructor::orderBy('id', 'desc')->get();
+        $ins = Instructor::orderBy('id', 'desc')->paginate(1);
         if(!empty($ins))
         {
             foreach($ins as $instr)
@@ -97,7 +97,7 @@ class AdminViewsController extends Controller
     }
     public function all_courses_view()
     {
-        $pending_courses = Course::where('status', '=', "Pending")->orderBy('id', 'desc')->get();
+        $pending_courses = Course::where('status', '=', "Pending")->orderBy('id', 'desc')->paginate(10);
         if(!empty($pending_courses))
         {
             foreach($pending_courses as $pc)
@@ -111,7 +111,7 @@ class AdminViewsController extends Controller
                 $pc['instructor_img'] = $img;
             }
         }
-        $approved_courses = Course::where('status', '=', "Approved")->orderBy('id', 'desc')->get();
+        $approved_courses = Course::where('status', '=', "Approved")->orderBy('id', 'desc')->paginate(1);
         if(!empty($approved_courses))
         {
             foreach($approved_courses as $pc)
@@ -119,11 +119,13 @@ class AdminViewsController extends Controller
                 $ins_id = $pc->user_id;
                 $ins = Instructor::find($ins_id);
                 $name = $ins->name;
+                $img = $ins->img;
 
                 $pc['instructor_name'] = $name;
+                $pc['instructor_img'] = $img;
             }
         }
-        $banned_courses = Course::where('status', '=', "Banned")->orderBy('id', 'desc')->get();
+        $banned_courses = Course::where('status', '=', "Banned")->orderBy('id', 'desc')->paginate(10);
         if(!empty($banned_courses))
         {
             foreach($banned_courses as $pc)
@@ -131,11 +133,13 @@ class AdminViewsController extends Controller
                 $ins_id = $pc->user_id;
                 $ins = Instructor::find($ins_id);
                 $name = $ins->name;
+                $img = $ins->img;
 
                 $pc['instructor_name'] = $name;
+                $pc['instructor_img'] = $img;
             }
         }
-        $not_approved_courses = Course::where('status', '=', "Not Approved")->orderBy('id', 'desc')->get();
+        $not_approved_courses = Course::where('status', '=', "Not Approved")->orderBy('id', 'desc')->paginate(10);
         if(!empty($not_approved_courses))
         {
             foreach($not_approved_courses as $pc)
@@ -143,8 +147,10 @@ class AdminViewsController extends Controller
                 $ins_id = $pc->user_id;
                 $ins = Instructor::find($ins_id);
                 $name = $ins->name;
+                $img = $ins->img;
 
                 $pc['instructor_name'] = $name;
+                $pc['instructor_img'] = $img;
             }
         }
         return view('admin.all-courses', [
@@ -156,7 +162,7 @@ class AdminViewsController extends Controller
     }
     public function courses_categories_view()
     {
-        $categories = CourseCategory::orderBy('id', 'desc')->paginate(5);
+        $categories = CourseCategory::orderBy('id', 'desc')->paginate(1);
         foreach($categories as $cat)
         {
             $id = $cat->id;

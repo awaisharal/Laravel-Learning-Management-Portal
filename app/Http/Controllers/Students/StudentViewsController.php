@@ -24,7 +24,7 @@ class StudentViewsController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
-            'phone' => 'required|max:255',
+            'phone' => 'required|numeric|max:15',
             'birthday' => 'max:255',
             'address_line1' => 'max:255',
             'address_line2' => 'max:255',
@@ -83,7 +83,10 @@ class StudentViewsController extends Controller
     }
     public function security_view ()
     {
-        return view('student.security');
+        $user = session()->get('sessionData')[0];
+        $user_id = $user->id;
+        $user_email = $user->email;
+        return view('student.security', ['user_id' => $user_id, 'user_email' => $user_email]);
     }
     public function update_password(Request $request)
     {

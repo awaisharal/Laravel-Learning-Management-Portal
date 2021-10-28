@@ -817,7 +817,7 @@
 										to come soon.
 										we release it soon for you. Thank you for watching.
 									</p>
-									<a href="../index.html" class="btn btn-primary">
+									<a href="/student/dashboard" class="btn btn-primary">
 									Back To Dashboard
 									</a>
 								</div>

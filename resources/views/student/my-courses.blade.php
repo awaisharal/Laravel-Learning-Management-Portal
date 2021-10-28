@@ -18,7 +18,7 @@
 			<ul class="nav nav-lb-tab mb-6" id="tab" role="tablist">
 				<li class="nav-item ms-0" role="presentation">
 					<a class="nav-link active " id="bookmarked-tab" data-bs-toggle="pill" href="#enroled" role="tab"
-						aria-controls="bookmarked" aria-selected="true">Enroled </a>
+						aria-controls="bookmarked" aria-selected="true">Enrolled </a>
 				</li>
 				<li class="nav-item" role="presentation">
 					<a class="nav-link" id="finished-tab" data-bs-toggle="pill" href="#finished" role="tab"

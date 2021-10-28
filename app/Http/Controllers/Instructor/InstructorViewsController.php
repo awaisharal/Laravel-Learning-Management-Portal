@@ -26,7 +26,7 @@ class InstructorViewsController extends Controller
     }
     public function add_course_view()
     {
-        $categories = CourseCategory::orderBy('id','desc')->get();
+        $categories = CourseCategory::orderBy('id','ASC')->get();
         return view('instructor.add-course',compact('categories'));
     }
     public function my_courses_view ()

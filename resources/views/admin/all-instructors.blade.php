@@ -201,7 +201,11 @@
                                 </div>
                             </div>
                         @endforeach
-                        
+                        {{-- <div class="row">
+                            <div class="pb-4 pt-4 pagination">
+                                {{$instructor->links()}}
+                            </div>
+                        </div> --}}
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="pt-4">
                                 <!-- Pagination -->
@@ -321,6 +325,11 @@
                                 </tbody>
                             </table>
                             <!-- Pagination -->
+                            <div class="row">
+                            <div class="pb-4 pt-4 pagination">
+                                {{$inks->links()}}
+                            </div>
+                        </div>
                             <div class="pb-4 pt-4">
                                 <nav>
                                     <ul class="pagination justify-content-center mb-0">

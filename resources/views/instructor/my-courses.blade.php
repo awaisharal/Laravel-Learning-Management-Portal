@@ -84,7 +84,7 @@
 										</div>
 										<div class="ms-lg-3 mt-2 mt-lg-0">
 											<h4 class="mb-1 h5">
-												<a href="#" class="text-inherit">
+												<a href="/instructor/course/{{$obj->id}}/edit" class="text-inherit">
 													{{$obj->title}}
 												</a>
 											</h4>

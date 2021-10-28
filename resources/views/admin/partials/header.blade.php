@@ -233,10 +233,10 @@
                                         </div>
                                         <div class="ms-3 lh-1">
                                             <h5 class="mb-1">
-                                                {{$admin->name}}
+                                                Admin
                                             </h5>
                                             <p class="mb-0 text-muted">
-                                                {{$admin->email}}
+                                                admin@lms.com
                                             </p>
                                         </div>
                                     </div>

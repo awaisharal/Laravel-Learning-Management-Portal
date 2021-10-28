@@ -98,8 +98,8 @@
                             <option value="{{old('level')}}">{{old('level')}}</option>
                           @endif
                           <option value="">Select level</option>
-                          <option value="Intermediate">Intermediate</option>
                           <option value="Beginner">Beginner</option>
+                          <option value="Intermediate">Intermediate</option>
                           <option value="Advance">Advance</option>
                         </select>
                       </div>
