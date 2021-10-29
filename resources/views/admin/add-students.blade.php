@@ -67,7 +67,7 @@
                             </div>
                             <div class="mb-3 col-12 col-md-6">
                                 <label class="form-label" for="phone">Phone</label>
-                                <input type="text" id="phone" class="form-control" placeholder="Phone" required name="phone" />
+                                <input type="text" id="phone" class="form-control" placeholder="Phone" required name="phone" maxlength="16" />
                                 @error('phone')
                                     <span>
                                         <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>

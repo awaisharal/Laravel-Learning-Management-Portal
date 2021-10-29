@@ -24,6 +24,10 @@
 					<div class="alert alert-success mt-5 mb-3">
 						Social updated successfully.
 					</div>
+				@elseif($errors->first() == 'UnknownError')
+					<div class="alert alert-warning mt-5 mb-3">
+						Try Again.
+					</div>
 				@endif
 			@endif
 		</div>
@@ -38,6 +42,11 @@
 					<div class="col-lg-9 col-md-8 col-12">
 						<input type="text" class="form-control mb-1" placeholder="Twitter Profile URL" value="{{ $user->twitter_link }}" name="twitter_link" />
 						<small class="text-muted">Add your Twitter username (e.g. johnsmith).</small>
+						@error('twitter_link')
+                            <span>
+                                <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
+                            </span>
+                        @enderror
 					</div>
 				</div>
 				<div class="row mb-5">
@@ -47,6 +56,11 @@
 					<div class="col-lg-9 col-md-8 col-12">
 						<input type="text" class="form-control mb-1" placeholder="Facebook Profile URL"  value="{{ $user->fb_link }}" name="fb_link" />
 						<small class="text-muted">Add your Facebook username (e.g. johnsmith).</small>
+						@error('fb_link')
+                            <span>
+                                <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
+                            </span>
+                        @enderror
 					</div>
 				</div>
 				<div class="row mb-5">
@@ -56,6 +70,11 @@
 					<div class="col-lg-9 col-md-8 col-12">
 						<input type="text" class="form-control mb-1" placeholder="Github Profile URL" value="{{ $user->github_link }}" name="github_link" />
 						<small class="text-muted">Add your github username (e.g. johnsmith).</small>
+						@error('github_link')
+                            <span>
+                                <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
+                            </span>
+                        @enderror
 					</div>
 				</div>
 				<div class="row mb-5">
@@ -66,6 +85,11 @@
 						<input type="text" class="form-control mb-1" placeholder="LinkedIn Profile URL " value="{{ $user->linkedin_link }}" name="linkedin_link" />
 						<small class="text-muted">Add your linkedin profile URL. (
 							https://www.linkedin.com/in/example-a678vdsa)</small>
+						@error('linkedin_link')
+                            <span>
+                                <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
+                            </span>
+                        @enderror
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -76,6 +100,11 @@
 						<input type="text" class="form-control mb-1" placeholder="YouTube URL" value="{{ $user->youtube_link }}" name="youtube_link" />
 						<small class="text-muted">Add your Youtube profile URL.
 						</small>
+						@error('youtube_link')
+                            <span>
+                                <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
+                            </span>
+                        @enderror
 					</div>
 				</div>
 				<div class="row">

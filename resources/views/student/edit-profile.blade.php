@@ -88,9 +88,8 @@
 					</div>
 					<!-- Birthday -->
 					<div class="mb-3 col-12 col-md-6">
-						<label class="form-label" for="birth">Birthday</label>
-						<input class="form-control flatpickr" name="birthday" type="text" placeholder="Birth of Date" id="birth"
-							name="birth" value="{{$user->birthday}}"/>
+						<label class="form-label" for="birthDate">Birthday</label>
+						<input class="form-control" name="birthday" type="date" placeholder="Birth of Date" id="birthDate" name="birth" value="{{$user->birthday}}"/>
 					</div>
 					<!-- Address -->
 					<div class="mb-3 col-12 col-md-6">
@@ -199,4 +198,22 @@
 		$("#dpModal").modal('show');
 	});
 </script>
+@endsection
+@section('extra_js')
+	<script>
+		$(function(){
+			var dtToday = new Date();
+
+			var month = dtToday.getMonth() + 1;
+			var day = dtToday.getDate();
+			var year = dtToday.getFullYear();
+			if(month < 10)
+			  month = '0' + month.toString();
+			if(day < 10)
+			  day = '0' + day.toString();
+
+			var maxDate = year + '-' + month + '-' + day;
+			$('#birthDate').attr('max', maxDate);
+		});
+	</script>
 @endsection

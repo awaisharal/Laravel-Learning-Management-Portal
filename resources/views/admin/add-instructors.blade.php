@@ -70,7 +70,7 @@
                             </div>
                             <div class="mb-3 col-12 col-md-6">
                                 <label class="form-label" for="phone">Phone <small class="text-danger">(Required)</small></label>
-                                <input type="text" id="phone" class="form-control" placeholder="Phone" required name="phone" value="{{old('phone')}}" />
+                                <input type="text" id="phone" class="form-control" placeholder="Phone" required name="phone" value="{{old('phone')}}" maxlength="16" />
                                 @error('phone')
                                     <span>
                                         <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
@@ -96,8 +96,8 @@
                                 @enderror
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                                <label class="form-label" for="date">Joining Date</label>
-                                <input type="date" id="date" class="form-control" placeholder="instructor joining date" required name="date" value="{{old('date')}}" />
+                                <label class="form-label" for="JoinDate">Joining Date</label>
+                                <input type="date" id="JoinDate" class="form-control" placeholder="instructor joining date" required name="date" value="{{old('date')}}" />
                                 @error('date')
                                     <span>
                                         <p style="font-size:13px!important; color: #fd0710!important;">{{ $message }}*</p>
@@ -134,4 +134,23 @@
         </div>
     </div>
 </div>
+@endsection
+@section('extra_js')
+    <script>
+        $(function(){
+            var dtToday = new Date();
+            
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+            var year = dtToday.getFullYear();
+            if(month < 10)
+                month = '0' + month.toString();
+            if(day < 10)
+                day = '0' + day.toString();
+            
+            var minDate= year + '-' + month + '-' + day;
+            
+            $('#JoinDate').attr('min', minDate);
+        });
+    </script>
 @endsection

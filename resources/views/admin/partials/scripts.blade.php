@@ -1,4 +1,3 @@
-<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/libs/odometer/odometer.min.js"></script>
 <script src="/assets/libs/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <script src="/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js"></script>

@@ -19,7 +19,7 @@ class AdminViewsController extends Controller
     }
     public function all_instructors_view()
     {
-        $instructors = Instructor::orderBy('id', 'desc')->paginate(1);
+        $instructors = Instructor::orderBy('id', 'desc')->paginate(10);
         if(!empty($instructors))
         {
             foreach($instructors as $instr)
@@ -33,7 +33,7 @@ class AdminViewsController extends Controller
                 
             }
         }
-        $ins = Instructor::orderBy('id', 'desc')->paginate(1);
+        $ins = Instructor::orderBy('id', 'desc')->paginate(10);
         if(!empty($ins))
         {
             foreach($ins as $instr)
@@ -70,7 +70,7 @@ class AdminViewsController extends Controller
     }
     public function all_students_view()
     {
-        $students = Student::orderBy('id', 'desc')->get();
+        $students = Student::orderBy('id', 'desc')->paginate(10);
 
         $live_courses       = Course::where('status', '=', "Approved")->get()->count();
         $pending_courses    = Course::where('status', '=', "Pending")->get()->count();
@@ -111,7 +111,7 @@ class AdminViewsController extends Controller
                 $pc['instructor_img'] = $img;
             }
         }
-        $approved_courses = Course::where('status', '=', "Approved")->orderBy('id', 'desc')->paginate(1);
+        $approved_courses = Course::where('status', '=', "Approved")->orderBy('id', 'desc')->paginate(10);
         if(!empty($approved_courses))
         {
             foreach($approved_courses as $pc)
@@ -162,7 +162,7 @@ class AdminViewsController extends Controller
     }
     public function courses_categories_view()
     {
-        $categories = CourseCategory::orderBy('id', 'desc')->paginate(1);
+        $categories = CourseCategory::orderBy('id', 'desc')->paginate(10);
         foreach($categories as $cat)
         {
             $id = $cat->id;

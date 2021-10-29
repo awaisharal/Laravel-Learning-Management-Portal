@@ -199,24 +199,33 @@ class InstructorViewsController extends Controller
     }
     public function edit_social_links(Request $request)
     {
+        # $regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
+        $request->validate([
+            'twitter_link'  => 'url',
+            'fb_link'       => 'url',
+            'github_link'   => 'url',
+            'linkedin_link' => 'url',
+            'youtube_link'  => 'url',
+        ]);
         $twitter_link    =   $request->twitter_link;
         $fb_link         =   $request->fb_link;
         $github_link     =   $request->github_link;
         $linkedin_link   =   $request->linkedin_link;
         $youtube_link    =   $request->youtube_link;
-        // return $request;
         $user    = session()->get('sessionData')[0];
         $user_id = $user->id;
 
-        Instructor::where('id',$user_id)->update([
+        $update_social =Instructor::where('id',$user_id)->update([
             'twitter_link'  => $twitter_link,
             'fb_link'       => $fb_link,
             'github_link'   => $github_link,
             'linkedin_link' => $linkedin_link,
             'youtube_link'  => $youtube_link
         ]);
-
-        return back()->withErrors('success');
+        if ($update_social) {
+            return back()->withErrors('success');
+        }
+        
     } 
     public function add_course(Request $request)
     {

@@ -81,9 +81,8 @@
 						<input type="text" id="phone" class="form-control" placeholder="Phone" name="phone" value="{{$user->phone}}" required />
 					</div>
 					<div class="mb-3 col-12 col-md-6">
-						<label class="form-label" for="birth">Birthday</label>
-						<input class="form-control flatpickr" type="text" placeholder="Birth of Date" id="birth datepicker"
-							name="birthday" value="{{$user->birthday}}"/>
+						<label class="form-label" for="JoinDate">Birthday</label>
+						<input class="form-control" type="date" placeholder="Birth of Date" id="JoinDate" name="birthday" value="{{$user->birthday}}"/>
 					</div>
 					<div class="col-12">
 						<button class="btn btn-primary" type="submit">
@@ -201,17 +200,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
 
-<script type="text/javascript">
-$(function() {
-	var date = new Date();
-	var currentMonth = date.getMonth();
-	var currentDate = date.getDate();
-	var currentYear = date.getFullYear();
-	$('#datepicker').datepicker({
-	maxDate: new Date(currentYear, currentMonth, currentDate)
-	});
-	});
-</script>
 <script>
 	$("#sidenav ul li#profile").addClass("active");
 	$("#chooseFile").click(function(){
@@ -223,4 +211,22 @@ $(function() {
 	});
 
 </script>
+@endsection
+@section('extra_js')
+	<script>
+		$(function(){
+			var dtToday = new Date();
+
+			var month = dtToday.getMonth() + 1;
+			var day = dtToday.getDate();
+			var year = dtToday.getFullYear();
+			if(month < 10)
+			  month = '0' + month.toString();
+			if(day < 10)
+			  day = '0' + day.toString();
+
+			var maxDate = year + '-' + month + '-' + day;
+			$('#JoinDate').attr('max', maxDate);
+		});
+	</script>
 @endsection
