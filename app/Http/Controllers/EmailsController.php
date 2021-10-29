@@ -393,7 +393,7 @@ class EmailsController extends Controller
            
             $mail->isHTML(true);
 
-            $mail->Subject = 'Welcome to LMS';
+            $mail->Subject = 'Course Approval';
             $mail->Body    = '<!DOCTYPE html>
                 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
                 <head>
