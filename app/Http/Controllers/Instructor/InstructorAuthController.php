@@ -12,10 +12,10 @@ class InstructorAuthController extends Controller
     public function add_instructor(Request $request)
     {
         $request->validate([
-            'first_name'        => 'required|max:14',
-            'last_name'         => 'required|max:14',
+            'first_name'        => 'required|regex:/^[a-zA-Z]+$/u||max:14',
+            'last_name'         => 'required|regex:/^[a-zA-Z]+$/u||max:14',
             'email'             => 'required|unique:instructors|email|max:255',
-            'phone'             => 'required|max:16',
+            'phone'             => 'required|numeric',
             'title'             => 'max:30',
             'password'          => 'required|min:6|max:14',
             'confirm_password'  => 'required|same:password|max:14'

@@ -122,7 +122,7 @@
                                                 <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit-category-modal" onclick="editCategory('<?php echo $cat->id; ?>', '<?php echo $cat->name; ?>')">
                                                     Edit
                                                 </a>
-                                                @if($cat->course_count == 0)
+                                                @if($cat->course_count == 0 AND $cat->status == "Live")
                                                 <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete-category-modal" onclick="deleteCategory('<?php echo $cat->id; ?>', '<?php echo $cat->name; ?>')">
                                                     Delete
                                                 </a>

@@ -261,9 +261,9 @@
                                         <th scope="col" class="border-0">
                                             Joined
                                         </th>
-                                        <th scope="col" class="border-0">
+                                        {{-- <th scope="col" class="border-0">
                                             Rating
-                                        </th>
+                                        </th> --}}
                                         <th scope="col" class="border-0">
                                             Action
                                         </th>
@@ -297,11 +297,11 @@
                                                 {{ $instructor->course_count }}
                                             </td>
                                             <td class="align-middle border-top-0">
-                                                7 July, 2020
+                                                {{  date("d M Y", strtotime($instructor->created_at)) }}
                                             </td>
-                                            <td class="align-middle text-warning border-top-0">
+                                            {{-- <td class="align-middle text-warning border-top-0">
                                                 4.5 <span class="mdi mdi-star"></span>
-                                            </td>
+                                            </td> --}}
                                             <td class="text-muted px-4 py-3 align-middle border-top-0">
                                                 <span class="dropdown dropstart">
                                                 <a class="text-muted text-decoration-none" href="#" role="button" id="courseDropdown"
@@ -327,7 +327,7 @@
                             <!-- Pagination -->
                             <div class="row">
                             <div class="pb-4 pt-4 pagination">
-                                {{$inks->links()}}
+                                {{$ins->links()}}
                             </div>
                         </div>
                             <div class="pb-4 pt-4">
