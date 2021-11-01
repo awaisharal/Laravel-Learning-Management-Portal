@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminViewsController;
 use App\Http\Controllers\Admin\AdminMainController;
 use App\Http\Controllers\Instructor\InstructorAuthController;
 use App\Http\Controllers\Instructor\InstructorViewsController;
+use App\Http\Controllers\Instructor\QuizController;
 use App\Http\Controllers\Students\StudentAuthController;
 use App\Http\Controllers\Students\StudentViewsController;
 use App\Http\Controllers\Students\StudentMainController;
@@ -100,6 +101,11 @@ Route::group(['middleware' => ['InstructorAuth']], function(){
 	Route::POST('/instructor/course/edit/curriculum', [InstructorViewsController::class,'editLecture'])->name('course.editLecture');
 	Route::post('/instructor/course/delete/lecture', [InstructorViewsController::class,'delete_lecture'])->name('lecture.delete');
 	Route::post('/instructor/course/submit/approval', [InstructorViewsController::class,'submit_for_approval'])->name('course.submitApproval');
+
+	Route::post('/instructor/course/add/quiz', [QuizController::class,'add_quiz'])->name('course.addQuiz');
+	Route::post('/instructor/course/update/quiz', [QuizController::class,'edit_quiz'])->name('course.editQuiz');
+	Route::get('/instructor/course/{course_id}/quiz/{quiz_id}/{section_id}/details', [QuizController::class,'quiz_details_view']);
+	Route::post('/instructor/quiz/add/question', [QuizController::class,'add_question'])->name('quiz.addQuestion');
 
 	Route::get('/instructor/reviews', [InstructorViewsController::class,'reviews_view']);
 	Route::get('/instructor/students', [InstructorViewsController::class,'students_view']);

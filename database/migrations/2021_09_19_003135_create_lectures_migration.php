@@ -16,11 +16,12 @@ class CreateLecturesMigration extends Migration
         Schema::create('lectures', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('video')->nullable();
             $table->integer('curriculum_id');
             $table->integer('course_id');
             $table->integer('user_id');
+            $table->enum('type',['Lecture','Quiz'])->default('Lecture');
             $table->integer('status')->default(1);
             $table->timestamps();
         });

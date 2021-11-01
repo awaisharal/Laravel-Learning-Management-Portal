@@ -39,9 +39,17 @@
 			<div class="alert alert-success mt-5">
 				New lecture added to the course
 			</div>
+		@elseif($errors->first() == 'quizAdded')
+			<div class="alert alert-success mt-5">
+				New Quiz added to this course
+			</div>
 		@elseif($errors->first() == 'sectionUpdated')
 			<div class="alert alert-success mt-5">
 				Section updated successfully.
+			</div>
+		@elseif($errors->first() == 'quizUpdated')
+			<div class="alert alert-success mt-5">
+				Quiz updated successfully.
 			</div>
 		@elseif($errors->first() == 'sectionDeleted')
 			<div class="alert alert-success mt-5">
@@ -92,29 +100,34 @@
 	                            <div class="list-group-item rounded px-3 mb-1" id="introduction">
 	                              <div class="d-flex align-items-center justify-content-between">
 	                                <h5 class="mb-0">
-	                                  <a href="#" class="text-inherit" data-toggle="collapse">
+	                                  <a class="text-inherit" data-toggle="collapse">
 	                                    <i class="fe fe-menu mr-1 text-muted align-middle"></i>
 	                                    <span class="align-middle">{{$lec->title}}</span>
 	                                  </a>
 	                                </h5>
 	                                <div style="display:flex;">
+	                                	@if($lec->type == 'Lecture')
 	                                	<a href="/instructor/course/{{ $lec->id }}/edit/curriculum" class="mr-1 text-inherit" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
 	                                		<i class="fe fe-edit font-size-xs"></i>
 	                                	</a>
+	                                	@else
+	                                		<button class="no-bg" onclick="quizEditModal('{{$lec->id}}','{{$lec->title}}')">
+	                                			<i class="fe fe-edit font-size-xs"></i>
+	                                		</button>
+	                                	@endif
 	                                	<button class="mr-1 text-inherit no-bg" onclick="openLectureDeleteModal('{{$lec->id}}','{{$lec->title}}')">
 	                                		<i class="fe fe-trash-2 font-size-xs"></i>
 	                                	</button>
+	                                	@if($lec->type == 'Quiz')
 	                                  <button type="button" class="text-inherit no-bg"  data-toggle="collapse" id="collapseBtn1" onclick="collapsefun({{$i}})">
 	                                    <span class="chevron-arrow"><i class="fe fe-chevron-down"></i></span>
 	                                  </button>
+	                                  @endif
 	                                </div>
 	                              </div>
 	                              <div id="collapselist{{$i}}" class="collapse inner" aria-labelledby="introduction" data-parent="#courseList">
 	                                <div class="card-body">
-	                                  <a href="#!" class="btn btn-secondary btn-sm">Add
-	                                    Article +</a>
-	                                  <a href="#!" class="btn btn-secondary btn-sm">Add
-	                                    Description +</a>
+	                                  <a href="/instructor/course/{{$course->id}}/quiz/{{$lec->id}}/{{$obj->id}}/details" class="btn btn-secondary btn-sm" target="_blank">Update Quiz Questions</a>
 	                                </div>
 	                              </div>
 	                            </div>
@@ -128,6 +141,7 @@
                           </div>
                         </div>
                         <button type="button" class="btn btn-outline-primary btn-sm mt-3" onclick="openLectureModal('addLectureModal','{{$course->id}}','{{$obj->id}}')">Add Lecture +</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm mt-3" onclick="openQuizModal('addQuizModal','{{$course->id}}','{{$obj->id}}')">Add Quiz +</button>
                     </div>
                     	@php
                     		$i++;
@@ -209,6 +223,35 @@
   </div>
 </div>
 
+{{-- Add Quiz model --}}
+<div class="modal fade" id="addQuizModal" tabindex="-1" role="dialog" aria-labelledby="addLectureModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:700px!important;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="addLectureModalLabel1">
+          Add New Quiz
+        </h4>
+        <button type="button" class="no-bg" data-dismiss="modal" aria-label="Close" onclick="dismissModal()">
+            <span aria-hidden="true"><i class="fe fe-x-circle"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{route('course.addQuiz')}}" method="post" enctype="multipart/form-data">
+        @csrf
+	        <div class="form-group mb-3">
+	        	<label for="title">Title</label>
+	        	<input class="form-control" type="text" id="title" name="title" placeholder="Quiz title here.." required />
+	        </div>
+	        <input type="hidden" id="course_id" name="course_id" value="" />
+	        <input type="hidden" id="curriculum_id" name="curriculum_id" value="" />
+	        <input class="btn btn-primary mt-5" type="submit" value="Create Quiz">
+	                 
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- EditSectionModal -->
 <div class="modal fade" id="EditSectionModal" tabindex="-1" role="dialog" aria-labelledby="addSectionModalLabel"
   aria-hidden="true">
@@ -229,6 +272,36 @@
 	        <input type="hidden" id="id" name="id" value="" />
 	        <button class="btn btn-primary" type="submit">
 	            Update Section
+	        </button>
+	        <button type="button" class="btn btn-outline-white" data-dismiss="modal" aria-label="Close" onclick="dismissModal()">
+            	Close
+          	</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{-- Quiz Edit Modal --}}
+<div class="modal fade" id="QuizEditModal" tabindex="-1" role="dialog" aria-labelledby="addSectionModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="addSectionModalLabel1">
+          Update Quiz Details
+        </h4>
+        <button type="button" class="no-bg" onclick="dismissModal()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fe fe-x-circle"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{route('course.editQuiz')}}" method="post">
+        @csrf
+	        <input class="form-control mb-3" type="text" name="title" id="title" placeholder="Enter quiz title here.." required />
+	        <input type="hidden" id="id" name="id" value="" />
+	        <button class="btn btn-primary" type="submit">
+	            Update
 	        </button>
 	        <button type="button" class="btn btn-outline-white" data-dismiss="modal" aria-label="Close" onclick="dismissModal()">
             	Close
@@ -335,6 +408,20 @@
 		let trigger = "#DeleteLectureModal";
 		$(trigger+ " #id").val(id);
 		$(trigger+ " #name").html(name);
+		$(trigger).modal('show');	
+	}
+	function openQuizModal(id, course_id, curriculum_id)
+	{
+		let trigger = "#"+id;
+		$(trigger+ " #course_id").val(course_id);
+		$(trigger+ " #curriculum_id").val(curriculum_id);
+		$(trigger).modal('show');	
+	}
+	function quizEditModal(id, title)
+	{
+		let trigger = "#QuizEditModal";
+		$(trigger+ " #id").val(id);
+		$(trigger+ " #title").val(title);
 		$(trigger).modal('show');	
 	}
 </script>
