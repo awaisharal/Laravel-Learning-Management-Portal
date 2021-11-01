@@ -106,6 +106,7 @@ Route::group(['middleware' => ['InstructorAuth']], function(){
 	Route::post('/instructor/course/update/quiz', [QuizController::class,'edit_quiz'])->name('course.editQuiz');
 	Route::get('/instructor/course/{course_id}/quiz/{quiz_id}/{section_id}/details', [QuizController::class,'quiz_details_view']);
 	Route::post('/instructor/quiz/add/question', [QuizController::class,'add_question'])->name('quiz.addQuestion');
+	Route::post('/instructor/quiz/delete/question', [QuizController::class,'delete_question'])->name('quiz.deleteQuestion');
 
 	Route::get('/instructor/reviews', [InstructorViewsController::class,'reviews_view']);
 	Route::get('/instructor/students', [InstructorViewsController::class,'students_view']);

@@ -34,6 +34,11 @@
                     New question successfully added
                   </div>
                 @endif
+                @if($errors->first() == 'questionDeleted')
+                  <div class="alert alert-success">
+                    Question successfully deleted from the system
+                  </div>
+                @endif
               @endif
               <div class="card-header border-bottom px-4 py-3">
                 <div class="row">
@@ -64,13 +69,17 @@
                     <td>{{$i}}</td>
                     <td>{{$obj->question}}</td>
                     <td>{{$obj->correct}}</td>
-                    <td style="text-align:right">
+                    <td style="text-align:right;display: flex;">
                       <button class="btn btn-primary btn-xs" onclick="hintModal('{{$obj->option1}}','{{$obj->option2}}','{{$obj->option3}}','{{$obj->option4}}','{{$obj->correct}}')">
                         <i class="fe fe-info"></i>
                       </button>
-                      <button class="btn btn-danger btn-xs">
-                        <i class="fe fe-trash"></i>
-                      </button>
+                      <form action="{{route('quiz.deleteQuestion')}}" method="post" style="margin-left: 10px;">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$obj->id}}" />
+                        <button class="btn btn-danger btn-xs">
+                          <i class="fe fe-trash"></i>
+                        </button>
+                      </form>
                     </td>
                   </tr>
                   @php $i++; @endphp
@@ -221,7 +230,7 @@
             <div class="clearfix"></div>
             <h4 class="">Correct Answer</h4>
             <div class="clearfix"></div>
-            <div class="alert alert-info mt-3" style="width: 100%;" id="correct">
+            <div class="alert alert-success mt-3" style="width: 100%;" id="correct">
               <i class="fe fe-check"></i> &nbsp;
               Correct Answer
             </div>

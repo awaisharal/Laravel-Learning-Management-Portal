@@ -115,4 +115,12 @@ class QuizController extends Controller
 
         return back()->withErrors('questionAdded');
     }
+    public function delete_question(Request $request)
+    {
+        $id = $request->id;
+
+        $res = Question::find($id);
+        $res->delete();
+        return back()->withErrors('questionDeleted');
+    }
 }
