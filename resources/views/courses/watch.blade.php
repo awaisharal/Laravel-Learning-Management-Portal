@@ -36,6 +36,28 @@
                 </div>
                 
 	              <!-- Video -->
+                @if($lecture != 'complete' && isset($lecture->type) && $lecture->type == 'Quiz')
+
+                  <div class="container-fluid watchPageDecs">
+                    <div class="text-center">
+                      <h2>Short Assessment</h2>
+                      <div class="mt-5" style="padding:0px 100px 0px 100px;">
+                        <p>You are required to complete this quiz in order to achieve the certification after course completion.</p>
+                      </div>
+                      <p>
+                        Estimated time: 10 minutes
+                      </p>
+                      @if($quiz_status != 'complete')
+                      <a href="/courses/{{$course->id}}/quiz/{{$lecture->id}}/attempt">
+                        <button class="btn btn-info btn-sm mt-5 ">Start Quiz <i class="fe fe-clock" style="font-size:15px;margin-top: 3px;margin-left: 3px;"></i></button>
+                      </a>
+                      @else
+                        <button type="button" class="btn btn-info btn-sm mt-5 disabled ">Quiz Submitted <i class="fe fe-check" style="font-size:15px;margin-top: 3px;margin-left: 3px;"></i></button>
+                      @endif
+                    </div>
+                  </div>
+
+                @else
                 @if(isset($lecture->video))
   	              @if($lecture->video != null)
     	              <div class="embed-responsive  position-relative w-100 d-block overflow-hidde p-0" style="height: 600px;">
@@ -43,27 +65,28 @@
       		          </div>
                   @endif
   		          @endif
-		          <div class="container-fluid watchPageDecs">
-		          	<p>
-                  @if(isset($lecture->description))
-		          		<?php  echo $lecture->description; ?>
-                  @else
-                    <h4>
-                      The standard Lorem Ipsum passage, used since the 1500s
-                    </h4>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
+  		          <div class="container-fluid watchPageDecs">
+  		          	<p>
+                    @if(isset($lecture->description))
+  		          		<?php  echo $lecture->description; ?>
+                    @else
+                      <h4>
+                        The standard Lorem Ipsum passage, used since the 1500s
+                      </h4>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                      </p>
 
-                    <div class="text-center">
-                      <button class="btn btn-info btn-sm btn-finish-course" onclick="finishCourse()">
-                         Finish Course 
-                         <i class="fe fe-arrow-right"></i>
-                      </button>
-                    </div>
-                  @endif
-		          	</p>
-		          </div>
+                      <div class="text-center">
+                        <button class="btn btn-info btn-sm btn-finish-course" onclick="finishCourse()">
+                           Finish Course 
+                           <i class="fe fe-arrow-right"></i>
+                        </button>
+                      </div>
+                    @endif
+  		          	</p>
+  		          </div>
+                @endif
 	            </div>
           
             </div>
@@ -105,11 +128,15 @@
                 id="course-intro-tab" href="/courses/{{$course->id}}/watch?s={{$lec->id}}" >
                 <div class="text-truncate">
                   <span class="icon-shape bg-light text-primary icon-sm  rounded-circle me-2">
-                  	@if($lec->video == null)
+                  	@if($lec->type == "Lecture")
+                    @if($lec->video == null)
                   	<i class="fe fe-book  fs-6"></i>
                   	@else
                   	<i class="fe fe-play  fs-6"></i>
                   	@endif
+                    @else
+                    <i class="fe fe-box  fs-6"></i>
+                    @endif
                   </span>
                   <span>{{$lec->title}}</span>
                 </div>
@@ -182,6 +209,46 @@
     </div>
   </div>
 </div>
+
+{{-- Quiz Modal --}}
+<div class="modal fade" id="quizModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <img src="assets/images/svg/checked-mark.svg" class="img-fluid" style="width:130px" />
+        </div>
+        <h4 class="text-center" style="font-size:25px;">Good Job</h4>
+        <p class="text-center">
+          Your quiz is submitted successfully. 
+        </p>
+      </div>
+      <form action="{{route('course.finish')}}" method="post">
+        @csrf
+        <div class="modal-footer">
+          <input type="hidden" name="course_id" value="{{$course->id}}">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+</script> 
+
+  @if(count($errors) > 0)
+    @if($errors->first() == 'quizCompleted')
+      <script>
+        $(document).ready(function(){
+          $("#quizModal").modal('show');
+        });
+      </script>
+    @endif
+  @endif
 
   <script>
     function finishCourse()

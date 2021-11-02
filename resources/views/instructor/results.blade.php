@@ -16,8 +16,8 @@
 		<!-- Card body -->
 		<div class="p-4 d-flex justify-content-between align-items-center">
 			<div>
-				<h3 class="mb-0">Manage Certificates</h3>
-				<span>Certificate manager for completed courses.</span>
+				<h3 class="mb-0">Results</h3>
+				<span>View results for the quizes attempted by students</span>
 			</div>
 			
 		</div>
@@ -26,14 +26,7 @@
 	<div class="tab-pane show" id="tabPaneList" role="tabpanel" aria-labelledby="tabPaneList">
 		<div class="card">
 			<div class="card-header border-bottom-0">
-				<div class="row">
-					<div class="col pe-0">
-						<form>
-							<input type="search" class="form-control" placeholder="Search by Name" />
-						</form>
-					</div>
-					
-				</div>
+				<h4>Attempted: {{$attempted}}/{{$total_quizes}}</h4>
 			</div>
 			@if(count($errors) > 0)
 				@if($errors->first() == 'CourseRejected')
@@ -51,61 +44,32 @@
 				<table class="table">
 					<thead class="table-light">
 						<tr>
-							<th scope="col" class="border-0">Name</th>
-							<th scope="col" class="border-0">Email</th>
-							{{-- <th scope="col" class="border-0">Phone</th> --}}
-							<th scope="col" class="border-0">Course</th>
-							<th scope="col" class="border-0">Complete</th>
+							<th scope="col" class="border-0">Quiz</th>
+							<th scope="col" class="border-0">Total Questions</th>
+							<th scope="col" class="border-0">Correct Answers</th>
+							<th scope="col" class="border-0">Percentage</th>
+							<th scope="col" class="border-0">Status</th>
 							<th scope="col" class="border-0"></th>
 						</tr>
 					</thead>
 					<tbody>
-						@if(!empty($data))
-						@foreach($data as $obj)
-						<tr>
-							<td class="align-middle border-top-0">
-								<div class="d-flex align-items-center">
-									@if($obj['img'] != "" || $obj['img'] != null)
-									<img src="uploads/profiles/{{$obj['img']}}" style="width:30px;"/>
-									@else
-									<img src="assets/images/avatar/avatar-3.jpg" style="width:30px;" />
-									@endif
-									<h5 class="mb-0" style="margin-left:10px;">{{$obj['name']}}</h5>
-								</div>
-							</td>
-							<td class="align-middle border-top-0">{{$obj['email']}}</td>
-							{{-- <td class="align-middle border-top-0">{{$obj['phone']}}</td> --}}
-							<td class="align-middle border-top-0">{{$obj['course_title']}}</td>
-							<td class="align-middle border-top-0">
-								<?php echo date('d M, Y', strtotime($obj["date"])); ?>
-							</td>
-							<td class="align-middle border-top-0">
-								<div class="row" style="text-align:center;">
-									<div>
-										<form action="{{route('certificate.reject')}}" method="post">
-											@csrf
-											<input type="hidden" name="id" value="{{$obj['id']}}">
-											<button class="btn btn-warning btn-xs" style="width:100%;">Reject</button>
-										</form>
-									</div>
-									<div style="margin-top: 6px;">
-										<button class="btn btn-success btn-xs" style="width:100%;" onclick="cert_approval_modal('{{$obj['id']}}')">Approve</button>
-									</div>
-									<div style="margin-top: 6px;">
-										<a href="/instructor/{{$obj['student_id']}}/certifications/{{$obj['course_id']}}/details" target="_blank">
-											<button class="btn btn-primary btn-xs" style="width:100%;">Details</button>
-										</a>
-									</div>
-								</div>
-							</td>
-						</tr>
-						@endforeach
-						@else
-						<tr>
-							<td colspan="5" class="text-center">
-								No pending requests found.
-							</td>
-						</tr>
+						@if(!empty($results))
+							@foreach($results as $res)
+								<tr>
+									<td>{{$res['title']}}</td>
+									<td>{{$res['total_questions']}}</td>
+									<td>{{$res['correct']}}</td>
+									<td>{{$res['percentage']}}%</td>
+									<td>
+										@if($res['status'] == 'Pass')
+											<span class="custom-badge-success">Pass</span>
+										@else
+											<span class="custom-badge-warning">Fail</span>
+										@endif
+									</td>
+									<td></td>
+								</tr>
+							@endforeach
 						@endif
 					</tbody>
 				</table>
@@ -154,27 +118,5 @@
   </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script>
-	$(document).ready(function(){
-		$("#file").on('change', function(){
-			let input = this;
-			if (input.files && input.files[0]) {
-		        var reader = new FileReader();
 
-		        reader.onload = function (e) {
-		            $('#preview').attr('src', e.target.result);
-		        }
-
-		        reader.readAsDataURL(input.files[0]);
-		    }
-
-		})
-	});
-	function cert_approval_modal(id)
-	{
-		$("#arrovalModal #id").val(id);
-		$("#arrovalModal").modal('show');
-	}
-	
-</script>
 @endsection

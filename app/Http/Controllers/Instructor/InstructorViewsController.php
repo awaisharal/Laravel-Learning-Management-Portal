@@ -13,6 +13,7 @@ use App\Models\Lecture;
 use App\Models\Student;
 use App\Models\Enrolment;
 use App\Models\Certificate;
+use App\Models\Result;
 
 class InstructorViewsController extends Controller
 {
@@ -593,6 +594,7 @@ class InstructorViewsController extends Controller
                 $student = Student::find($student_id);
                 $course  = Course::find($course_id);
 
+                $student_id = $student->id;
                 $student_name = $student->name;
                 $student_email = $student->email;
                 $student_img = $student->img;
@@ -600,11 +602,12 @@ class InstructorViewsController extends Controller
 
                 $list = [   
                     'id' => $id,
+                    'student_id'=>$student_id,
                     'name' => $student_name,
                     'email' => $student_email,
                     'img' => $student_img,
                     'phone' => $student_phone,
-                    'course_id' => $course->title,
+                    'course_id' => $course->id,
                     'course_title' => $course->title,
                     'date' => $date
                 ];
@@ -671,5 +674,48 @@ class InstructorViewsController extends Controller
         // Send mail here
         EmailsController::certificate_approval($student->name, $student->email, $course->title, $filename);
         return back()->withErrors('CourseAccepted');
+    }
+    public function certification_results_details($course_id, $student_id)
+    {
+        $course = Course::find($course_id);
+        if(empty($course))
+        {
+            return back();
+        }
+
+        $quizes = Lecture::where([
+            ['course_id','=',$course_id],
+            ['type','=','Quiz']
+        ])->get();
+
+        $total_quizes = count($quizes);
+        $attempted = 0;
+        $results = [];
+
+        foreach($quizes as $quiz)
+        {
+            $id = $quiz->id;
+            $title = $quiz->title;
+            $result = Result::where('quiz_id', $id)->get();
+            if(!$result->isEmpty())
+            {
+                $list = [
+                    'id' => $id,
+                    'title' => $title,
+                    'total_questions' => $result[0]->total_questions,
+                    'correct' => $result[0]->correct,
+                    'percentage' => $result[0]->percentage,
+                    'status' => $result[0]->status,
+                    'date' => $result[0]->created_at
+                ];
+                array_push($results, $list);
+                $attempted++;
+            }
+        }   
+
+        // Fetching student details
+        $student = Student::find($student_id);
+        return view('instructor.results',['results'=>$results,'total_quizes'=>$total_quizes,'attempted'=>$attempted,'student'=>$student]);
+
     }
 }

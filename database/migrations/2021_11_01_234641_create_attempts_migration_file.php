@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionsMigrationFile extends Migration
+class CreateAttemptsMigrationFile extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,12 @@ class CreateQuestionsMigrationFile extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('attempts', function (Blueprint $table) {
             $table->id();
-            $table->string('question');
-            $table->string('option1');
-            $table->string('option2');
-            $table->string('option3');
-            $table->string('option4');
-            $table->string('correct');
+            $table->string('student_id');
             $table->string('course_id');
-            $table->string('section_id');
             $table->string('quiz_id');
+            $table->enum('status',['Pending','Complete'])->default('Pending');
             $table->timestamps();
         });
     }
@@ -35,6 +30,6 @@ class CreateQuestionsMigrationFile extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('attempts');
     }
 }

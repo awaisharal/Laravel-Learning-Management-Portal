@@ -114,6 +114,8 @@ Route::group(['middleware' => ['InstructorAuth']], function(){
 	Route::get('/instructor/certifications', [InstructorViewsController::class,'certifications_view']);
 	Route::post('/instructor/certification/reject', [InstructorViewsController::class,'reject_certification'])->name('certificate.reject');
 	Route::post('/instructor/certification/approve', [InstructorViewsController::class,'approve_certification'])->name('certificate.approve');
+	Route::get('/instructor/{student_id}/certifications/{course_id}/details', [InstructorViewsController::class,'certification_results_details']);
+
 
 
 	Route::get('/instructor/edit-profile', [InstructorViewsController::class,'edit_profile_view']);
@@ -166,5 +168,7 @@ Route::group(['middleware' => ['StudentAuth']], function(){
 	Route::get('/courses/{id}/watch', [mainController::class,'watch_course']);
 	Route::post('/course/finish', [mainController::class,'finish_course'])->name('course.finish');
 	Route::get('/course/completed', [mainController::class,'thankyou']);
+	Route::get('/courses/{id}/quiz/{lec_id}/attempt', [QuizController::class,'quiz_attempt_view']);
+	Route::post('/courses/quiz/submit-answer', [QuizController::class,'submit_answer'])->name('answer.submit');
 
 });

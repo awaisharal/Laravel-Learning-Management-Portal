@@ -171,6 +171,7 @@
           </div>
           <input type="hidden" id="course_id" name="course_id" value="{{$course_id}}" />
           <input type="hidden" id="section_id" name="section_id" value="{{$section_id}}" />
+          <input type="hidden" id="quiz_id" name="quiz_id" value="{{$quiz->id}}" />
           <button class="btn btn-primary" type="submit">
               Add Question
           </button>

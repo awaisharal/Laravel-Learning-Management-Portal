@@ -8,6 +8,9 @@ use App\Models\Quiz;
 use App\Models\Course;
 use App\Models\Lecture;
 use App\Models\Question;
+use App\Models\Answer;
+use App\Models\Attempt;
+use App\Models\Result;
 
 class QuizController extends Controller
 {
@@ -90,6 +93,7 @@ class QuizController extends Controller
         $correct = $request->correct;
         $course_id = $request->course_id;
         $section_id = $request->section_id;
+        $quiz_id = $request->quiz_id;
 
         if($correct == 1)
         {
@@ -110,7 +114,8 @@ class QuizController extends Controller
             'option4' => $opt4,
             'correct' => $correct,
             'course_id' => $course_id,
-            'section_id' => $section_id
+            'section_id' => $section_id,
+            'quiz_id' => $quiz_id
         ]);
 
         return back()->withErrors('questionAdded');
@@ -122,5 +127,137 @@ class QuizController extends Controller
         $res = Question::find($id);
         $res->delete();
         return back()->withErrors('questionDeleted');
+    }
+    public function quiz_attempt_view($course_id, $quiz_id)
+    {
+        $quiz = Lecture::find($quiz_id);
+
+        if(empty($quiz))
+        {
+            return redirect('/student');
+        }
+
+        $session = session()->get('sessionData')[0];
+        $student_id = $session->id;
+        $section_id = $quiz->curriculum_id;
+        $questions = Question::where('section_id', $section_id)->get();
+        $question = null;
+        $question_no = 0;
+        $total = count($questions);
+        $i = 1;
+        foreach($questions as $obj)
+        {
+            $id = $obj->id;
+            $res = Answer::where([
+                ['student_id','=',$student_id],
+                ['question_id','=',$id]
+            ])->count();
+            if($res == 0)
+            {
+                $question = $obj;
+            }
+
+        }
+
+        $check2 = Answer::where([
+                ['student_id','=',$student_id],
+                ['quiz_id','=',$quiz_id]
+            ])->count();
+        $question_no = $check2+1; 
+        return view('courses.attempt-quiz',['question'=>$question,'course_id'=>$course_id,'quiz_id'=>$quiz_id,'question_no'=>$question_no,'total'=>$total]);
+    }
+    public function submit_answer(Request $request)
+    {
+        $request->validate([
+            'answer' => 'required'
+        ]);
+        $answer = $request->answer;
+        $question_id = $request->question_id;
+        $quiz_id = $request->quiz_id;
+        $course_id = $request->course_id;
+        $session = session()->get('sessionData')[0];
+        $student_id = $session->id;
+        $is_correct = "wrong";
+
+
+        $check = Answer::where([
+            ['student_id','=', $student_id],
+            ['quiz_id','=', $quiz_id],
+            ['question_id','=', $question_id]
+        ])->count();
+
+        if($check == 0)
+        {
+
+            // Check if answer is correct or wrong
+            $question = Question::find($question_id);
+            if($question->correct == $answer)
+            {
+                $is_correct = "correct";
+            }
+            Answer::create([
+                'question_id' => $question_id,
+                'quiz_id' => $quiz_id,
+                'course_id' => $course_id,
+                'student_id' => $student_id,
+                'status' => $is_correct
+            ]);
+        }
+
+        $check2 = Attempt::where([
+            ['student_id','=', $student_id],
+            ['quiz_id','=', $quiz_id],
+            ['course_id','=', $course_id]
+        ])->count();
+        if($check2 == 0)
+        {
+            Attempt::create([
+                'student_id' => $student_id,
+                'course_id' => $course_id,
+                'quiz_id' => $quiz_id
+            ]);
+        }
+
+        if(isset($request->finish))
+        {
+            Attempt::where([
+                ['student_id','=', $student_id],
+                ['quiz_id','=', $quiz_id],
+                ['course_id','=', $course_id]
+            ])->update(['status'=>'Complete']);
+
+            // Calculating results
+            $total_questions = Question::where('quiz_id',$quiz_id)->count();
+            $correct_answers = Answer::where([
+                ['student_id','=',$student_id],
+                ['quiz_id','=',$quiz_id],
+                ['status','=','correct']
+            ])->count();
+            
+            $percentage = ($correct_answers/$total_questions)*100;
+
+            if($percentage >= 60)
+            {
+                $result_status = 'Pass';
+            }else{
+                $result_status = 'Fail';
+            }
+
+            Result::create([
+                'student_id' => $student_id,
+                'quiz_id' => $quiz_id,
+                'course_id' => $course_id,
+                'total_questions' => $total_questions,
+                'correct' => $correct_answers,
+                'percentage' => $percentage,
+                'status' => $result_status
+            ]);
+
+            $route = '/courses/'.$course_id.'/watch?s='.$quiz_id+1;
+            return redirect($route)->withErrors('quizCompleted');
+        }
+
+        return redirect()->back();
+
     }
 }

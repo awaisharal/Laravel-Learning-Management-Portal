@@ -49,3 +49,32 @@ button.no-bg{
 .dropdown-menu{
 	/*transform: translate(-20px, -120px)!important;*/
 }
+.quizWrapper{
+	
+}
+.questionSection {
+	display: flex;
+}
+.questionSection p, .questionSection h4{
+	font-size: 20px;
+}
+.optionSection span{
+	font-size: 17px;
+	margin-left: 10px;
+}
+.custom-badge-success{
+	background: #19CB98;
+	color: #fff;
+	border-radius: 4px;
+	border: 1px solid #19CB98;
+	font-size: 13px;
+	padding: 3px 5px 3px 5px;
+}
+.custom-badge-warning{
+	background: #FFAA46;
+	color: #333;
+	border-radius: 4px;
+	border: 1px solid #FFAA46;
+	font-size: 13px;
+	padding: 3px 5px 3px 5px;
+}

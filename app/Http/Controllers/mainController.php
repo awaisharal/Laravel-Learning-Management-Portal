@@ -14,6 +14,7 @@ use App\Models\Lecture;
 use App\Models\Enrolment;
 use App\Models\Bookmark;
 use App\Models\Certificate;
+use App\Models\Attempt;
 use DB;
 
 
@@ -216,20 +217,6 @@ class mainController extends Controller
                 'course_id' => $course_id
             ]);
 
-            // Check if student already exist for this instructor
-            $student_check = Assign::where([
-                ['student_id','=',$student_id],
-                ['instructor_id','=',$instructor_id]
-            ])->get();
-            $student_check = count($student_check);
-            if($student_check == 0)
-            {
-                Assign::create([
-                    'student_id' => $student_id,
-                    'instructor_id' => $instructor_id
-                ]);
-            }
-            
             $course = Course::find($course_id);
             $title = $course->title;
             $ins_id = $course->user_id;
@@ -285,6 +272,7 @@ class mainController extends Controller
         {
             $user = session()->get('sessionData')[0];
             $user_id = $user->id;
+            $quiz_status = null;
 
             $enrolCheck = Enrolment::where([
                 ['student_id','=',$user_id],
@@ -336,7 +324,6 @@ class mainController extends Controller
                         $lecture = [];
                     }
                 }
-
                 // Fetching last lecture
                 // ======================
 
@@ -344,12 +331,35 @@ class mainController extends Controller
                 if($last_cur != null)
                 {
                     $last_lecture = Lecture::where('curriculum_id', $last_cur->id)->orderBy('id','desc')->first();
-                    $last_lecture_id = $last_lecture->id;
+                    if($last_lecture != null)
+                    {
+                        $last_lecture_id = $last_lecture->id;
+                    }else{
+                        $last_lecture_id = null;
+                    }
                 }else{
                     $last_lecture_id = null;
                 }
-                
-                return view('courses.watch',['course'=>$course,'curriculums'=>$curriculums,'lecture'=>$lecture,'last_lecture_id'=>$last_lecture_id]);
+                // return $lecture->id;
+                if($lecture != 'complete' && $lecture != [] && $lecture != null)
+                {
+                    if($lecture->type == 'Quiz')
+                    {
+                        $attempt = Attempt::where([
+                            ['student_id','=',$user_id],
+                            ['quiz_id','=',$lecture->id],
+                            ['status','=','Complete'],
+                        ])->get();
+                        // return $attempt;
+                        if(!$attempt->isEmpty())
+                        {
+                            $quiz_status = 'complete';
+                        }
+                         
+                    }
+                }
+                // return dd($quiz_status);
+                return view('courses.watch',['course'=>$course,'curriculums'=>$curriculums,'lecture'=>$lecture,'last_lecture_id'=>$last_lecture_id,'quiz_status'=>$quiz_status]);
             }else{
                 return redirect('/courses/'.$course_id.'/details');
             }
