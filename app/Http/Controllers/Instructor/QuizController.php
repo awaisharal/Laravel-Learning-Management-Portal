@@ -71,7 +71,7 @@ class QuizController extends Controller
         }
 
         $quiz = Lecture::find($quiz_id);
-        $questions = Question::where('section_id', $section_id)->get();
+        $questions = Question::where('quiz_id', $quiz_id)->get();
         return view('instructor.quiz-details',['course_id'=>$course_id,'quiz'=>$quiz,'section_id'=>$section_id,'questions'=>$questions]);
     }
     public function add_question(Request $request)
@@ -140,7 +140,7 @@ class QuizController extends Controller
         $session = session()->get('sessionData')[0];
         $student_id = $session->id;
         $section_id = $quiz->curriculum_id;
-        $questions = Question::where('section_id', $section_id)->get();
+        $questions = Question::where('quiz_id', $quiz_id)->get();
         $question = null;
         $question_no = 0;
         $total = count($questions);
